@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
@@ -18,20 +19,23 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.protocol.HTTP;
 
+import com.hiputto.common4android.util.HP_NetWorkAsyncTask.AsyncTaskSteps;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.util.Log;
 
 public class HP_NetWorkUtils {
-	private int REQUEST_TIMEOUT = 10 * 1000;// 请求超时
-	private int SO_TIMEOUT = 10 * 1000; // 数据接收超时
+	private int REQUEST_TIMEOUT = 5 * 1000;// 请求超时
+	private int SO_TIMEOUT = 0 * 1000; // 数据接收超时
 
-	public void setRequestTimeOut(int seconds) {
-		REQUEST_TIMEOUT = seconds * 1000;
+	public void setRequestTimeOut(int time) {
+		REQUEST_TIMEOUT = time;
 	}
 
-	public void setSoTimeOut(int seconds) {
-		SO_TIMEOUT = seconds * 1000;
+	public void setSoTimeOut(int time) {
+		SO_TIMEOUT = time;
 	}
 
 	public int getRequestTimeOut() {
@@ -147,8 +151,9 @@ public class HP_NetWorkUtils {
 			onRequestFinished.onRequestFinished(resultStr, isSuccess);
 		}
 	}
-	
-	public void getRequestData(String url,OnRequestDataFinished onRequestDataFinished){
+
+	public void getRequestData(String url,
+			OnRequestDataFinished onRequestDataFinished) {
 		String resultStr = "";
 		boolean isSuccess = false;
 		byte[] data = null;
@@ -158,19 +163,20 @@ public class HP_NetWorkUtils {
 
 			HttpResponse httpResponse = httpClient.execute(httpPost);
 			if (httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-				
-				DataInputStream dataInputStream = new DataInputStream(httpResponse.getEntity().getContent());
-				
+
+				DataInputStream dataInputStream = new DataInputStream(
+						httpResponse.getEntity().getContent());
+
 				ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-				
+
 				int index = 0;
 				byte[] buffer = new byte[1024];
-				while ((index = dataInputStream.read(buffer, 0, buffer.length)) != -1) {                     
+				while ((index = dataInputStream.read(buffer, 0, buffer.length)) != -1) {
 					byteArrayOutputStream.write(buffer, 0, index);
 				}
-				
-				data =  byteArrayOutputStream.toByteArray();
-				
+
+				data = byteArrayOutputStream.toByteArray();
+
 				dataInputStream.close();
 				byteArrayOutputStream.close();
 			}
@@ -183,37 +189,41 @@ public class HP_NetWorkUtils {
 			resultStr = e.toString();
 			data = null;
 		} finally {
-			onRequestDataFinished.onRequestDataFinished(resultStr, data, isSuccess);
+			onRequestDataFinished.onRequestDataFinished(resultStr, data,
+					isSuccess);
 		}
 	}
-	
-	public void getRequestBitmap(String url,OnRequestBitmapFinished bitmapLoadFinished) {
+
+	public void getRequestBitmap(String url,
+			OnRequestBitmapFinished bitmapLoadFinished) {
 		String resultStr = "";
 		boolean isSuccess = false;
 		Bitmap bitmap = null;
-		
+
 		try {
 			HttpClient httpClient = getHttpClient();
 			HttpPost httpPost = new HttpPost(url);
 
 			HttpResponse httpResponse = httpClient.execute(httpPost);
 			if (httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-				
-				DataInputStream dataInputStream = new DataInputStream(httpResponse.getEntity().getContent());
+
+				DataInputStream dataInputStream = new DataInputStream(
+						httpResponse.getEntity().getContent());
 				bitmap = BitmapFactory.decodeStream(dataInputStream);
-				
+
 				dataInputStream.close();
 			}
 
 			isSuccess = true;
-			
-		}  catch (Exception e) {
+
+		} catch (Exception e) {
 			Log.e("HP_" + e.getClass().getName(), e.getMessage());
 			isSuccess = false;
 			bitmap = null;
 			resultStr = e.toString();
 		} finally {
-			bitmapLoadFinished.onRequestBitmapFinished(resultStr,bitmap, isSuccess);
+			bitmapLoadFinished.onRequestBitmapFinished(resultStr, bitmap,
+					isSuccess);
 		}
 	}
 
@@ -228,13 +238,227 @@ public class HP_NetWorkUtils {
 	public interface OnRequestFinished {
 		public void onRequestFinished(String resultStr, boolean isSuccess);
 	}
-	
+
 	public interface OnRequestDataFinished {
-		public void onRequestDataFinished(String resultStr, byte[] data, boolean isSuccess);
+		public void onRequestDataFinished(String resultStr, byte[] data,
+				boolean isSuccess);
 	}
-	
+
 	public interface OnRequestBitmapFinished {
-		public void onRequestBitmapFinished(String resultStr, Bitmap bitmap, boolean isSuccess);
+		public void onRequestBitmapFinished(String resultStr, Bitmap bitmap,
+				boolean isSuccess);
+	}
+
+	public AsyncTask<String, Integer, HashMap<String, Object>> sendAsyncRequest(
+			final String url, final OnRequestFinished onRequestFinished) {
+
+		return new HP_NetWorkAsyncTask(new AsyncTaskSteps() {
+			@Override
+			public void onPreExecute() {
+
+			}
+
+			@Override
+			public HashMap<String, Object> doInBackground(String... params) {
+				final HashMap<String, Object> hashMap = new HashMap<String, Object>();
+
+				sendRequest(url, new OnRequestFinished() {
+					@Override
+					public void onRequestFinished(String resultStr,
+							boolean isSuccess) {
+						hashMap.put("isSuccess", isSuccess);
+						hashMap.put("resultStr", resultStr);
+					}
+				});
+				return hashMap;
+			}
+
+			@Override
+			public void onPostExecute(HashMap<String, Object> hashMap) {
+
+				String resultStr = (String) hashMap.get("resultStr");
+				boolean isSuccess = (Boolean) hashMap.get("isSuccess");
+				onRequestFinished.onRequestFinished(resultStr, isSuccess);
+			}
+
+			@Override
+			public void onProgressUpdate(Integer... values) {
+
+			}
+		}).execute("");
+
+	}
+
+	public AsyncTask<String, Integer, HashMap<String, Object>> sendAsyncRequestStrEntity(
+			final String url, final String str,
+			final OnRequestFinished onRequestFinished) {
+
+		return new HP_NetWorkAsyncTask(new AsyncTaskSteps() {
+
+			@Override
+			public void onPreExecute() {
+
+			}
+
+			@Override
+			public HashMap<String, Object> doInBackground(String... params) {
+				final HashMap<String, Object> hashMap = new HashMap<String, Object>();
+				sendRequestStrEntity(url, str, new OnRequestFinished() {
+					@Override
+					public void onRequestFinished(String resultStr,
+							boolean isSuccess) {
+						hashMap.put("isSuccess", isSuccess);
+						hashMap.put("resultStr", resultStr);
+					}
+				});
+				return hashMap;
+			}
+
+			@Override
+			public void onPostExecute(HashMap<String, Object> hashMap) {
+
+				String resultStr = (String) hashMap.get("resultStr");
+				boolean isSuccess = (Boolean) hashMap.get("isSuccess");
+
+				onRequestFinished.onRequestFinished(resultStr, isSuccess);
+			}
+
+			@Override
+			public void onProgressUpdate(Integer... values) {
+
+			}
+		}).execute("");
+
+	}
+
+	public AsyncTask<String, Integer, HashMap<String, Object>> sendAsyncRequestParamsEntity(
+			final String url, final List<NameValuePair> nameValuePairList,
+			final OnRequestFinished onRequestFinished) {
+
+		return new HP_NetWorkAsyncTask(new AsyncTaskSteps() {
+
+			@Override
+			public void onPreExecute() {
+
+			}
+
+			@Override
+			public HashMap<String, Object> doInBackground(String... params) {
+				final HashMap<String, Object> hashMap = new HashMap<String, Object>();
+				sendRequestParamsEntity(url, nameValuePairList,
+						new OnRequestFinished() {
+							@Override
+							public void onRequestFinished(String resultStr,
+									boolean isSuccess) {
+								hashMap.put("isSuccess", isSuccess);
+								hashMap.put("resultStr", resultStr);
+							}
+						});
+				return hashMap;
+			}
+
+			@Override
+			public void onPostExecute(HashMap<String, Object> hashMap) {
+
+				String resultStr = (String) hashMap.get("resultStr");
+				boolean isSuccess = (Boolean) hashMap.get("isSuccess");
+
+				onRequestFinished.onRequestFinished(resultStr, isSuccess);
+			}
+
+			@Override
+			public void onProgressUpdate(Integer... values) {
+
+			}
+		}).execute("");
+
+	}
+
+	public AsyncTask<String, Integer, HashMap<String, Object>> getAsyncRequestData(
+			final String url, final OnRequestDataFinished onRequestDataFinished) {
+
+		return new HP_NetWorkAsyncTask(new AsyncTaskSteps() {
+
+			@Override
+			public void onPreExecute() {
+
+			}
+
+			@Override
+			public HashMap<String, Object> doInBackground(String... params) {
+				final HashMap<String, Object> hashMap = new HashMap<String, Object>();
+				getRequestData(url, new OnRequestDataFinished() {
+					@Override
+					public void onRequestDataFinished(String resultStr,
+							byte[] data, boolean isSuccess) {
+						hashMap.put("isSuccess", isSuccess);
+						hashMap.put("resultStr", resultStr);
+						hashMap.put("data", data);
+
+					}
+				});
+				return hashMap;
+			}
+
+			@Override
+			public void onPostExecute(HashMap<String, Object> hashMap) {
+				String resultStr = (String) hashMap.get("resultStr");
+				boolean isSuccess = (Boolean) hashMap.get("isSuccess");
+				byte[] data = (byte[]) hashMap.get("data");
+
+				onRequestDataFinished.onRequestDataFinished(resultStr, data,
+						isSuccess);
+			}
+
+			@Override
+			public void onProgressUpdate(Integer... values) {
+
+			}
+		}).execute("");
+
+	}
+
+	public AsyncTask<String, Integer, HashMap<String, Object>> getAsyncRequestBitmap(
+			final String url, final OnRequestBitmapFinished bitmapLoadFinished) {
+
+		return new HP_NetWorkAsyncTask(new AsyncTaskSteps() {
+
+			@Override
+			public void onPreExecute() {
+			}
+
+			@Override
+			public HashMap<String, Object> doInBackground(String... params) {
+				final HashMap<String, Object> hashMap = new HashMap<String, Object>();
+				getRequestBitmap(url, new OnRequestBitmapFinished() {
+
+					@Override
+					public void onRequestBitmapFinished(String resultStr,
+							Bitmap bitmap, boolean isSuccess) {
+						hashMap.put("isSuccess", isSuccess);
+						hashMap.put("resultStr", resultStr);
+						hashMap.put("bitmap", bitmap);
+					}
+				});
+
+				return hashMap;
+			}
+
+			@Override
+			public void onPostExecute(HashMap<String, Object> hashMap) {
+				String resultStr = (String) hashMap.get("resultStr");
+				boolean isSuccess = (Boolean) hashMap.get("isSuccess");
+				Bitmap bitmap = (Bitmap) hashMap.get("bitmap");
+				bitmapLoadFinished.onRequestBitmapFinished(resultStr, bitmap,
+						isSuccess);
+			}
+
+			@Override
+			public void onProgressUpdate(Integer... values) {
+
+			}
+		}).execute("");
+
 	}
 
 }
