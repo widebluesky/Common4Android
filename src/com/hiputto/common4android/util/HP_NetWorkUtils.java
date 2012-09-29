@@ -71,6 +71,8 @@ public class HP_NetWorkUtils {
 					sb.append(s);
 				}
 				resultStr = sb.toString();
+				
+				reader.close();
 			}
 
 			isSuccess = true;
@@ -102,6 +104,8 @@ public class HP_NetWorkUtils {
 					sb.append(s);
 				}
 				resultStr = sb.toString();
+				
+				reader.close();
 			}
 
 			isSuccess = true;
@@ -139,6 +143,8 @@ public class HP_NetWorkUtils {
 					sb.append(s);
 				}
 				resultStr = sb.toString();
+				
+				reader.close();
 			}
 
 			isSuccess = true;
