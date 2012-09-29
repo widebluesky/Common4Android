@@ -285,6 +285,11 @@ public class HP_NetWorkUtils {
 			public void onProgressUpdate(Integer... values) {
 
 			}
+
+			@Override
+			public void onCancelled() {
+
+			}
 		}).execute("");
 
 	}
@@ -325,6 +330,11 @@ public class HP_NetWorkUtils {
 
 			@Override
 			public void onProgressUpdate(Integer... values) {
+
+			}
+
+			@Override
+			public void onCancelled() {
 
 			}
 		}).execute("");
@@ -368,6 +378,12 @@ public class HP_NetWorkUtils {
 
 			@Override
 			public void onProgressUpdate(Integer... values) {
+
+			}
+
+			@Override
+			public void onCancelled() {
+				// TODO Auto-generated method stub
 
 			}
 		}).execute("");
@@ -414,6 +430,12 @@ public class HP_NetWorkUtils {
 			public void onProgressUpdate(Integer... values) {
 
 			}
+
+			@Override
+			public void onCancelled() {
+				// TODO Auto-generated method stub
+
+			}
 		}).execute("");
 
 	}
@@ -455,6 +477,12 @@ public class HP_NetWorkUtils {
 
 			@Override
 			public void onProgressUpdate(Integer... values) {
+
+			}
+
+			@Override
+			public void onCancelled() {
+				// TODO Auto-generated method stub
 
 			}
 		}).execute("");

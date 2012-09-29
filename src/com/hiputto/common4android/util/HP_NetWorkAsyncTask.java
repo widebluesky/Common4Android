@@ -27,6 +27,11 @@ public class HP_NetWorkAsyncTask extends AsyncTask<String, Integer, HashMap<Stri
 	}
 
 	@Override
+	protected void onCancelled() {
+		asyncTaskSteps.onCancelled();
+	}
+	
+	@Override
 	protected void onProgressUpdate(Integer... values) {
 		asyncTaskSteps.onProgressUpdate(values);
 	}
@@ -40,6 +45,8 @@ public class HP_NetWorkAsyncTask extends AsyncTask<String, Integer, HashMap<Stri
 		public void onPostExecute(HashMap<String,Object> result);
 
 		public void onProgressUpdate(Integer... values);
+		
+		public void onCancelled();
 	}
 
 }
