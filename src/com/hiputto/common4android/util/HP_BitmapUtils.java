@@ -26,6 +26,13 @@ public class HP_BitmapUtils {
 
 	/**
 	 * Bitmap to Drawable
+	 * 
+	 * @param bitmap
+	 * Bitmap类型的图片
+	 * 
+	 * @return
+	 * 返回Dawable类型的图片
+	 * 
 	 * */
 	public static Drawable bitmap2Drawable(Bitmap bitmap) {
 		BitmapDrawable bitmapDrawable = new BitmapDrawable(bitmap);
@@ -34,6 +41,13 @@ public class HP_BitmapUtils {
 
 	/**
 	 * Bitmap from Drawable
+	 * 
+	 * @param drawable
+	 * Drawable类型的图片
+	 * 
+	 * @return 
+	 * 返回Bitmap类型的图片
+	 * 
 	 * */
 	public static Bitmap bitmapFromDrawable(Drawable drawable) {
 		Bitmap bitmap = Bitmap
@@ -52,6 +66,13 @@ public class HP_BitmapUtils {
 
 	/**
 	 * Bitmap转换Byte数组
+	 * 
+	 * @param bitmap
+	 * Bitmap类型的图片
+	 * 
+	 * @return
+	 * 返回Byte数组数据
+	 * 
 	 * */
 	public static byte[] bitmap2Bytes(Bitmap bitmap) {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -61,6 +82,13 @@ public class HP_BitmapUtils {
 
 	/**
 	 * Bitmap转换自Byte数组
+	 * 
+	 * @param data
+	 * Byte数组的数据
+	 * 
+	 * @return
+	 * 返回Bitmap类型的图片
+	 * 
 	 * */
 	public static Bitmap bitmapFromBytes(byte[] data) {
 		if (data.length != 0) {
@@ -72,6 +100,19 @@ public class HP_BitmapUtils {
 
 	/**
 	 * Bitmap缩放
+	 * 
+	 * @param bitmap
+	 * Bitmap类型的图片
+	 * 
+	 * @param width
+	 * Resize后的图片宽度
+	 * 
+	 * @param height
+	 * Resize后的图片高度
+	 * 
+	 * @return 
+	 * 返回Bitmap类型的图片
+	 * 
 	 * */
 	public static Bitmap bitmap2Resize(Bitmap bitmap, int width, int height) {
 		int tempWidth = bitmap.getWidth();
@@ -87,6 +128,16 @@ public class HP_BitmapUtils {
 
 	/**
 	 * Bitmap设置圆角
+	 * 
+	 * @param bitmap
+	 * Bitmap类型的图片
+	 * 
+	 * @param roundPx
+	 * 圆角的大小
+	 * 
+	 * @return
+	 * Bitmap类型的图片
+	 * 
 	 * */
 	public static Bitmap bitmap2Round(Bitmap bitmap, float roundPx) {
 		Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
@@ -105,6 +156,16 @@ public class HP_BitmapUtils {
 
 	/**
 	 * Bitmap设置倒影
+	 * 
+	 * @param bitmap
+	 * Bitmap类型的图片
+	 * 
+	 * @param reflectionImageDistance
+	 * 倒影与图片的间距
+	 * 
+	 * @return
+	 * 返回Bitmap类型的图片
+	 * 
 	 * */
 	public static Bitmap bitmap2ReflectionImage(Bitmap bitmap,
 			int reflectionImageDistance) {
@@ -145,17 +206,27 @@ public class HP_BitmapUtils {
 
 	/**
 	 * Bitmap设置水印图片
+	 * 
+	 * @param bitmap
+	 * Bitmap类型的图片
+	 * 
+	 * @param watermark
+	 * Bitmap类型的水印图片
+	 * 
+	 * @return
+	 * Bitmap类型的图片
+	 * 
 	 * */
-	public static Bitmap bitmap2WatermarkImage(Bitmap src, Bitmap watermark) {
-		if (src == null) {
+	public static Bitmap bitmap2WatermarkImage(Bitmap bitmap, Bitmap watermark) {
+		if (bitmap == null) {
 			return null;
 		}
-		int w = src.getWidth();
-		int h = src.getHeight();
+		int w = bitmap.getWidth();
+		int h = bitmap.getHeight();
 		// 需要处理图片太大造成的内存超过的问题,这里我的图片很小所以不写相应代码了
 		Bitmap newb = Bitmap.createBitmap(w, h, Config.ARGB_8888);// 创建一个新的和SRC长度宽度一样的位图
 		Canvas cv = new Canvas(newb);
-		cv.drawBitmap(src, 0, 0, null);// 在 0，0坐标开始画入src
+		cv.drawBitmap(bitmap, 0, 0, null);// 在 0，0坐标开始画入src
 		Paint paint = new Paint();
 		// 加入图片
 		if (watermark != null) {
@@ -169,12 +240,38 @@ public class HP_BitmapUtils {
 		cv.restore();// 存储
 		return newb;
 	}
-	
+
 	/**
 	 * Bitmap设置水印文字
+	 * 
+	 * @param bitmap
+	 * Bitmap类型的图片
+	 * 
+	 * @param text
+	 * String类型的字符串
+	 * 
+	 * @param textColor
+	 * int类型的文字颜色
+	 * 
+	 * @param textSize
+	 * int类型的文字大小
+	 * 
+	 * @param x
+	 * int类型的文字x坐标
+	 * 
+	 * @param y
+	 * int类型的文字y坐标
+	 * 
+	 * @param isHorizentalCenter
+	 * 文字是否居中显示
+	 * 
+	 * @return
+	 * 返回Bitmap类型的图片
+	 * 
 	 * */
 	public static Bitmap bitmap2WatermarkText(Bitmap bitmap, String text,
-			int textColor, int textSize, int x, int y,boolean isHorizentalCenter) {
+			int textColor, int textSize, int x, int y,
+			boolean isHorizentalCenter) {
 		if (bitmap == null) {
 			return null;
 		}
@@ -188,24 +285,27 @@ public class HP_BitmapUtils {
 
 		// 加入文字
 		if (text != null) {
-//			String familyName = "宋体";
-//			Typeface font = Typeface.create(familyName, Typeface.BOLD);
+			// String familyName = "宋体";
+			// Typeface font = Typeface.create(familyName, Typeface.BOLD);
 			TextPaint textPaint = new TextPaint();
 			textPaint.setColor(textColor);
-//			textPaint.setTypeface(font);
+			// textPaint.setTypeface(font);
 			textPaint.setTextSize(textSize);
-			
+
 			// 这里是自动换行的
-			cv.translate(x,y);
+			cv.translate(x, y);
 			StaticLayout layout = new StaticLayout(text, textPaint, w,
-					isHorizentalCenter?Alignment.ALIGN_CENTER:Alignment.ALIGN_NORMAL, 1.0F, 0.0F, true);
+					isHorizentalCenter ? Alignment.ALIGN_CENTER
+							: Alignment.ALIGN_NORMAL, 1.0F, 0.0F, true);
 			layout.draw(cv);
-			
+
 		}
 		cv.save(Canvas.ALL_SAVE_FLAG);// 保存
 		cv.restore();// 存储
 
 		return newb;
 	}
+
+
 
 }
