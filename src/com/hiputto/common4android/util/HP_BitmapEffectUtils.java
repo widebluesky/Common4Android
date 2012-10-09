@@ -78,4 +78,6 @@ public class HP_BitmapEffectUtils {
 		
 		return bm;
 	}
+	
+	
 }
