@@ -1,5 +1,7 @@
 package com.hiputto.common4android.util;
 
+import com.hiputto.common4android.anim.HP_RotateXAnimation;
+
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
@@ -26,19 +28,19 @@ public class HP_AnimationUtils {
 	// view.startAnimation(new HP_AnimationUtils().animTranslate(0,100,0, 100,
 	// 500,new AnimationListener() {
 	//
-	// @Override
+	// 
 	// public void onAnimationStart(Animation animation) {
 	// // TODO Auto-generated method stub
 	//
 	// }
 	//
-	// @Override
+	// 
 	// public void onAnimationRepeat(Animation animation) {
 	// // TODO Auto-generated method stub
 	//
 	// }
 	//
-	// @Override
+	// 
 	// public void onAnimationEnd(Animation animation) {
 	// // TODO Auto-generated method stub
 	// LayoutParams params = (LayoutParams) imageView.getLayoutParams();
@@ -52,7 +54,7 @@ public class HP_AnimationUtils {
 	// }));
 
 	private Animation animationTranslate, animationRotate, animationScale,
-			animationAlpha;
+			animationAlpha,animationRotateX,animationRotateY,animationRotateZ;
 
 	public Animation animScale(float fromX, float toX, float fromY, float toY,
 			long duration) {
@@ -129,6 +131,33 @@ public class HP_AnimationUtils {
 		animationAlpha.setAnimationListener(animationListener);
 		return animationAlpha;
 	}
+	
+	public Animation animRotateX(float fromDegree, float toDegree, long duration,int centerX,int centerY,
+			AnimationListener animationListener) {
+		animationRotateX = new HP_RotateXAnimation(fromDegree, toDegree, centerX, centerY);
+		animationRotateX.setDuration(duration);
+		animationRotateX.setFillAfter(true);
+		animationRotateX.setAnimationListener(animationListener);
+		return animationRotateX;
+	}
+	
+	public Animation animRotateY(float fromDegree, float toDegree, long duration,int centerX,int centerY,
+			AnimationListener animationListener) {
+		animationRotateY = new HP_RotateXAnimation(fromDegree, toDegree, centerX, centerY);
+		animationRotateY.setDuration(duration);
+		animationRotateY.setFillAfter(true);
+		animationRotateY.setAnimationListener(animationListener);
+		return animationRotateY;
+	}
+	
+	public Animation animRotateZ(float fromDegree, float toDegree, long duration,int centerX,int centerY,
+			AnimationListener animationListener) {
+		animationRotateZ = new HP_RotateXAnimation(fromDegree, toDegree, centerX, centerY);
+		animationRotateZ.setDuration(duration);
+		animationRotateZ.setFillAfter(true);
+		animationRotateZ.setAnimationListener(animationListener);
+		return animationRotateZ;
+	}
 
 	/**
 	 * start 加速度 center 最大速度 end 减速度
@@ -163,7 +192,6 @@ public class HP_AnimationUtils {
 	 * @return
 	 */
 	public static AnticipateInterpolator getAnticipateInterpolator() {
-
 		return new AnticipateInterpolator();
 	}
 
@@ -173,7 +201,6 @@ public class HP_AnimationUtils {
 	 * @return
 	 */
 	public static AnticipateInterpolator getAnticipateInterpolator(float tension) {
-
 		return new AnticipateInterpolator(tension);
 	}
 
@@ -252,7 +279,7 @@ public class HP_AnimationUtils {
 
 	/**
 	 * 向前甩一定值后再回到原来位置
-	 * 
+	 *  
 	 * @return
 	 */
 	public static OvershootInterpolator getOvershootInterpolator(float tension) {

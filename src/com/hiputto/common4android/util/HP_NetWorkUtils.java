@@ -44,6 +44,8 @@ public class HP_NetWorkUtils {
 
 	public int getSoTimeOut() {
 		return this.SO_TIMEOUT;
+		
+		
 	}
 
 	public void sendRequestStrEntity(String url, String str,
