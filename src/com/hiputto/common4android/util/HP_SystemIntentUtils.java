@@ -1,8 +1,11 @@
 package com.hiputto.common4android.util;
 
 import android.app.SearchManager;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.net.Uri;
+import android.provider.MediaStore;
+import android.provider.MediaStore.Audio.Media;
 
 public class HP_SystemIntentUtils {
 	
@@ -128,11 +131,13 @@ public class HP_SystemIntentUtils {
 		Intent intent = new Intent(Intent.ACTION_PACKAGE_ADDED, installUri); 
 		return intent;
 	}
-
-
-//
+	
+	public Intent getOpenCameraIntent(){
+		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE); 
+		return intent;
+	}
+	
 //	13. 打开照相机 
-//	    <1>Intent i = new Intent(Intent.ACTION_CAMERA_BUTTON, null); 
 //	           this.sendBroadcast(i); 
 //	     <2>long dateTaken = System.currentTimeMillis(); 
 //	            String name = createName(dateTaken) + ".jpg"; 
@@ -150,17 +155,20 @@ public class HP_SystemIntentUtils {
 //	            Intent inttPhoto = new Intent(MediaStore.ACTION_IMAGE_CAPTURE); 
 //	            inttPhoto.putExtra(MediaStore.EXTRA_OUTPUT, photoUri); 
 //	            startActivityForResult(inttPhoto, 10); 
-//
-//	14.从gallery选取图片 
-//	  Intent i = new Intent(); 
-//	            i.setType("image/*"); 
-//	            i.setAction(Intent.ACTION_GET_CONTENT); 
-//	            startActivityForResult(i, 11); 
-//
-//	15. 打开录音机 
-//	   Intent mi = new Intent(Media.RECORD_SOUND_ACTION); 
-//	            startActivity(mi); 
-//
+	public Intent getOpenGalleryIntent(){
+//		14.从gallery选取图片 
+		  Intent intent = new Intent(); 
+		  intent.setType("image/*"); 
+		  intent.setAction(Intent.ACTION_GET_CONTENT); 
+		  return intent;
+	}
+
+	public Intent getRecordSoundIntent(){
+//		15. 打开录音机 
+		Intent intent = new Intent(Media.RECORD_SOUND_ACTION); 
+		return intent;
+	}
+
 //	16.显示应用详细列表       
 //	Uri uri = Uri.parse("market://details?id=app_id");         
 //	Intent it = new Intent(Intent.ACTION_VIEW, uri);         
@@ -190,14 +198,16 @@ public class HP_SystemIntentUtils {
 //	            Uri uri = Uri.parse("content://contacts/people"); 
 //	            Intent it = new Intent(Intent.ACTION_PICK, uri); 
 //	            startActivityForResult(it, REQUEST_TEXT); 
-//
-//	19 打开另一程序 
-//	Intent i = new Intent(); 
-//	            ComponentName cn = new ComponentName("com.yellowbook.android2", 
-//	                    "com.yellowbook.android2.AndroidSearch"); 
-//	            i.setComponent(cn); 
-//	            i.setAction("android.intent.action.MAIN"); 
-//	            startActivityForResult(i, RESULT_OK); 
+	public Intent getOpenOtherApplicationIntent(String packageName){
+		//	19 打开另一程序 
+		Intent intent = new Intent(); 
+		ComponentName cn = new ComponentName(packageName, 
+		                    "com.yellowbook.android2.AndroidSearch"); 
+		intent.setComponent(cn); 
+		intent.setAction("android.intent.action.MAIN"); 
+		return intent;
+	}
+
 //
 //	20.调用系统编辑添加联系人（高版本SDK有效）： 
 //	Intent it = new Intent(Intent.ACTION_INSERT_OR_EDIT); 
