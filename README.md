@@ -30,8 +30,8 @@ HP_NetWorkUtils.java       | center
 ###HP_NetWorkUtils.java
 
 	HP_NetWorkUtils netWorkUtils = new HP_NetWorkUtils();
-		
-	netWorkUtils.getAsyncRequestBitmap("",new OnRequestBitmapFinished() {
+	String url = "";
+	netWorkUtils.getAsyncRequestBitmap(url,new OnRequestBitmapFinished() {
 			
 		public void onRequestBitmapFinished(String resultStr, Bitmap bitmap,
 				boolean isSuccess) {
