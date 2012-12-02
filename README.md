@@ -50,3 +50,8 @@ HP_SystemIntentUtils.java  | center
 					
 		}
 	});
+	
+###HP_SystemIntentUtils.java
+
+#### - CallPhoneIntent
+#### - SendMessageIntent
