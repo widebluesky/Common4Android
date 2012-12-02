@@ -29,7 +29,7 @@ HP_NetWorkUtils.java       | center
 ###HP_NetWorkAsyncTask.java
 ###HP_NetWorkUtils.java
 
-Get Bitmap by URL.
+####Bitmap Request
 
 	HP_NetWorkUtils netWorkUtils = new HP_NetWorkUtils();
 	String url = "";
