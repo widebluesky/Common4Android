@@ -15,9 +15,11 @@ HP_NetWorkAsyncTask.java   | center
 HP_NetWorkUtils.java       | center     
 
 ##Example Usage
+
 ###HP_AnimationUtils.java  
 
-
+    $ printf "Hello, world.\n"
+    
 ###HP_BitmapEffectUtils.java
 ###HP_BitmapUtils.java
 
