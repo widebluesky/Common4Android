@@ -5,11 +5,11 @@
 
 ClassName                  | Description  
 ---------------------------|--------------------------------------
-HP_AnimationUtils.java     | center       
-HP_BitmapEffectUtils.java  | center       
-HP_BitmapUtils.java        | center  
-HP_NetWorkUtils.java       | center 
-HP_SystemIntentUtils.java  | center           
+HP_AnimationUtils.java     | ......       
+HP_BitmapEffectUtils.java  | ......       
+HP_BitmapUtils.java        | ......  
+HP_NetWorkUtils.java       | ...... 
+HP_SystemIntentUtils.java  | ......           
 
 ##Example Usage
 
@@ -53,12 +53,12 @@ HP_SystemIntentUtils.java  | center
 	
 ###HP_SystemIntentUtils.java
 
-#### - CallPhoneIntent
+#### - PhoneCall
 	HP_SystemIntentUtils systemIntentUtils = new HP_SystemIntentUtils();
 	Intent intent = systemIntentUtils.getPhoneCallIntent(1391391313);
 	this.startActivity(intent);
 		
-#### - SendMessageIntent
+#### - SendMessage
 
 	HP_SystemIntentUtils systemIntentUtils = new HP_SystemIntentUtils();
 	Intent intent = systemIntentUtils.getSendMessageIntent("Test Message.");
