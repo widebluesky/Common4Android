@@ -3,16 +3,16 @@
   
 #Overview
 
-ClassName                  | Description  | head2
----------------------------|:------------:|------:
-HP_AnimationUtils.java     | center       | right
-HP_BitmapEffectUtils.java  | center       | right
-HP_BitmapUtils.java        | center       | right
-HP_SystemIntentUtils.java  | center       | right
-HP_AsyncTaskManager.java   | center       | right
-HP_NetWorkAsyncTask.java   | center       | right
-HP_NetWorkAsyncTask.java   | center       | right
-HP_NetWorkUtils.java       | center       | right
+ClassName                  | Description  
+---------------------------|------------
+HP_AnimationUtils.java     | center       
+HP_BitmapEffectUtils.java  | center       
+HP_BitmapUtils.java        | center      
+HP_SystemIntentUtils.java  | center      
+HP_AsyncTaskManager.java   | center       
+HP_NetWorkAsyncTask.java   | center      
+HP_NetWorkAsyncTask.java   | center      
+HP_NetWorkUtils.java       | center     
 
 ##HP_AnimationUtils.java  
 
