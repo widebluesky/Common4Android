@@ -45,7 +45,7 @@ HP_NetWorkUtils.java       | center
 ####Data Request	
 	HP_NetWorkUtils netWorkUtils = new HP_NetWorkUtils();
 	String url = "";
-	netWorkUtils.getAsyncRequestData("", new OnRequestDataFinished() {
+	netWorkUtils.getAsyncRequestData(url, new OnRequestDataFinished() {
 			
 		public void onRequestDataFinished(String resultStr, byte[] data,
 				boolean isSuccess) {
@@ -56,7 +56,8 @@ HP_NetWorkUtils.java       | center
 	
 ####JSONObject Request	
 	HP_NetWorkUtils netWorkUtils = new HP_NetWorkUtils();
-	netWorkUtils.getAsyncRequestJSONObject("", new OnRequestJSONObjectFinished() {
+	String url = "";
+	netWorkUtils.getAsyncRequestJSONObject(url, new OnRequestJSONObjectFinished() {
 			
 		public void onRequestJSONObjectFinished(String resultStr,
 				JSONObject jsonObject, boolean isSuccess) {
