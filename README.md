@@ -41,3 +41,15 @@ HP_NetWorkUtils.java       | center
 			
 		}
 	});
+	
+####Data Request	
+	HP_NetWorkUtils netWorkUtils = new HP_NetWorkUtils();
+	String url = "";
+	netWorkUtils.getAsyncRequestData("", new OnRequestDataFinished() {
+			
+		public void onRequestDataFinished(String resultStr, byte[] data,
+				boolean isSuccess) {
+			// TODO Auto-generated method stub
+			
+		}
+	});
