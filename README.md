@@ -3,14 +3,7 @@
   
 #Overview
 
-.. table:: 示例表格
-   :class: classic
-
-   +---------+--------+--------+
-   | head1   | head2  | head3  |
-   +=========+========+========+
-   |         | cell   | cell   |
-   | rowspan +--------+--------+
-   |         | * colspan       |
-   |         | * another line  |
-   +---------+-----------------+
+head1 | head2  | head2
+------|:------:|------:
+left  | center | right
+left  | center | right
