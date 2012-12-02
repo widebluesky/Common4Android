@@ -28,3 +28,14 @@ HP_NetWorkUtils.java       | center
 ###HP_AsyncTaskManager.java
 ###HP_NetWorkAsyncTask.java
 ###HP_NetWorkUtils.java
+
+    $ HP_NetWorkUtils netWorkUtils = new HP_NetWorkUtils();
+  	$
+		$ netWorkUtils.getAsyncRequestBitmap("",new OnRequestBitmapFinished() {
+		$	
+		$ 	public void onRequestBitmapFinished(String resultStr, Bitmap bitmap,
+		$ 			boolean isSuccess) {
+		$ 		// TODO Auto-generated method stub
+		$ 		
+		$ 	}
+		$ });
