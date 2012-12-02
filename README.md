@@ -54,4 +54,12 @@ HP_SystemIntentUtils.java  | center
 ###HP_SystemIntentUtils.java
 
 #### - CallPhoneIntent
+	HP_SystemIntentUtils systemIntentUtils = new HP_SystemIntentUtils();
+	Intent intent = systemIntentUtils.getPhoneCallIntent(1391391313);
+	this.startActivity(intent);
+		
 #### - SendMessageIntent
+
+	HP_SystemIntentUtils systemIntentUtils = new HP_SystemIntentUtils();
+	Intent intent = systemIntentUtils.getSendMessageIntent("Test Message.");
+	this.startActivity(intent);
