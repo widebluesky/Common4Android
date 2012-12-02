@@ -8,28 +8,14 @@ ClassName                  | Description
 HP_AnimationUtils.java     | center       
 HP_BitmapEffectUtils.java  | center       
 HP_BitmapUtils.java        | center      
-HP_SystemIntentUtils.java  | center      
-HP_AsyncTaskManager.java   | center       
-HP_NetWorkAsyncTask.java   | center      
-HP_NetWorkAsyncTask.java   | center      
+HP_SystemIntentUtils.java  | center           
 HP_NetWorkUtils.java       | center     
 
 ##Example Usage
 
-###HP_AnimationUtils.java  
+###HP_NetWorkUtils.java
 
-    $ printf "Hello, world.\n"
-    
-###HP_BitmapEffectUtils.java
-###HP_BitmapUtils.java
-
-###HP_SystemIntentUtils.java
-
-###HP_AsyncTaskManager.java
-###HP_NetWorkAsyncTask.java
-	###HP_NetWorkUtils.java
-
-	####Bitmap Request
+####Bitmap Request
 
 	HP_NetWorkUtils netWorkUtils = new HP_NetWorkUtils();
 	String url = "";
@@ -42,7 +28,7 @@ HP_NetWorkUtils.java       | center
 		}
 	});
 	
-	####Data Request	
+####Data Request	
 	HP_NetWorkUtils netWorkUtils = new HP_NetWorkUtils();
 	String url = "";
 	netWorkUtils.getAsyncRequestData(url, new OnRequestDataFinished() {
@@ -54,7 +40,7 @@ HP_NetWorkUtils.java       | center
 		}
 	});
 	
-	####JSONObject Request	
+####JSONObject Request	
 	HP_NetWorkUtils netWorkUtils = new HP_NetWorkUtils();
 	String url = "";
 	netWorkUtils.getAsyncRequestJSONObject(url, new OnRequestJSONObjectFinished() {
