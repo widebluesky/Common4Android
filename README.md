@@ -27,9 +27,9 @@ HP_NetWorkUtils.java       | center
 
 ###HP_AsyncTaskManager.java
 ###HP_NetWorkAsyncTask.java
-###HP_NetWorkUtils.java
+	###HP_NetWorkUtils.java
 
-####Bitmap Request
+	####Bitmap Request
 
 	HP_NetWorkUtils netWorkUtils = new HP_NetWorkUtils();
 	String url = "";
@@ -42,7 +42,7 @@ HP_NetWorkUtils.java       | center
 		}
 	});
 	
-####Data Request	
+	####Data Request	
 	HP_NetWorkUtils netWorkUtils = new HP_NetWorkUtils();
 	String url = "";
 	netWorkUtils.getAsyncRequestData(url, new OnRequestDataFinished() {
@@ -54,7 +54,7 @@ HP_NetWorkUtils.java       | center
 		}
 	});
 	
-####JSONObject Request	
+	####JSONObject Request	
 	HP_NetWorkUtils netWorkUtils = new HP_NetWorkUtils();
 	String url = "";
 	netWorkUtils.getAsyncRequestJSONObject(url, new OnRequestJSONObjectFinished() {
