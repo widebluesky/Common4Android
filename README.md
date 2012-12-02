@@ -53,3 +53,14 @@ HP_NetWorkUtils.java       | center
 			
 		}
 	});
+	
+####JSONObject Request	
+	HP_NetWorkUtils netWorkUtils = new HP_NetWorkUtils();
+	netWorkUtils.getAsyncRequestJSONObject("", new OnRequestJSONObjectFinished() {
+			
+		public void onRequestJSONObjectFinished(String resultStr,
+				JSONObject jsonObject, boolean isSuccess) {
+			// TODO Auto-generated method stub
+					
+		}
+	});
