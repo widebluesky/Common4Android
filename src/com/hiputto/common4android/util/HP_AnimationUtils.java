@@ -1,6 +1,8 @@
 package com.hiputto.common4android.util;
 
 import com.hiputto.common4android.anim.HP_RotateXAnimation;
+import com.hiputto.common4android.anim.HP_RotateYAnimation;
+import com.hiputto.common4android.anim.HP_RotateZAnimation;
 
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
@@ -143,7 +145,7 @@ public class HP_AnimationUtils {
 	
 	public Animation animRotateY(float fromDegree, float toDegree, long duration,int centerX,int centerY,
 			AnimationListener animationListener) {
-		animationRotateY = new HP_RotateXAnimation(fromDegree, toDegree, centerX, centerY);
+		animationRotateY = new HP_RotateYAnimation(fromDegree, toDegree, centerX, centerY);
 		animationRotateY.setDuration(duration);
 		animationRotateY.setFillAfter(true);
 		animationRotateY.setAnimationListener(animationListener);
@@ -152,7 +154,7 @@ public class HP_AnimationUtils {
 	
 	public Animation animRotateZ(float fromDegree, float toDegree, long duration,int centerX,int centerY,
 			AnimationListener animationListener) {
-		animationRotateZ = new HP_RotateXAnimation(fromDegree, toDegree, centerX, centerY);
+		animationRotateZ = new HP_RotateZAnimation(fromDegree, toDegree, centerX, centerY);
 		animationRotateZ.setDuration(duration);
 		animationRotateZ.setFillAfter(true);
 		animationRotateZ.setAnimationListener(animationListener);

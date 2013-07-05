@@ -37,7 +37,7 @@ public class HP_SystemIntentUtils {
 //	Intent it = new Intent(Intent.ACTION_VIEW,URI); 
 //	startActivity(it); 
 
-	public Intent getCallPhoneIntent(long number){
+	public Intent getCallPhoneIntent(String number){
 		//5.拨打电话 
 		Uri uri = Uri.parse("tel:"+number); 
 		Intent intent = new Intent(Intent.ACTION_DIAL, uri);
@@ -163,6 +163,11 @@ public class HP_SystemIntentUtils {
 		  return intent;
 	}
 
+	public Intent getImageCropIntent(){
+		Intent intent = new Intent("com.android.camera.action.CROP");
+		return intent;
+	}
+	
 	public Intent getRecordSoundIntent(){
 //		15. 打开录音机 
 		Intent intent = new Intent(Media.RECORD_SOUND_ACTION); 

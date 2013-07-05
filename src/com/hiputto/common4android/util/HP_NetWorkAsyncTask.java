@@ -2,6 +2,8 @@ package com.hiputto.common4android.util;
 
 import java.util.HashMap;
 
+import com.hiputto.common4android.util.HP_AsyncTaskUtils.AsyncTaskSteps;
+
 import android.os.AsyncTask;
 
 public class HP_NetWorkAsyncTask extends AsyncTask<String, Integer, HashMap<String, Object>> {
@@ -36,17 +38,5 @@ public class HP_NetWorkAsyncTask extends AsyncTask<String, Integer, HashMap<Stri
 		asyncTaskSteps.onProgressUpdate(values);
 	}
 
-	public interface AsyncTaskSteps {
-		
-		public void onPreExecute();
-
-		public HashMap<String,Object> doInBackground(String... params) ;
-
-		public void onPostExecute(HashMap<String,Object> result);
-
-		public void onProgressUpdate(Integer... values);
-		
-		public void onCancelled();
-	}
 
 }
