@@ -6,6 +6,8 @@ import android.content.Context;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -25,45 +27,6 @@ public class HP_DeviceUtils {
 	public static String getProduct() {
 		return "Product: " + android.os.Build.PRODUCT;
 	}
-
-	// String phoneInfo = "Product: " + android.os.Build.PRODUCT;
-	// logErrorMessage(phoneInfo);
-	// phoneInfo = "CPU_ABI: " + android.os.Build.CPU_ABI;
-	// logErrorMessage(phoneInfo);
-	// phoneInfo = "TAGS: " + android.os.Build.TAGS;
-	// logErrorMessage(phoneInfo);
-	// phoneInfo = "VERSION_CODES.BASE: " + android.os.Build.VERSION_CODES.BASE;
-	// logErrorMessage(phoneInfo);
-	// phoneInfo = "MODEL: " + android.os.Build.MODEL;
-	// logErrorMessage(phoneInfo);
-	// phoneInfo = "SDK: " + android.os.Build.VERSION.SDK;
-	// logErrorMessage(phoneInfo);
-	// phoneInfo = "VERSION.RELEASE: " + android.os.Build.VERSION.RELEASE;
-	// logErrorMessage(phoneInfo);
-	// phoneInfo = "DEVICE: " + android.os.Build.DEVICE;
-	// logErrorMessage(phoneInfo);
-	// phoneInfo = "DISPLAY: " + android.os.Build.DISPLAY;
-	// logErrorMessage(phoneInfo);
-	// phoneInfo = "BRAND: " + android.os.Build.BRAND;
-	// logErrorMessage(phoneInfo);
-	// phoneInfo = "BOARD: " + android.os.Build.BOARD;
-	// logErrorMessage(phoneInfo);
-	// phoneInfo = "FINGERPRINT: " + android.os.Build.FINGERPRINT;
-	// logErrorMessage(phoneInfo);
-	// phoneInfo = "ID: " + android.os.Build.ID;
-	// logErrorMessage(phoneInfo);
-	// phoneInfo = "MANUFACTURER: " + android.os.Build.MANUFACTURER;
-	// logErrorMessage(phoneInfo);
-	// phoneInfo = "USER: " + android.os.Build.USER;
-	// logErrorMessage(phoneInfo);
-
-	// //获取mac地址
-	// public static String getMACAddress(Context context){
-	// WifiManager wifi = (WifiManager)
-	// context.getSystemService(Context.WIFI_SERVICE);
-	// WifiInfo info = wifi.getConnectionInfo();
-	// return info.getMacAddress();
-	// }
 
 	// 获取屏幕宽度
 	public static int getScreenWidth(Context context) {
@@ -112,6 +75,74 @@ public class HP_DeviceUtils {
 	public static int px2dip(Context context, float pxValue) {
 		final float scale = context.getResources().getDisplayMetrics().density;
 		return (int) (pxValue / scale + 0.5f);
+	}
+
+	public static String getBuild_PRODUCT() {
+		return android.os.Build.PRODUCT;
+	}
+
+	public static String getBuild_CPU_ABI() {
+		return android.os.Build.CPU_ABI;
+	}
+
+	public static String getBuild_TAGS() {
+		return android.os.Build.TAGS;
+	}
+
+	public static int getBuild_VERSION_CODES_BASE() {
+		return android.os.Build.VERSION_CODES.BASE;
+	}
+
+	public static String getBuild_MODEL() {
+		return android.os.Build.MODEL;
+	}
+
+	public static String getBuild_VERSION_SDK() {
+		return android.os.Build.VERSION.SDK;
+	}
+
+	public static String getBuild_VERSION_RELEASE() {
+		return android.os.Build.VERSION.RELEASE;
+	}
+
+	public static String getBuild_DEVICE() {
+		return android.os.Build.DEVICE;
+	}
+
+	public static String getBuild_DISPLAY() {
+		return android.os.Build.DISPLAY;
+	}
+
+	public static String getBuild_BRAND() {
+		return android.os.Build.BRAND;
+	}
+
+	public static String getBuild_BOARD() {
+		return android.os.Build.BOARD;
+	}
+
+	public static String getBuild_FINGERPRINT() {
+		return android.os.Build.FINGERPRINT;
+	}
+
+	public static String getBuild_ID() {
+		return android.os.Build.ID;
+	}
+
+	public static String getBuild_MANUFACTURER() {
+		return android.os.Build.MANUFACTURER;
+	}
+
+	public static String getBuild_USER() {
+		return android.os.Build.USER;
+	}
+
+	// 获取mac地址
+	public static String getMACAddress(Context context) {
+		WifiManager wifi = (WifiManager) context
+				.getSystemService(Context.WIFI_SERVICE);
+		WifiInfo info = wifi.getConnectionInfo();
+		return info.getMacAddress();
 	}
 
 }
