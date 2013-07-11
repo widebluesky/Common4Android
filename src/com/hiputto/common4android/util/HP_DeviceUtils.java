@@ -79,24 +79,6 @@ public class HP_DeviceUtils {
 				.getDisplayMetrics().heightPixels;
 	}
 
-	// // dp转成px
-	// public static int dp2px(Context context, float dpValue) {
-	// final float scale = context.getResources().getDisplayMetrics().density;
-	// return (int) (dpValue * scale + 0.5f);
-	// }
-
-	// // px转成dp
-	// public static int px2dp(Context context, float pxValue) {
-	// final float scale = context.getResources().getDisplayMetrics().density;
-	// return (int) (pxValue / scale + 0.5f);
-	// }
-
-	// dp转成px
-	public static int dp2px(Context context, int dp) {
-		return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, dp,
-				context.getResources().getDisplayMetrics());
-	}
-
 	// 判断GPS是否打开
 	public static boolean isGPSEnabled(Context context) {
 		LocationManager lm = ((LocationManager) context
