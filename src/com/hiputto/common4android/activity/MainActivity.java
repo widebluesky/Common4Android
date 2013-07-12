@@ -25,8 +25,8 @@ public class MainActivity extends HP_BaseActivity {
 		setContentView(R.layout.activity_main);
 
 		logErrorMessage(new HP_ErrorHttpStatusException().getMessage());
-		
-//		doRequest();
+
+		// doRequest();
 
 	}
 
@@ -51,6 +51,7 @@ public class MainActivity extends HP_BaseActivity {
 					BufferedReader reader = new BufferedReader(
 							new InputStreamReader(httpResponse.getEntity()
 									.getContent()));
+
 					StringBuilder sb = new StringBuilder();
 					for (String s = reader.readLine(); s != null; s = reader
 							.readLine()) {

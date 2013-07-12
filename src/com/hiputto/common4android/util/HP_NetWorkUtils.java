@@ -21,12 +21,14 @@ import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.protocol.HTTP;
 
 import com.hiputto.common4android.exception.HP_ErrorHttpStatusException;
+import com.hiputto.common4android.util.HP_AsyncTaskUtils.AsyncTaskSteps;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 
 public class HP_NetWorkUtils {
 
@@ -354,4 +356,86 @@ public class HP_NetWorkUtils {
 			onRequestBitmapFinished.onFailure(httpRequest, httpResponse, e);
 		}
 	}
+
+	public AsyncTask<String, Integer, HashMap<String, Object>> doAsyncRequest(
+			final String url, final OnRequestFinished onRequestFinished) {
+
+		return new HP_NetWorkAsyncTask(new AsyncTaskSteps() {
+			@Override
+			public void onPreExecute() {
+
+			}
+
+			@Override
+			public HashMap<String, Object> doInBackground(String... params) {
+				final HashMap<String, Object> hashMap = new HashMap<String, Object>();
+
+				doPostRequest(url, new OnRequestFinished() {
+
+					@Override
+					public void onSuccess(HttpRequestBase httpRequest,
+							HttpResponse httpResponse) throws Exception {
+
+						hashMap.put("isSuccess", true);
+						hashMap.put("httpRequest", httpRequest);
+						hashMap.put("httpResponse", httpResponse);
+					}
+
+					@Override
+					public void onFailure(HttpRequestBase httpRequest,
+							HttpResponse httpResponse, Exception exception) {
+
+						hashMap.put("isSuccess", false);
+						hashMap.put("httpRequest", httpRequest);
+						hashMap.put("httpResponse", httpResponse);
+						hashMap.put("exception", exception);
+					}
+				});
+
+				return hashMap;
+			}
+
+			@Override
+			public void onPostExecute(HashMap<String, Object> hashMap) {
+
+				boolean isSuccess = (Boolean) hashMap.get("isSuccess");
+				if (isSuccess) {
+
+					HttpRequestBase httpRequest = (HttpRequestBase) hashMap
+							.get("httpRequest");
+					HttpResponse httpResponse = (HttpResponse) hashMap
+							.get("httpResponse");
+					try {
+						onRequestFinished.onSuccess(httpRequest, httpResponse);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+
+				} else {
+
+					HttpRequestBase httpRequest = (HttpRequestBase) hashMap
+							.get("httpRequest");
+					HttpResponse httpResponse = (HttpResponse) hashMap
+							.get("httpResponse");
+
+					Exception exception = (Exception) hashMap.get("exception");
+
+					onRequestFinished.onFailure(httpRequest, httpResponse,
+							exception);
+				}
+
+			}
+
+			@Override
+			public void onProgressUpdate(Integer... values) {
+
+			}
+
+			@Override
+			public void onCancelled() {
+
+			}
+		}).execute("");
+	}
+
 }
