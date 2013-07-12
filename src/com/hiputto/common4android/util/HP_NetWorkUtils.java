@@ -1,10 +1,9 @@
 package com.hiputto.common4android.util;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
-import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
@@ -12,25 +11,76 @@ import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
+import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.protocol.HTTP;
 
-import com.hiputto.common4android.util.HP_AsyncTaskUtils.AsyncTaskSteps;
+import com.hiputto.common4android.exception.HP_ErrorHttpStatusException;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.AsyncTask;
-import android.util.Log;
 
 public class HP_NetWorkUtils {
+
+	public static enum HTTP_METHOD {
+		// newest不是latest...
+		POST("POST"), GET("GET");
+
+		private String value;
+
+		private HTTP_METHOD(String value) {
+			this.value = value;
+		}
+
+		public String getValue() {
+			return value;
+		}
+	}
+
+	private HttpClient getHttpClient() {
+		BasicHttpParams httpParams = new BasicHttpParams();
+		HttpConnectionParams.setConnectionTimeout(httpParams, REQUEST_TIMEOUT);
+		HttpConnectionParams.setSoTimeout(httpParams, SO_TIMEOUT);
+		HttpClient httpClient = new DefaultHttpClient(httpParams);
+		return httpClient;
+	}
+
+	public interface OnRequestFinished {
+
+		public void onSuccess(HttpRequestBase httpRequest,
+				HttpResponse httpResponse) throws Exception;
+
+		public void onFailure(HttpRequestBase httpRequest,
+				HttpResponse httpResponse, Exception e);
+
+	}
+
+	public interface OnRequestDataFinished {
+
+		public void onSuccess(HttpRequestBase httpRequest,
+				HttpResponse httpResponse, byte[] data) throws Exception;
+
+		public void onFailure(HttpRequestBase httpRequest,
+				HttpResponse httpResponse, Exception e);
+	}
+
+	public interface OnRequestBitmapFinished {
+
+		public void onSuccess(HttpRequestBase httpRequest,
+				HttpResponse httpResponse, Bitmap bitmap) throws Exception;
+
+		public void onFailure(HttpRequestBase httpRequest,
+				HttpResponse httpResponse, Exception e);
+	}
+
 	private int REQUEST_TIMEOUT = 5 * 1000;// 请求超时
 	private int SO_TIMEOUT = 0 * 1000; // 数据接收超时
 
@@ -98,167 +148,147 @@ public class HP_NetWorkUtils {
 		return false;
 	}
 
-	public void sendRequestStrEntity(String url, String str,
+	public void doGetRequest(String url, OnRequestFinished onRequestFinished) {
+
+		HttpClient httpClient = getHttpClient();
+
+		HttpRequestBase httpRequest = null;
+
+		HttpResponse httpResponse = null;
+
+		try {
+
+			httpRequest = new HttpGet(url);
+
+			httpResponse = httpClient.execute(httpRequest);
+
+			onRequestFinished.onSuccess(httpRequest, httpResponse);
+
+		} catch (Exception e) {
+
+			onRequestFinished.onFailure(httpRequest, httpResponse, e);
+
+		}
+	}
+
+	public void doGetRequest(String url, HashMap<String, String> params,
 			OnRequestFinished onRequestFinished) {
-		String resultStr = "";
-		boolean isSuccess = false;
-		try {
-			HttpClient httpClient = getHttpClient();
-			HttpPost httpPost = new HttpPost(url);
 
-			StringEntity entity = new StringEntity(str, HTTP.UTF_8);
+		Iterator<String> keySetIterator = params.keySet().iterator();
+		Iterator<String> valueIterator = params.values().iterator();
 
-			httpPost.setEntity(entity);
+		if (!params.isEmpty()) {
+			url += "?";
 
-			HttpResponse httpResponse = httpClient.execute(httpPost);
-			if (httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-
-				BufferedReader reader = new BufferedReader(
-						new InputStreamReader(httpResponse.getEntity()
-								.getContent()));
-
-				StringBuilder sb = new StringBuilder();
-				for (String s = reader.readLine(); s != null; s = reader
-						.readLine()) {
-					sb.append(s);
+			while (keySetIterator.hasNext()) {
+				if (String.valueOf(url.charAt(url.length() - 1)).equals("?")) {
+					url += keySetIterator.next() + "=" + valueIterator.next();
+				} else {
+					url += "&" + keySetIterator.next() + "="
+							+ valueIterator.next();
 				}
-				resultStr = sb.toString();
-
-				reader.close();
 			}
-
-			isSuccess = true;
-
-		} catch (Exception e) {
-			Log.e("HP_" + e.getClass().getName(), e.getMessage());
-			isSuccess = false;
-			resultStr = e.toString();
-		} finally {
-			onRequestFinished.onRequestFinished(resultStr, isSuccess);
 		}
+		doGetRequest(url, onRequestFinished);
 	}
 
-	public void sendRequest(String url, OnRequestFinished onRequestFinished) {
-		String resultStr = "";
-		boolean isSuccess = false;
+	public void doPostRequest(String url, OnRequestFinished onRequestFinished) {
+
+		HttpClient httpClient = getHttpClient();
+
+		HttpRequestBase httpRequest = null;
+
+		HttpResponse httpResponse = null;
+
+		httpRequest = new HttpPost(url);
+
 		try {
-			HttpClient httpClient = getHttpClient();
-			HttpPost httpPost = new HttpPost(url);
 
-			HttpResponse httpResponse = httpClient.execute(httpPost);
-			if (httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-				BufferedReader reader = new BufferedReader(
-						new InputStreamReader(httpResponse.getEntity()
-								.getContent()));
-				StringBuilder sb = new StringBuilder();
-				for (String s = reader.readLine(); s != null; s = reader
-						.readLine()) {
-					sb.append(s);
-				}
-				resultStr = sb.toString();
+			httpResponse = httpClient.execute(httpRequest);
 
-				reader.close();
-			}
-
-			isSuccess = true;
+			onRequestFinished.onSuccess(httpRequest, httpResponse);
 
 		} catch (Exception e) {
-			Log.e("HP_" + e.getClass().getName(), e.getMessage());
-			isSuccess = false;
-			resultStr = e.toString();
-		} finally {
-			onRequestFinished.onRequestFinished(resultStr, isSuccess);
+
+			onRequestFinished.onFailure(httpRequest, httpResponse, e);
+
 		}
+
 	}
 
-	public void sendRequestParamsEntity(String url,
+	public void doPostRequest(String url,
 			List<NameValuePair> nameValuePairList,
 			OnRequestFinished onRequestFinished) {
-		String resultStr = "";
-		boolean isSuccess = false;
+
+		HttpClient httpClient = getHttpClient();
+
+		HttpRequestBase httpRequest = null;
+
+		HttpResponse httpResponse = null;
+
+		httpRequest = new HttpPost(url);
+
 		try {
-			HttpClient httpClient = getHttpClient();
-			HttpPost httpPost = new HttpPost(url);
 
-			httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairList,
-					HTTP.UTF_8));
-
-			HttpResponse httpResponse = httpClient.execute(httpPost);
-			if (httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-
-				BufferedReader reader = new BufferedReader(
-						new InputStreamReader(httpResponse.getEntity()
-								.getContent()));
-
-				StringBuilder sb = new StringBuilder();
-				for (String s = reader.readLine(); s != null; s = reader
-						.readLine()) {
-					sb.append(s);
-				}
-				resultStr = sb.toString();
-
-				reader.close();
+			if (nameValuePairList != null) {
+				((HttpPost) httpRequest).setEntity(new UrlEncodedFormEntity(
+						nameValuePairList, HTTP.UTF_8));
 			}
 
-			isSuccess = true;
+			httpResponse = httpClient.execute(httpRequest);
+
+			onRequestFinished.onSuccess(httpRequest, httpResponse);
 
 		} catch (Exception e) {
-			Log.e("HP_" + e.getClass().getName(), e.getMessage());
-			isSuccess = false;
-			resultStr = e.toString();
-		} finally {
-			onRequestFinished.onRequestFinished(resultStr, isSuccess);
+
+			onRequestFinished.onFailure(httpRequest, httpResponse, e);
+
 		}
 	}
 
-	public void sendRequestParamsEntity(String url,
-			MultipartEntity multipartEntity, OnRequestFinished onRequestFinished) {
-		String resultStr = "";
-		boolean isSuccess = false;
+	public void doPostRequest(String url, MultipartEntity multipartEntity,
+			OnRequestFinished onRequestFinished) {
+		HttpClient httpClient = getHttpClient();
+
+		HttpRequestBase httpRequest = null;
+
+		HttpResponse httpResponse = null;
+
 		try {
-			HttpClient httpClient = getHttpClient();
-			HttpPost httpPost = new HttpPost(url);
 
-			httpPost.setEntity(multipartEntity);
+			httpRequest = new HttpPost(url);
 
-			HttpResponse httpResponse = httpClient.execute(httpPost);
-			if (httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-
-				BufferedReader reader = new BufferedReader(
-						new InputStreamReader(httpResponse.getEntity()
-								.getContent()));
-
-				StringBuilder sb = new StringBuilder();
-				for (String s = reader.readLine(); s != null; s = reader
-						.readLine()) {
-					sb.append(s);
-				}
-				resultStr = sb.toString();
-
-				reader.close();
+			if (multipartEntity != null) {
+				((HttpPost) httpRequest).setEntity(multipartEntity);
 			}
 
-			isSuccess = true;
+			httpResponse = httpClient.execute(httpRequest);
+
+			onRequestFinished.onSuccess(httpRequest, httpResponse);
 
 		} catch (Exception e) {
-			Log.e("HP_" + e.getClass().getName(), e.getMessage());
-			isSuccess = false;
-			resultStr = e.toString();
-		} finally {
-			onRequestFinished.onRequestFinished(resultStr, isSuccess);
+
+			onRequestFinished.onFailure(httpRequest, httpResponse, e);
+
 		}
 	}
 
-	public void getRequestData(String url,
+	public void doRequestData(String url,
 			OnRequestDataFinished onRequestDataFinished) {
-		String resultStr = "";
-		boolean isSuccess = false;
-		byte[] data = null;
-		try {
-			HttpClient httpClient = getHttpClient();
-			HttpPost httpPost = new HttpPost(url);
 
-			HttpResponse httpResponse = httpClient.execute(httpPost);
+		HttpClient httpClient = getHttpClient();
+
+		HttpRequestBase httpRequest = null;
+
+		HttpResponse httpResponse = null;
+
+		byte[] data = null;
+
+		try {
+			httpRequest = new HttpPost(url);
+
+			httpResponse = httpClient.execute(httpRequest);
+
 			if (httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 
 				DataInputStream dataInputStream = new DataInputStream(
@@ -276,32 +306,35 @@ public class HP_NetWorkUtils {
 
 				dataInputStream.close();
 				byteArrayOutputStream.close();
+
+				onRequestDataFinished
+						.onSuccess(httpRequest, httpResponse, data);
+			} else {
+				onRequestDataFinished.onFailure(httpRequest, httpResponse,
+						new HP_ErrorHttpStatusException());
 			}
 
-			isSuccess = true;
-
 		} catch (Exception e) {
-			Log.e("HP_" + e.getClass().getName(), e.getMessage());
-			isSuccess = false;
-			resultStr = e.toString();
-			data = null;
-		} finally {
-			onRequestDataFinished.onRequestDataFinished(resultStr, data,
-					isSuccess);
+			onRequestDataFinished.onFailure(httpRequest, httpResponse, e);
 		}
 	}
 
-	public void getRequestBitmap(String url,
-			OnRequestBitmapFinished bitmapLoadFinished) {
-		String resultStr = "";
-		boolean isSuccess = false;
-		Bitmap bitmap = null;
+	public void doRequestBitmap(String url,
+			OnRequestBitmapFinished onRequestBitmapFinished) {
+
+		HttpClient httpClient = getHttpClient();
+
+		HttpRequestBase httpRequest = null;
+
+		HttpResponse httpResponse = null;
 
 		try {
-			HttpClient httpClient = getHttpClient();
-			HttpPost httpPost = new HttpPost(url);
+			Bitmap bitmap = null;
 
-			HttpResponse httpResponse = httpClient.execute(httpPost);
+			httpRequest = new HttpPost(url);
+
+			httpResponse = httpClient.execute(httpRequest);
+
 			if (httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 
 				DataInputStream dataInputStream = new DataInputStream(
@@ -309,333 +342,16 @@ public class HP_NetWorkUtils {
 				bitmap = BitmapFactory.decodeStream(dataInputStream);
 
 				dataInputStream.close();
-			}
-			isSuccess = true;
 
-		} catch (OutOfMemoryError e) {
-			Log.e("HP_" + e.getClass().getName(), e.getMessage() == null ? ""
-					: e.getMessage());
+				onRequestBitmapFinished.onSuccess(httpRequest, httpResponse,
+						bitmap);
+			} else {
+				onRequestBitmapFinished.onFailure(httpRequest, httpResponse,
+						new HP_ErrorHttpStatusException());
+			}
+
 		} catch (Exception e) {
-			Log.e("HP_" + e.getClass().getName(), e.getMessage() == null ? ""
-					: e.getMessage());
-			isSuccess = false;
-			bitmap = null;
-			resultStr = e.toString();
-		} finally {
-			bitmapLoadFinished.onRequestBitmapFinished(resultStr, bitmap,
-					isSuccess);
+			onRequestBitmapFinished.onFailure(httpRequest, httpResponse, e);
 		}
 	}
-
-	private HttpClient getHttpClient() {
-		BasicHttpParams httpParams = new BasicHttpParams();
-		HttpConnectionParams.setConnectionTimeout(httpParams, REQUEST_TIMEOUT);
-		HttpConnectionParams.setSoTimeout(httpParams, SO_TIMEOUT);
-		HttpClient httpClient = new DefaultHttpClient(httpParams);
-		return httpClient;
-	}
-
-	public interface OnRequestFinished {
-		public void onRequestFinished(String resultStr, boolean isSuccess);
-	}
-
-	public interface OnRequestDataFinished {
-		public void onRequestDataFinished(String resultStr, byte[] data,
-				boolean isSuccess);
-	}
-
-	public interface OnRequestBitmapFinished {
-		public void onRequestBitmapFinished(String resultStr, Bitmap bitmap,
-				boolean isSuccess);
-	}
-
-	public AsyncTask<String, Integer, HashMap<String, Object>> sendAsyncRequest(
-			final String url, final OnRequestFinished onRequestFinished) {
-
-		return new HP_NetWorkAsyncTask(new AsyncTaskSteps() {
-			@Override
-			public void onPreExecute() {
-
-			}
-
-			@Override
-			public HashMap<String, Object> doInBackground(String... params) {
-				final HashMap<String, Object> hashMap = new HashMap<String, Object>();
-
-				sendRequest(url, new OnRequestFinished() {
-					@Override
-					public void onRequestFinished(String resultStr,
-							boolean isSuccess) {
-						hashMap.put("isSuccess", isSuccess);
-						hashMap.put("resultStr", resultStr);
-					}
-				});
-				return hashMap;
-			}
-
-			@Override
-			public void onPostExecute(HashMap<String, Object> hashMap) {
-
-				String resultStr = (String) hashMap.get("resultStr");
-				boolean isSuccess = (Boolean) hashMap.get("isSuccess");
-				onRequestFinished.onRequestFinished(resultStr, isSuccess);
-			}
-
-			@Override
-			public void onProgressUpdate(Integer... values) {
-
-			}
-
-			@Override
-			public void onCancelled() {
-
-			}
-		}).execute("");
-
-	}
-
-	public AsyncTask<String, Integer, HashMap<String, Object>> sendAsyncRequestStrEntity(
-			final String url, final String str,
-			final OnRequestFinished onRequestFinished) {
-
-		return new HP_NetWorkAsyncTask(new AsyncTaskSteps() {
-
-			@Override
-			public void onPreExecute() {
-
-			}
-
-			@Override
-			public HashMap<String, Object> doInBackground(String... params) {
-				final HashMap<String, Object> hashMap = new HashMap<String, Object>();
-				sendRequestStrEntity(url, str, new OnRequestFinished() {
-					@Override
-					public void onRequestFinished(String resultStr,
-							boolean isSuccess) {
-						hashMap.put("isSuccess", isSuccess);
-						hashMap.put("resultStr", resultStr);
-					}
-				});
-				return hashMap;
-			}
-
-			@Override
-			public void onPostExecute(HashMap<String, Object> hashMap) {
-
-				String resultStr = (String) hashMap.get("resultStr");
-				boolean isSuccess = (Boolean) hashMap.get("isSuccess");
-
-				onRequestFinished.onRequestFinished(resultStr, isSuccess);
-			}
-
-			@Override
-			public void onProgressUpdate(Integer... values) {
-
-			}
-
-			@Override
-			public void onCancelled() {
-
-			}
-		}).execute("");
-
-	}
-
-	public AsyncTask<String, Integer, HashMap<String, Object>> sendAsyncRequestParamsEntity(
-			final String url, final List<NameValuePair> nameValuePairList,
-			final OnRequestFinished onRequestFinished) {
-
-		return new HP_NetWorkAsyncTask(new AsyncTaskSteps() {
-
-			@Override
-			public void onPreExecute() {
-
-			}
-
-			@Override
-			public HashMap<String, Object> doInBackground(String... params) {
-				final HashMap<String, Object> hashMap = new HashMap<String, Object>();
-				sendRequestParamsEntity(url, nameValuePairList,
-						new OnRequestFinished() {
-							@Override
-							public void onRequestFinished(String resultStr,
-									boolean isSuccess) {
-								hashMap.put("isSuccess", isSuccess);
-								hashMap.put("resultStr", resultStr);
-							}
-						});
-				return hashMap;
-			}
-
-			@Override
-			public void onPostExecute(HashMap<String, Object> hashMap) {
-
-				String resultStr = (String) hashMap.get("resultStr");
-				boolean isSuccess = (Boolean) hashMap.get("isSuccess");
-
-				onRequestFinished.onRequestFinished(resultStr, isSuccess);
-			}
-
-			@Override
-			public void onProgressUpdate(Integer... values) {
-
-			}
-
-			@Override
-			public void onCancelled() {
-				// TODO Auto-generated method stub
-
-			}
-		}).execute("");
-
-	}
-
-	public AsyncTask<String, Integer, HashMap<String, Object>> getAsyncRequestData(
-			final String url, final OnRequestDataFinished onRequestDataFinished) {
-
-		return new HP_NetWorkAsyncTask(new AsyncTaskSteps() {
-
-			@Override
-			public void onPreExecute() {
-
-			}
-
-			@Override
-			public HashMap<String, Object> doInBackground(String... params) {
-				final HashMap<String, Object> hashMap = new HashMap<String, Object>();
-				getRequestData(url, new OnRequestDataFinished() {
-					@Override
-					public void onRequestDataFinished(String resultStr,
-							byte[] data, boolean isSuccess) {
-						hashMap.put("isSuccess", isSuccess);
-						hashMap.put("resultStr", resultStr);
-						hashMap.put("data", data);
-
-					}
-				});
-				return hashMap;
-			}
-
-			@Override
-			public void onPostExecute(HashMap<String, Object> hashMap) {
-				String resultStr = (String) hashMap.get("resultStr");
-				boolean isSuccess = (Boolean) hashMap.get("isSuccess");
-				byte[] data = (byte[]) hashMap.get("data");
-
-				onRequestDataFinished.onRequestDataFinished(resultStr, data,
-						isSuccess);
-			}
-
-			@Override
-			public void onProgressUpdate(Integer... values) {
-
-			}
-
-			@Override
-			public void onCancelled() {
-				// TODO Auto-generated method stub
-
-			}
-		}).execute("");
-
-	}
-
-	public AsyncTask<String, Integer, HashMap<String, Object>> getAsyncRequestBitmap(
-			final String url, final OnRequestBitmapFinished bitmapLoadFinished) {
-
-		return new HP_NetWorkAsyncTask(new AsyncTaskSteps() {
-
-			@Override
-			public void onPreExecute() {
-			}
-
-			@Override
-			public HashMap<String, Object> doInBackground(String... params) {
-				final HashMap<String, Object> hashMap = new HashMap<String, Object>();
-				getRequestBitmap(url, new OnRequestBitmapFinished() {
-
-					@Override
-					public void onRequestBitmapFinished(String resultStr,
-							Bitmap bitmap, boolean isSuccess) {
-						hashMap.put("isSuccess", isSuccess);
-						hashMap.put("resultStr", resultStr);
-						hashMap.put("bitmap", bitmap);
-					}
-				});
-
-				return hashMap;
-			}
-
-			@Override
-			public void onPostExecute(HashMap<String, Object> hashMap) {
-				String resultStr = (String) hashMap.get("resultStr");
-				boolean isSuccess = (Boolean) hashMap.get("isSuccess");
-				Bitmap bitmap = (Bitmap) hashMap.get("bitmap");
-				bitmapLoadFinished.onRequestBitmapFinished(resultStr, bitmap,
-						isSuccess);
-			}
-
-			@Override
-			public void onProgressUpdate(Integer... values) {
-
-			}
-
-			@Override
-			public void onCancelled() {
-				// TODO Auto-generated method stub
-
-			}
-		}).execute("");
-
-	}
-
-	public AsyncTask<String, Integer, HashMap<String, Object>> sendAsyncRequestParamsEntity(
-			final String url, final MultipartEntity multipartEntity,
-			final OnRequestFinished onRequestFinished) {
-
-		return new HP_NetWorkAsyncTask(new AsyncTaskSteps() {
-
-			@Override
-			public void onPreExecute() {
-
-			}
-
-			@Override
-			public HashMap<String, Object> doInBackground(String... params) {
-				final HashMap<String, Object> hashMap = new HashMap<String, Object>();
-				sendRequestParamsEntity(url, multipartEntity,
-						new OnRequestFinished() {
-							@Override
-							public void onRequestFinished(String resultStr,
-									boolean isSuccess) {
-								hashMap.put("isSuccess", isSuccess);
-								hashMap.put("resultStr", resultStr);
-							}
-						});
-				return hashMap;
-			}
-
-			@Override
-			public void onPostExecute(HashMap<String, Object> hashMap) {
-
-				String resultStr = (String) hashMap.get("resultStr");
-				boolean isSuccess = (Boolean) hashMap.get("isSuccess");
-
-				onRequestFinished.onRequestFinished(resultStr, isSuccess);
-			}
-
-			@Override
-			public void onProgressUpdate(Integer... values) {
-
-			}
-
-			@Override
-			public void onCancelled() {
-				// TODO Auto-generated method stub
-
-			}
-		}).execute("");
-
-	}
-
 }

@@ -1,11 +1,14 @@
 package com.hiputto.common4android.superclass;
 
+import com.hiputto.common4android.util.HP_StringUtils;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.graphics.drawable.Drawable;
 import android.os.StrictMode;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Display;
 
 public class HP_BaseActivity extends Activity {
@@ -24,24 +27,24 @@ public class HP_BaseActivity extends Activity {
 	@Override
 	protected void onCreate(android.os.Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		//StrictMode
-        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-                .detectDiskReads()
-                .detectDiskWrites()
-                .detectNetwork()   // or .detectAll() for all detectable problems
-                .penaltyLog()
-                .build());
-        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
-                .detectLeakedSqlLiteObjects()
-                .penaltyLog()
-                .penaltyDeath()
-                .build());
-        
+
+		// StrictMode
+		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+				.detectDiskReads().detectDiskWrites().detectNetwork() // or
+																		// .detectAll()
+																		// for
+																		// all
+																		// detectable
+																		// problems
+				.penaltyLog().build());
+		StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+				.detectLeakedSqlLiteObjects().penaltyLog().penaltyDeath()
+				.build());
+
 		display = getWindowManager().getDefaultDisplay();
 		displayMetrics = new DisplayMetrics();
 		display.getMetrics(displayMetrics);
-		
+
 		progressDialog = new ProgressDialog(this);
 		alertDialog = new AlertDialog.Builder(this).create();
 	};
@@ -105,5 +108,41 @@ public class HP_BaseActivity extends Activity {
 
 	protected int getScreenHeightPixels() {
 		return displayMetrics.heightPixels;
+	}
+
+	protected void logErrorMessage(String message) {
+		if (message == null) {
+			message = "message is null";
+		} else if (HP_StringUtils.isEmptyString(message)) {
+			message = "";
+		}
+		Log.e("[ERROR - " + this.getClass().getName() + "]", message);
+	}
+
+	protected void logWarnMessage(String message) {
+		if (message == null) {
+			message = "message is null";
+		} else if (HP_StringUtils.isEmptyString(message)) {
+			message = "";
+		}
+		Log.w("[WARN - " + this.getClass().getName() + "]", message);
+	}
+
+	protected void logInfoMessage(String message) {
+		if (message == null) {
+			message = "message is null";
+		} else if (HP_StringUtils.isEmptyString(message)) {
+			message = "";
+		}
+		Log.i("[INFO - " + this.getClass().getName() + "]", message);
+	}
+
+	protected void logDebugMessage(String message) {
+		if (message == null) {
+			message = "message is null";
+		} else if (HP_StringUtils.isEmptyString(message)) {
+			message = "";
+		}
+		Log.d("[DEBUG - " + this.getClass().getName() + "]", message);
 	}
 }
