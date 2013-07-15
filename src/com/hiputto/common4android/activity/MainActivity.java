@@ -41,12 +41,11 @@ public class MainActivity extends HP_BaseActivity {
 		hashMap.put("key4", "a");
 		hashMap.put("key5", "a");
 
-		netWorkUtils.doGetRequest(url, hashMap, new OnRequestFinished() {
+		netWorkUtils.doAsyncRequest(url, new OnRequestFinished() {
 
 			@Override
 			public void onSuccess(HttpRequestBase httpRequest,
 					HttpResponse httpResponse) throws Exception {
-
 				if (httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 					BufferedReader reader = new BufferedReader(
 							new InputStreamReader(httpResponse.getEntity()
@@ -67,9 +66,10 @@ public class MainActivity extends HP_BaseActivity {
 			@Override
 			public void onFailure(HttpRequestBase httpRequest,
 					HttpResponse httpResponse, Exception e) {
-				logErrorMessage("onFailure:" + e.getLocalizedMessage());
+
 			}
 		});
+
 	}
 
 	@Override
