@@ -1,6 +1,7 @@
 package com.hiputto.common4android.activity;
 
 import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 
@@ -12,10 +13,14 @@ import com.hiputto.common4android.R;
 import com.hiputto.common4android.exception.HP_ErrorHttpStatusException;
 import com.hiputto.common4android.superclass.HP_BaseActivity;
 import com.hiputto.common4android.util.HP_NetWorkUtils;
+import com.hiputto.common4android.util.HP_NetWorkUtils.OnRequestBitmapFinished;
 import com.hiputto.common4android.util.HP_NetWorkUtils.OnRequestFinished;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.Menu;
+import android.widget.ImageView;
 
 public class MainActivity extends HP_BaseActivity {
 
@@ -24,51 +29,91 @@ public class MainActivity extends HP_BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		logErrorMessage(new HP_ErrorHttpStatusException().getMessage());
+		// logErrorMessage(new HP_ErrorHttpStatusException().getMessage());
 
-		// doRequest();
+		doRequest();
 
 	}
 
 	public void doRequest() {
-		String url = "http://192.168.1.78/beta_appinterfaces/login";
+		String url = "https://api.weibo.com/2/users/show.json";
+		// url = "http://www.youyouapp.com/beta_appinterfaces/login";
+		url = "http://tp2.sinaimg.cn/1904178193/180/5610154048/0";
+
 		HP_NetWorkUtils netWorkUtils = new HP_NetWorkUtils();
 
-		HashMap<String, String> hashMap = new HashMap<String, String>();
-		hashMap.put("key1", "a");
-		hashMap.put("key2", "a");
-		hashMap.put("key3", "a");
-		hashMap.put("key4", "a");
-		hashMap.put("key5", "a");
-
-		netWorkUtils.doAsyncRequest(url, new OnRequestFinished() {
+		netWorkUtils.doAsyncGetRequest(url, new OnRequestFinished() {
 
 			@Override
 			public void onSuccess(HttpRequestBase httpRequest,
 					HttpResponse httpResponse) throws Exception {
+
 				if (httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-					BufferedReader reader = new BufferedReader(
-							new InputStreamReader(httpResponse.getEntity()
-									.getContent()));
 
-					StringBuilder sb = new StringBuilder();
-					for (String s = reader.readLine(); s != null; s = reader
-							.readLine()) {
-						sb.append(s);
-					}
-					reader.close();
+					DataInputStream dataInputStream = new DataInputStream(
+							httpResponse.getEntity().getContent());
+					Bitmap bitmap = BitmapFactory.decodeStream(dataInputStream);
+					dataInputStream.close();
 
-					logErrorMessage("onSuccess:" + sb.toString());
+					ImageView imageView = (ImageView) findViewById(R.id.imageview);
+					imageView.setImageBitmap(bitmap);
 
+					logErrorMessage("onSuccess");
+
+				} else {
+
+					logErrorMessage("onFailure");
 				}
+
 			}
 
 			@Override
 			public void onFailure(HttpRequestBase httpRequest,
 					HttpResponse httpResponse, Exception e) {
+				// TODO Auto-generated method stub
 
 			}
 		});
+
+		// HashMap<String, String> hashMap = new HashMap<String, String>();
+		// hashMap.put("uid", "1904178193");
+		// hashMap.put("access_token", "2.004IPtFCgsKwwCc4b784204bU6I4UC");
+		//
+		// netWorkUtils.doAsyncGetRequest(url, hashMap, new OnRequestFinished()
+		// {
+		//
+		// @Override
+		// public void onSuccess(HttpRequestBase httpRequest,
+		// HttpResponse httpResponse) throws Exception {
+		// logErrorMessage("onSuccess:" +
+		// httpResponse.getStatusLine().getStatusCode());
+		// if (httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK)
+		// {
+		// BufferedReader reader = new BufferedReader(
+		// new InputStreamReader(httpResponse.getEntity()
+		// .getContent()));
+		//
+		// StringBuilder sb = new StringBuilder();
+		// for (String s = reader.readLine(); s != null; s = reader
+		// .readLine()) {
+		// sb.append(s);
+		// }
+		// reader.close();
+		//
+		// logErrorMessage("onSuccess:" + sb.toString());
+		//
+		// } else {
+		// logErrorMessage("onFailure");
+		// }
+		// }
+		//
+		// @Override
+		// public void onFailure(HttpRequestBase httpRequest,
+		// HttpResponse httpResponse, Exception e) {
+		// e.printStackTrace();
+		// logErrorMessage("onFailure:" + e.getMessage());
+		// }
+		// });
 
 	}
 
