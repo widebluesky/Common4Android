@@ -49,7 +49,7 @@ public class MainActivity extends HP_BaseActivity {
 					HttpResponse httpResponse) throws Exception {
 
 				if (httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-
+					
 					DataInputStream dataInputStream = new DataInputStream(
 							httpResponse.getEntity().getContent());
 					Bitmap bitmap = BitmapFactory.decodeStream(dataInputStream);
