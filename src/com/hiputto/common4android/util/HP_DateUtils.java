@@ -79,8 +79,10 @@ public class HP_DateUtils {
 	 * 得到几天前的时间
 	 * 
 	 * @param d
+	 *            当前时间
 	 * @param day
-	 * @return
+	 *            天数
+	 * @return Date date
 	 */
 	public static Date getDateBefore(Date d, int day) {
 		Calendar now = Calendar.getInstance();
@@ -93,8 +95,10 @@ public class HP_DateUtils {
 	 * 得到几天后的时间
 	 * 
 	 * @param d
+	 *            当前时间
 	 * @param day
-	 * @return
+	 *            天数
+	 * @return Date date
 	 */
 	public static Date getDateAfter(Date d, int day) {
 		Calendar now = Calendar.getInstance();
