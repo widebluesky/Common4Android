@@ -72,6 +72,34 @@ public class HP_DateUtils {
 	public static int date2Age(Date date) {
 		Calendar mycalendar = Calendar.getInstance();// 获取现在时间
 		int year = mycalendar.get(Calendar.YEAR);// 获取年份
-		return year - date.getYear()-1900;
+		return year - date.getYear() - 1900;
+	}
+
+	/**
+	 * 得到几天前的时间
+	 * 
+	 * @param d
+	 * @param day
+	 * @return
+	 */
+	public static Date getDateBefore(Date d, int day) {
+		Calendar now = Calendar.getInstance();
+		now.setTime(d);
+		now.set(Calendar.DATE, now.get(Calendar.DATE) - day);
+		return now.getTime();
+	}
+
+	/**
+	 * 得到几天后的时间
+	 * 
+	 * @param d
+	 * @param day
+	 * @return
+	 */
+	public static Date getDateAfter(Date d, int day) {
+		Calendar now = Calendar.getInstance();
+		now.setTime(d);
+		now.set(Calendar.DATE, now.get(Calendar.DATE) + day);
+		return now.getTime();
 	}
 }
