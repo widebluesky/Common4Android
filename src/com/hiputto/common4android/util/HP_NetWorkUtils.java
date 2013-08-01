@@ -108,6 +108,7 @@ public class HP_NetWorkUtils {
 				// 使用线程安全的连接管理来创建HttpClient
 				ClientConnectionManager ccm = new ThreadSafeClientConnManager(
 						params, registry);
+				
 
 				httpClient = new DefaultHttpClient(ccm, params);
 
