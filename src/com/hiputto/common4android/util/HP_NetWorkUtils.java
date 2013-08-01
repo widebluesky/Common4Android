@@ -55,6 +55,8 @@ import android.os.AsyncTask;
 
 public class HP_NetWorkUtils {
 
+	private static HttpClient httpClient;
+
 	public static enum HTTP_METHOD {
 		// newest不是latest...
 		POST("POST"), GET("GET");
@@ -70,45 +72,51 @@ public class HP_NetWorkUtils {
 		}
 	}
 
-	private HttpClient getHttpClient() {
+	private synchronized HttpClient getHttpClient() {
 		try {
-			// BasicHttpParams httpParams = new BasicHttpParams();
-			// HttpConnectionParams.setConnectionTimeout(httpParams,
-			// REQUEST_TIMEOUT);
-			// HttpConnectionParams.setSoTimeout(httpParams, SOCKET_TIMEOUT);
-			// HttpClient httpClient = new DefaultHttpClient(httpParams);
+			if (httpClient == null) {
 
-			KeyStore trustStore = KeyStore.getInstance(KeyStore
-					.getDefaultType());
-			trustStore.load(null, null);
+				// BasicHttpParams httpParams = new BasicHttpParams();
+				// HttpConnectionParams.setConnectionTimeout(httpParams,
+				// REQUEST_TIMEOUT);
+				// HttpConnectionParams.setSoTimeout(httpParams,
+				// SOCKET_TIMEOUT);
+				// HttpClient httpClient = new DefaultHttpClient(httpParams);
 
-			SSLSocketFactory sf = new MySSLSocketFactory(trustStore);
-			sf.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+				KeyStore trustStore = KeyStore.getInstance(KeyStore
+						.getDefaultType());
+				trustStore.load(null, null);
 
-			HttpParams params = new BasicHttpParams();
+				SSLSocketFactory sf = new MySSLSocketFactory(trustStore);
+				sf.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
 
-			HttpConnectionParams.setConnectionTimeout(params, 10000);
-			HttpConnectionParams.setSoTimeout(params, 10000);
+				HttpParams params = new BasicHttpParams();
 
-			HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
-			HttpProtocolParams.setContentCharset(params, HTTP.UTF_8);
+				HttpConnectionParams.setConnectionTimeout(params,
+						getConnectionTimeOut());
+				HttpConnectionParams.setSoTimeout(params, getRequestTimeOut());
 
-			SchemeRegistry registry = new SchemeRegistry();
-			registry.register(new Scheme("http", PlainSocketFactory
-					.getSocketFactory(), 80));
-			registry.register(new Scheme("https", sf, 443));
+				HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
+				HttpProtocolParams.setContentCharset(params, HTTP.UTF_8);
 
-			ClientConnectionManager ccm = new ThreadSafeClientConnManager(
-					params, registry);
+				// 支持两种协议
+				SchemeRegistry registry = new SchemeRegistry();
+				registry.register(new Scheme("http", PlainSocketFactory
+						.getSocketFactory(), 80));
+				registry.register(new Scheme("https", sf, 443));
 
-			HttpConnectionParams.setConnectionTimeout(params, REQUEST_TIMEOUT);
-			HttpConnectionParams.setSoTimeout(params, SOCKET_TIMEOUT);
-			HttpClient client = new DefaultHttpClient(ccm, params);
-			return client;
+				// 使用线程安全的连接管理来创建HttpClient
+				ClientConnectionManager ccm = new ThreadSafeClientConnManager(
+						params, registry);
 
+				httpClient = new DefaultHttpClient(ccm, params);
+
+			}
+			return httpClient;
 		} catch (Exception e) {
 			return new DefaultHttpClient();
 		}
+
 	}
 
 	public interface OnRequestFinished {
@@ -139,23 +147,31 @@ public class HP_NetWorkUtils {
 				HttpResponse httpResponse, Exception e);
 	}
 
-	private int REQUEST_TIMEOUT = 5 * 1000;// 请求超时
-	private int SOCKET_TIMEOUT = 0 * 1000; // 数据接收超时
+	// /* 从连接池中取连接的超时时间 */
+	// ConnManagerParams.setTimeout(params, 1000);
+	// /* 连接超时 */
+	// HttpConnectionParams.setConnectionTimeout(params, 2000);
+	// /* 请求超时 */
+	// HttpConnectionParams.setSoTimeout(params, 4000);
+
+	private int CONNECTION_TIMEOUT = 5 * 1000;// 连接超时
+	private int REQUEST_TIMEOUT = 0 * 1000; // 请求超时
+	// private int GET_CONNECTION_TIMEOUT = 1 * 1000;/* 从连接池中取连接的超时时间 */
 
 	public void setRequestTimeOut(int time) {
 		REQUEST_TIMEOUT = time;
 	}
 
-	public void setSoTimeOut(int time) {
-		SOCKET_TIMEOUT = time;
+	public void setConnectionTimeOut(int time) {
+		CONNECTION_TIMEOUT = time;
 	}
 
 	public int getRequestTimeOut() {
 		return this.REQUEST_TIMEOUT;
 	}
 
-	public int getSoTimeOut() {
-		return this.SOCKET_TIMEOUT;
+	public int getConnectionTimeOut() {
+		return this.CONNECTION_TIMEOUT;
 
 	}
 
@@ -226,6 +242,8 @@ public class HP_NetWorkUtils {
 
 			onRequestFinished.onFailure(httpRequest, httpResponse, e);
 
+		} finally {
+			httpClient.getConnectionManager().shutdown();
 		}
 	}
 
