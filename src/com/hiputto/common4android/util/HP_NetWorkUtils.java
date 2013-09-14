@@ -57,6 +57,18 @@ public class HP_NetWorkUtils {
 
 	private static HttpClient httpClient;
 
+	// /* 从连接池中取连接的超时时间 */
+	// ConnManagerParams.setTimeout(params, 1000);
+	// /* 连接超时 */
+	// HttpConnectionParams.setConnectionTimeout(params, 2000);
+	// /* 请求超时 */
+	// HttpConnectionParams.setSoTimeout(params, 4000);
+
+	private int CONNECTION_TIMEOUT = 30 * 1000;// 连接超时
+	private int REQUEST_TIMEOUT = 30 * 1000; // 请求超时
+
+	// private int GET_CONNECTION_TIMEOUT = 1 * 1000;/* 从连接池中取连接的超时时间 */
+
 	public static enum HTTP_METHOD {
 		// newest不是latest...
 		POST("POST"), GET("GET");
@@ -72,7 +84,7 @@ public class HP_NetWorkUtils {
 		}
 	}
 
-	private synchronized HttpClient getHttpClient() {
+	public synchronized HttpClient getHttpClient() {
 		try {
 			if (httpClient == null) {
 
@@ -108,7 +120,6 @@ public class HP_NetWorkUtils {
 				// 使用线程安全的连接管理来创建HttpClient
 				ClientConnectionManager ccm = new ThreadSafeClientConnManager(
 						params, registry);
-				
 
 				httpClient = new DefaultHttpClient(ccm, params);
 
@@ -147,17 +158,6 @@ public class HP_NetWorkUtils {
 		public void onFailure(HttpRequestBase httpRequest,
 				HttpResponse httpResponse, Exception e);
 	}
-
-	// /* 从连接池中取连接的超时时间 */
-	// ConnManagerParams.setTimeout(params, 1000);
-	// /* 连接超时 */
-	// HttpConnectionParams.setConnectionTimeout(params, 2000);
-	// /* 请求超时 */
-	// HttpConnectionParams.setSoTimeout(params, 4000);
-
-	private int CONNECTION_TIMEOUT = 5 * 1000;// 连接超时
-	private int REQUEST_TIMEOUT = 0 * 1000; // 请求超时
-	// private int GET_CONNECTION_TIMEOUT = 1 * 1000;/* 从连接池中取连接的超时时间 */
 
 	public void setRequestTimeOut(int time) {
 		REQUEST_TIMEOUT = time;
@@ -243,8 +243,6 @@ public class HP_NetWorkUtils {
 
 			onRequestFinished.onFailure(httpRequest, httpResponse, e);
 
-		} finally {
-			httpClient.getConnectionManager().shutdown();
 		}
 	}
 
