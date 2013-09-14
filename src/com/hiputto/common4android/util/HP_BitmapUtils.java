@@ -86,9 +86,9 @@ public class HP_BitmapUtils {
 	 * @throws Exception
 	 * 
 	 * */
-	public static byte[] bitmap2Bytes(Bitmap bitmap) throws Exception {
+	public static byte[] bitmap2Bytes(Bitmap bitmap,Bitmap.CompressFormat format) throws Exception {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+		bitmap.compress(format, 100, baos);
 		byte[] data = baos.toByteArray();
 		return data;
 	}
@@ -321,11 +321,11 @@ public class HP_BitmapUtils {
 		return newb;
 	}
 
-	public static Bitmap bitmap2CompressBitmap(Bitmap bitmap, int scale) {
+	public static Bitmap bitmap2CompressBitmap(Bitmap bitmap, int scale,Bitmap.CompressFormat format) {
 
 		byte[] data = null;
 		try {
-			data = HP_BitmapUtils.bitmap2Bytes(bitmap);
+			data = HP_BitmapUtils.bitmap2Bytes(bitmap,format);
 		} catch (Exception e) {
 			Log.e("asdf", e.getLocalizedMessage());
 		}

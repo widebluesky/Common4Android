@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.net.URL;
 import java.net.UnknownHostException;
 import java.security.KeyManagementException;
 import java.security.KeyStore;
@@ -37,6 +38,7 @@ import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
@@ -44,30 +46,19 @@ import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.protocol.HTTP;
 
 import com.hiputto.common4android.exception.HP_ErrorHttpStatusException;
+import com.hiputto.common4android.manager.ImageMemoryCache;
 import com.hiputto.common4android.util.HP_AsyncTaskUtils.AsyncTaskSteps;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.util.Log;
 
 public class HP_NetWorkUtils {
-
-	private static HttpClient httpClient;
-
-	// /* 从连接池中取连接的超时时间 */
-	// ConnManagerParams.setTimeout(params, 1000);
-	// /* 连接超时 */
-	// HttpConnectionParams.setConnectionTimeout(params, 2000);
-	// /* 请求超时 */
-	// HttpConnectionParams.setSoTimeout(params, 4000);
-
-	private int CONNECTION_TIMEOUT = 30 * 1000;// 连接超时
-	private int REQUEST_TIMEOUT = 30 * 1000; // 请求超时
-
-	// private int GET_CONNECTION_TIMEOUT = 1 * 1000;/* 从连接池中取连接的超时时间 */
 
 	public static enum HTTP_METHOD {
 		// newest不是latest...
@@ -84,17 +75,17 @@ public class HP_NetWorkUtils {
 		}
 	}
 
-	public synchronized HttpClient getHttpClient() {
+	private HttpClient client = null;
+
+	private HttpClient getHttpClient() {
 		try {
-			if (httpClient == null) {
+			// BasicHttpParams httpParams = new BasicHttpParams();
+			// HttpConnectionParams.setConnectionTimeout(httpParams,
+			// REQUEST_TIMEOUT);
+			// HttpConnectionParams.setSoTimeout(httpParams, SOCKET_TIMEOUT);
+			// HttpClient client = new DefaultHttpClient(httpParams);
 
-				// BasicHttpParams httpParams = new BasicHttpParams();
-				// HttpConnectionParams.setConnectionTimeout(httpParams,
-				// REQUEST_TIMEOUT);
-				// HttpConnectionParams.setSoTimeout(httpParams,
-				// SOCKET_TIMEOUT);
-				// HttpClient httpClient = new DefaultHttpClient(httpParams);
-
+			if (client == null) {
 				KeyStore trustStore = KeyStore.getInstance(KeyStore
 						.getDefaultType());
 				trustStore.load(null, null);
@@ -104,31 +95,31 @@ public class HP_NetWorkUtils {
 
 				HttpParams params = new BasicHttpParams();
 
-				HttpConnectionParams.setConnectionTimeout(params,
-						getConnectionTimeOut());
-				HttpConnectionParams.setSoTimeout(params, getRequestTimeOut());
+				HttpConnectionParams.setConnectionTimeout(params, 10000);
+				HttpConnectionParams.setSoTimeout(params, 10000);
 
 				HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
 				HttpProtocolParams.setContentCharset(params, HTTP.UTF_8);
 
-				// 支持两种协议
 				SchemeRegistry registry = new SchemeRegistry();
 				registry.register(new Scheme("http", PlainSocketFactory
 						.getSocketFactory(), 80));
 				registry.register(new Scheme("https", sf, 443));
 
-				// 使用线程安全的连接管理来创建HttpClient
 				ClientConnectionManager ccm = new ThreadSafeClientConnManager(
 						params, registry);
 
-				httpClient = new DefaultHttpClient(ccm, params);
-
+				HttpConnectionParams.setConnectionTimeout(params,
+						REQUEST_TIMEOUT);
+				HttpConnectionParams.setSoTimeout(params, SOCKET_TIMEOUT);
+				client = new DefaultHttpClient(ccm, params);
 			}
-			return httpClient;
+
+			return client;
+
 		} catch (Exception e) {
 			return new DefaultHttpClient();
 		}
-
 	}
 
 	public interface OnRequestFinished {
@@ -159,20 +150,29 @@ public class HP_NetWorkUtils {
 				HttpResponse httpResponse, Exception e);
 	}
 
+	public interface OnRequestDrawableFinished {
+		public void onSuccess(Drawable drawable) throws Exception;
+
+		public void onFailure(Exception e);
+	}
+
+	private int REQUEST_TIMEOUT = 5 * 1000;// 请求超时
+	private int SOCKET_TIMEOUT = 0 * 1000; // 数据接收超时
+
 	public void setRequestTimeOut(int time) {
 		REQUEST_TIMEOUT = time;
 	}
 
-	public void setConnectionTimeOut(int time) {
-		CONNECTION_TIMEOUT = time;
+	public void setSoTimeOut(int time) {
+		SOCKET_TIMEOUT = time;
 	}
 
 	public int getRequestTimeOut() {
 		return this.REQUEST_TIMEOUT;
 	}
 
-	public int getConnectionTimeOut() {
-		return this.CONNECTION_TIMEOUT;
+	public int getSoTimeOut() {
+		return this.SOCKET_TIMEOUT;
 
 	}
 
@@ -348,7 +348,7 @@ public class HP_NetWorkUtils {
 		}
 	}
 
-	public void doRequestData(String url,
+	public void doPostRequestData(String url,
 			OnRequestDataFinished onRequestDataFinished) {
 
 		HttpClient httpClient = getHttpClient();
@@ -394,7 +394,7 @@ public class HP_NetWorkUtils {
 		}
 	}
 
-	public void doRequestBitmap(String url,
+	public void doPostRequestBitmap(String url,
 			OnRequestBitmapFinished onRequestBitmapFinished) {
 
 		HttpClient httpClient = getHttpClient();
@@ -428,6 +428,173 @@ public class HP_NetWorkUtils {
 		} catch (Exception e) {
 			onRequestBitmapFinished.onFailure(httpRequest, httpResponse, e);
 		}
+	}
+
+	public void doRequestDrawable(String url,
+			OnRequestDrawableFinished onRequestDrawableFinished) {
+
+		Drawable drawable = null;
+		try {
+			// 可以在这里通过文件名来判断，是否本地有此图片
+			drawable = Drawable.createFromStream(new URL(url).openStream(),
+					"drawable");
+			onRequestDrawableFinished.onSuccess(drawable);
+		} catch (Exception e) {
+			onRequestDrawableFinished.onFailure(e);
+		}
+
+		if (drawable == null) {
+			Log.d("test", "null drawable");
+		} else {
+			Log.d("test", "not null drawable");
+		}
+
+	}
+
+	public AsyncTask<String, Integer, HashMap<String, Object>> doAsyncRequestDrawable(
+			final String url,
+			final OnRequestDrawableFinished onRequestDrawableFinished) {
+
+		return new HP_NetWorkAsyncTask(new AsyncTaskSteps() {
+			@Override
+			public void onPreExecute() {
+
+			}
+
+			@Override
+			public HashMap<String, Object> doInBackground(String... params) {
+				final HashMap<String, Object> hashMap = new HashMap<String, Object>();
+
+				doRequestDrawable(url, new OnRequestDrawableFinished() {
+
+					@Override
+					public void onSuccess(Drawable drawable) throws Exception {
+						hashMap.put("isSuccess", true);
+						hashMap.put("drawable", drawable);
+					}
+
+					@Override
+					public void onFailure(Exception exception) {
+						hashMap.put("isSuccess", false);
+						hashMap.put("exception", exception);
+					}
+				});
+
+				return hashMap;
+			}
+
+			@Override
+			public void onPostExecute(HashMap<String, Object> hashMap) {
+
+				boolean isSuccess = (Boolean) hashMap.get("isSuccess");
+				if (isSuccess) {
+					Drawable drawable = (Drawable) hashMap.get("drawable");
+					try {
+						onRequestDrawableFinished.onSuccess(drawable);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				} else {
+					Exception exception = (Exception) hashMap.get("exception");
+					onRequestDrawableFinished.onFailure(exception);
+				}
+
+			}
+
+			@Override
+			public void onProgressUpdate(Integer... values) {
+
+			}
+
+			@Override
+			public void onCancelled() {
+
+			}
+		}).execute("");
+	}
+
+	public AsyncTask<String, Integer, HashMap<String, Object>> doAsyncPostRequestBitmap(
+			final String url,
+			final OnRequestBitmapFinished onRequestBitmapFinished) {
+
+		return new HP_NetWorkAsyncTask(new AsyncTaskSteps() {
+			@Override
+			public void onPreExecute() {
+
+			}
+
+			@Override
+			public HashMap<String, Object> doInBackground(String... params) {
+				final HashMap<String, Object> hashMap = new HashMap<String, Object>();
+
+				doPostRequestBitmap(url, new OnRequestBitmapFinished() {
+
+					@Override
+					public void onSuccess(HttpRequestBase httpRequest,
+							HttpResponse httpResponse, Bitmap bitmap)
+							throws Exception {
+						hashMap.put("isSuccess", true);
+						hashMap.put("httpRequest", httpRequest);
+						hashMap.put("httpResponse", httpResponse);
+						hashMap.put("bitmap", bitmap);
+					}
+
+					@Override
+					public void onFailure(HttpRequestBase httpRequest,
+							HttpResponse httpResponse, Exception exception) {
+						hashMap.put("isSuccess", false);
+						hashMap.put("httpRequest", httpRequest);
+						hashMap.put("httpResponse", httpResponse);
+						hashMap.put("exception", exception);
+					}
+				});
+
+				return hashMap;
+			}
+
+			@Override
+			public void onPostExecute(HashMap<String, Object> hashMap) {
+
+				boolean isSuccess = (Boolean) hashMap.get("isSuccess");
+				if (isSuccess) {
+
+					HttpRequestBase httpRequest = (HttpRequestBase) hashMap
+							.get("httpRequest");
+					HttpResponse httpResponse = (HttpResponse) hashMap
+							.get("httpResponse");
+					Bitmap bitmap = (Bitmap) hashMap.get("bitmap");
+					try {
+						onRequestBitmapFinished.onSuccess(httpRequest,
+								httpResponse, bitmap);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+
+				} else {
+
+					HttpRequestBase httpRequest = (HttpRequestBase) hashMap
+							.get("httpRequest");
+					HttpResponse httpResponse = (HttpResponse) hashMap
+							.get("httpResponse");
+
+					Exception exception = (Exception) hashMap.get("exception");
+
+					onRequestBitmapFinished.onFailure(httpRequest,
+							httpResponse, exception);
+				}
+
+			}
+
+			@Override
+			public void onProgressUpdate(Integer... values) {
+
+			}
+
+			@Override
+			public void onCancelled() {
+
+			}
+		}).execute("");
 	}
 
 	public AsyncTask<String, Integer, HashMap<String, Object>> doAsyncPostRequest(

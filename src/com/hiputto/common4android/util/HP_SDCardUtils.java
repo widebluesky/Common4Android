@@ -74,7 +74,11 @@ public class HP_SDCardUtils {
 			File file = Environment.getExternalStorageDirectory();
 			return file.getPath();
 		} else {
-			return null ;
+			return null;
 		}
+	}
+
+	public static String getMobileMemory() {
+		return Environment.getRootDirectory().getPath();
 	}
 }

@@ -39,19 +39,26 @@ public class HP_RegexUtils {
 		Matcher matcher = pattern.matcher(string);
 		return matcher.find();// boolean
 	}
-	
+
 	public static boolean isHanZi(String string) {
 		String regExp = "^[\u4e00-\u9fa5]*$";
 		Pattern pattern = Pattern.compile(regExp);
 		Matcher matcher = pattern.matcher(string);
 		return matcher.find();// boolean
 	}
-	
+
 	public static boolean isURL(String string) {
 		String regExp = "^[\\w]*://([\\w-]+\\.)+[\\w-]+(/[\\w-./?%&=]*)?$";
 		Pattern pattern = Pattern.compile(regExp);
 		Matcher matcher = pattern.matcher(string);
 		return matcher.find();// boolean
 	}
-	
+
+	public static boolean isIdCard(String string) {
+		String regExp = "\\d{17}[[0-9],0-9xX]";
+		Pattern pattern = Pattern.compile(regExp);
+		Matcher matcher = pattern.matcher(string);
+		return matcher.find();// boolean
+	}
+
 }

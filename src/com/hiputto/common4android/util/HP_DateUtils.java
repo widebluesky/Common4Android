@@ -75,35 +75,13 @@ public class HP_DateUtils {
 		return year - date.getYear() - 1900;
 	}
 
-	/**
-	 * 得到几天前的时间
-	 * 
-	 * @param d
-	 *            当前时间
-	 * @param day
-	 *            天数
-	 * @return Date date
-	 */
-	public static Date getDateBefore(Date d, int day) {
-		Calendar now = Calendar.getInstance();
-		now.setTime(d);
-		now.set(Calendar.DATE, now.get(Calendar.DATE) - day);
-		return now.getTime();
+	public static long javaTime2PhpTime(long time) {
+		String javaTime = String.valueOf(time);
+		String phpTime = javaTime.substring(0, javaTime.length() - 3);
+		return Long.valueOf(phpTime);
 	}
 
-	/**
-	 * 得到几天后的时间
-	 * 
-	 * @param d
-	 *            当前时间
-	 * @param day
-	 *            天数
-	 * @return Date date
-	 */
-	public static Date getDateAfter(Date d, int day) {
-		Calendar now = Calendar.getInstance();
-		now.setTime(d);
-		now.set(Calendar.DATE, now.get(Calendar.DATE) + day);
-		return now.getTime();
+	public static long phpTime2JavaTime(long time) {
+		return time * 1000;
 	}
 }
