@@ -12,8 +12,11 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
+import android.view.animation.TranslateAnimation;
+import android.view.animation.Animation.AnimationListener;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -271,13 +274,38 @@ public class HP_PullToRefreshListView extends ListView implements
 					+ "正在加载中 ...REFRESHING");
 			break;
 		case DONE:
-			headView.setPadding(0, -1 * headContentHeight, 0, 0);
-			progressBar.setVisibility(View.GONE);
-			arrowImageView.clearAnimation();
-			arrowImageView.setImageResource(R.drawable.common_arrow);
-			tipsTextview.setText("已经加载完毕");
-			lastUpdatedTextView.setVisibility(View.VISIBLE);
-			Log.v("@@@@@@", "DONE 这是第  " + i++ + "步" + "已经加载完毕- DONE ");
+			TranslateAnimation bounceAnimation = new TranslateAnimation(
+					TranslateAnimation.ABSOLUTE, 0,
+					TranslateAnimation.ABSOLUTE, 0,
+					TranslateAnimation.ABSOLUTE, 0,
+					TranslateAnimation.ABSOLUTE, -1 * headContentHeight
+							- headView.getPaddingTop());
+			bounceAnimation.setDuration(200);
+			bounceAnimation.setFillEnabled(true);
+			bounceAnimation.setFillAfter(false);
+			bounceAnimation.setFillBefore(true);
+			bounceAnimation.setAnimationListener(new AnimationListener() {
+				@Override
+				public void onAnimationStart(Animation animation) {
+				}
+
+				@Override
+				public void onAnimationRepeat(Animation animation) {
+				}
+
+				@Override
+				public void onAnimationEnd(Animation animation) {
+					headView.setPadding(0, -1 * headContentHeight, 0, 0);
+					progressBar.setVisibility(View.GONE);
+					arrowImageView.clearAnimation();
+					arrowImageView.setImageResource(R.drawable.common_arrow);
+					tipsTextview.setText("已经加载完毕");
+					lastUpdatedTextView.setVisibility(View.VISIBLE);
+					Log.v("@@@@@@", "DONE 这是第  " + i++ + "步" + "已经加载完毕- DONE ");
+
+				}
+			});
+			startAnimation(bounceAnimation);
 			break;
 		}
 	}
