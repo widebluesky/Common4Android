@@ -3,8 +3,8 @@ package com.hiputto.common4android.superclass.view;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpRequestBase;
 
-import com.hiputto.common4android.manager.ImageFileCache;
-import com.hiputto.common4android.manager.ImageMemoryCache;
+import com.hiputto.common4android.manager.HP_ImageFileCache;
+import com.hiputto.common4android.manager.HP_ImageMemoryCache;
 import com.hiputto.common4android.util.HP_NetWorkAsyncTask;
 import com.hiputto.common4android.util.HP_NetWorkUtils;
 import com.hiputto.common4android.util.HP_NetWorkUtils.OnRequestBitmapFinished;
@@ -79,8 +79,8 @@ public class HP_ImageView extends ImageView {
 	private void doAsyncPostRequestBitmap(final String url,
 			final OnImageRequest onImageRequest) {
 
-		final ImageMemoryCache memoryCache = new ImageMemoryCache(getContext());
-		final ImageFileCache fileCache = new ImageFileCache();
+		final HP_ImageMemoryCache memoryCache = new HP_ImageMemoryCache(getContext());
+		final HP_ImageFileCache fileCache = new HP_ImageFileCache();
 
 		Bitmap bitmap = memoryCache.getBitmapFromCache(url);
 		if (bitmap == null) {

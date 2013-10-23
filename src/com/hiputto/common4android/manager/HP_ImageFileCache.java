@@ -14,7 +14,7 @@ import android.os.Environment;
 import android.os.StatFs;
 import android.util.Log;
 
-public class ImageFileCache {
+public class HP_ImageFileCache {
 	private static final String CACHDIR = "ImgCach";
 	private static final String WHOLESALE_CONV = ".cach";
 
@@ -22,7 +22,7 @@ public class ImageFileCache {
 	private static final int CACHE_SIZE = 10;
 	private static final int FREE_SD_SPACE_NEEDED_TO_CACHE = 10;
 
-	public ImageFileCache() {
+	public HP_ImageFileCache() {
 		// 清理文件缓存
 		removeCache(getDirectory());
 	}

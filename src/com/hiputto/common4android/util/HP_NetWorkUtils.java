@@ -46,7 +46,7 @@ import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.protocol.HTTP;
 
 import com.hiputto.common4android.exception.HP_ErrorHttpStatusException;
-import com.hiputto.common4android.manager.ImageMemoryCache;
+import com.hiputto.common4android.manager.HP_ImageMemoryCache;
 import com.hiputto.common4android.util.HP_AsyncTaskUtils.AsyncTaskSteps;
 
 import android.content.Context;
