@@ -59,6 +59,7 @@ public class MainActivity extends HP_BaseActivity {
 				+ "access_token=2.004IPtFCgsKwwCc4b784204bU6I4UC"
 				+ "&count=100";
 		
+		doNetWorkUtils(url);
 		try {
 			doSomeThing(url);
 		} catch (ClientProtocolException e) {
@@ -72,6 +73,26 @@ public class MainActivity extends HP_BaseActivity {
 			e.printStackTrace();
 		}
 
+	}
+
+	private void doNetWorkUtils(String url) {
+		HP_NetWorkUtils netWorkUtils = new HP_NetWorkUtils();
+		netWorkUtils.doAsyncPostRequestBitmap(url, new OnRequestBitmapFinished() {
+			
+			@Override
+			public void onSuccess(HttpRequestBase httpRequest,
+					HttpResponse httpResponse, Bitmap bitmap) throws Exception {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onFailure(HttpRequestBase httpRequest,
+					HttpResponse httpResponse, Exception e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 	}
 
 	private void doSomeThing(String url) throws ClientProtocolException, IOException, JSONException {
@@ -119,8 +140,8 @@ public class MainActivity extends HP_BaseActivity {
             
             JSONObject jsonObject = new JSONObject(html);
             logErrorMessage("json数据:"+jsonObject.getJSONArray("statuses").length());
-        }
-		
+		}
+
 	}
 
 	public void doRequest() {

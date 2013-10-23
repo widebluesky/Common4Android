@@ -15,39 +15,21 @@ HP_SystemIntentUtils.java  | ......
 
 ###HP_NetWorkUtils.java
 
-#### - Bitmap Request
+#### - doAsyncGetRequest
 	HP_NetWorkUtils netWorkUtils = new HP_NetWorkUtils();
-	String url = "";
-	netWorkUtils.getAsyncRequestBitmap(url,new OnRequestBitmapFinished() {
+	netWorkUtils.doAsyncGetRequest(url, new OnRequestFinished() {
 			
-		public void onRequestBitmapFinished(String resultStr, Bitmap bitmap,
-				boolean isSuccess) {
-			// TODO Auto-generated method stub
-			
+		@Override
+		public void onSuccess(HttpRequestBase httpRequest, HttpResponse httpResponse) throws Exception {
+				// TODO Auto-generated method stub
+				
 		}
-	});
-	
-#### - Data Request	
-	HP_NetWorkUtils netWorkUtils = new HP_NetWorkUtils();
-	String url = "";
-	netWorkUtils.getAsyncRequestData(url, new OnRequestDataFinished() {
 			
-		public void onRequestDataFinished(String resultStr, byte[] data,
-				boolean isSuccess) {
-			// TODO Auto-generated method stub
-			
-		}
-	});
-	
-#### - JSONObject Request	
-	HP_NetWorkUtils netWorkUtils = new HP_NetWorkUtils();
-	String url = "";
-	netWorkUtils.getAsyncRequestJSONObject(url, new OnRequestJSONObjectFinished() {
-			
-		public void onRequestJSONObjectFinished(String resultStr,
-				JSONObject jsonObject, boolean isSuccess) {
-			// TODO Auto-generated method stub
-					
+		@Override
+		public void onFailure(HttpRequestBase httpRequest,
+					HttpResponse httpResponse, Exception e) {
+				// TODO Auto-generated method stub
+				
 		}
 	});
 	
