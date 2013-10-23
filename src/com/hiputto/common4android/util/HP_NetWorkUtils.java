@@ -95,8 +95,8 @@ public class HP_NetWorkUtils {
 
 				HttpParams params = new BasicHttpParams();
 
-				HttpConnectionParams.setConnectionTimeout(params, 10000);
-				HttpConnectionParams.setSoTimeout(params, 10000);
+				HttpConnectionParams.setConnectionTimeout(params, 30000);
+				HttpConnectionParams.setSoTimeout(params, 30000);
 
 				HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
 				HttpProtocolParams.setContentCharset(params, HTTP.UTF_8);
@@ -156,8 +156,8 @@ public class HP_NetWorkUtils {
 		public void onFailure(Exception e);
 	}
 
-	private int REQUEST_TIMEOUT = 5 * 1000;// 请求超时
-	private int SOCKET_TIMEOUT = 0 * 1000; // 数据接收超时
+	private int REQUEST_TIMEOUT = 30 * 1000;// 请求超时
+	private int SOCKET_TIMEOUT = 30 * 1000; // 数据接收超时
 
 	public void setRequestTimeOut(int time) {
 		REQUEST_TIMEOUT = time;
@@ -264,6 +264,7 @@ public class HP_NetWorkUtils {
 				}
 			}
 		}
+
 		doGetRequest(url, onRequestFinished);
 	}
 
@@ -363,7 +364,7 @@ public class HP_NetWorkUtils {
 			httpRequest = new HttpPost(url);
 
 			httpResponse = httpClient.execute(httpRequest);
-
+			
 			if (httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 
 				DataInputStream dataInputStream = new DataInputStream(
@@ -757,7 +758,7 @@ public class HP_NetWorkUtils {
 
 			@Override
 			public void onCancelled() {
-
+				
 			}
 		}).execute("");
 	}

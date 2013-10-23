@@ -6,7 +6,8 @@ import com.hiputto.common4android.util.HP_AsyncTaskUtils.AsyncTaskSteps;
 
 import android.os.AsyncTask;
 
-public class HP_NetWorkAsyncTask extends AsyncTask<String, Integer, HashMap<String, Object>> {
+public class HP_NetWorkAsyncTask extends
+		AsyncTask<String, Integer, HashMap<String, Object>> {
 	private AsyncTaskSteps asyncTaskSteps;
 
 	public HP_NetWorkAsyncTask(AsyncTaskSteps asyncTaskSteps) {
@@ -19,12 +20,12 @@ public class HP_NetWorkAsyncTask extends AsyncTask<String, Integer, HashMap<Stri
 	}
 
 	@Override
-	protected HashMap<String,Object> doInBackground(String... params) {
+	protected HashMap<String, Object> doInBackground(String... params) {
 		return asyncTaskSteps.doInBackground(params);
 	}
 
 	@Override
-	protected void onPostExecute(HashMap<String,Object> result) {
+	protected void onPostExecute(HashMap<String, Object> result) {
 		asyncTaskSteps.onPostExecute(result);
 	}
 
@@ -32,11 +33,10 @@ public class HP_NetWorkAsyncTask extends AsyncTask<String, Integer, HashMap<Stri
 	protected void onCancelled() {
 		asyncTaskSteps.onCancelled();
 	}
-	
+
 	@Override
 	protected void onProgressUpdate(Integer... values) {
 		asyncTaskSteps.onProgressUpdate(values);
 	}
-
 
 }

@@ -62,17 +62,19 @@ public class HP_BitmapUtils {
 	 * 
 	 * */
 	public static Bitmap bitmapFromDrawable(Drawable drawable) {
-		Bitmap bitmap = Bitmap
-				.createBitmap(
-						drawable.getIntrinsicWidth(),
-						drawable.getIntrinsicHeight(),
-						drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888
-								: Bitmap.Config.RGB_565);
-		Canvas canvas = new Canvas();
-		canvas.setBitmap(bitmap);
-		drawable.setBounds(0, 0, drawable.getIntrinsicWidth(),
-				drawable.getIntrinsicHeight());
-		drawable.draw(canvas);
+		
+		Bitmap bitmap = ((BitmapDrawable)drawable).getBitmap();
+//		Bitmap bitmap = Bitmap
+//				.createBitmap(
+//						drawable.getIntrinsicWidth(),
+//						drawable.getIntrinsicHeight(),
+//						drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888
+//								: Bitmap.Config.RGB_565);
+//		Canvas canvas = new Canvas();
+//		canvas.setBitmap(bitmap);
+//		drawable.setBounds(0, 0, drawable.getIntrinsicWidth(),
+//				drawable.getIntrinsicHeight());
+//		drawable.draw(canvas);
 		return bitmap;
 	}
 

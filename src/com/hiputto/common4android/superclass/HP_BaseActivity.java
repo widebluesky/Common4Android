@@ -10,7 +10,6 @@ import android.app.ActivityGroup;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
@@ -27,6 +26,7 @@ import android.view.View.MeasureSpec;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class HP_BaseActivity extends ActivityGroup {
 	/**
@@ -43,6 +43,8 @@ public class HP_BaseActivity extends ActivityGroup {
 	private AlertDialog alertDialog;
 	private Display display;
 	private DisplayMetrics displayMetrics;
+
+	private Toast toast;
 
 	@Override
 	protected void onCreate(android.os.Bundle savedInstanceState) {
@@ -71,6 +73,17 @@ public class HP_BaseActivity extends ActivityGroup {
 		progressDialog = new ProgressDialog(this);
 		alertDialog = new AlertDialog.Builder(this).create();
 	};
+
+	public void showToast(String message, int duration) {
+
+		if (toast == null) {
+			toast = Toast.makeText(this, message, duration);
+		}
+
+		toast.setText(message);
+		toast.cancel();
+		toast.show();
+	}
 
 	public void showProgressDialog(String title, String message,
 			boolean cancelable) {
@@ -313,4 +326,13 @@ public class HP_BaseActivity extends ActivityGroup {
 		}
 	}
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+	}
 }

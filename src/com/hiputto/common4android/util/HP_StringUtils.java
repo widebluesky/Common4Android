@@ -4,7 +4,7 @@ package com.hiputto.common4android.util;
 public class HP_StringUtils {
 
 	public static boolean isEmptyString(String string) {
-		return (string.length() == 0 || string.equals(""));
+		return (string==null||string.length() == 0 || string.equals(""));
 	}
 
 	public static int getStringLength(String string) {

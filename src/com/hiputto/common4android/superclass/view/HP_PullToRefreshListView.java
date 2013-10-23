@@ -12,11 +12,8 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
-import android.view.animation.TranslateAnimation;
-import android.view.animation.Animation.AnimationListener;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -88,8 +85,8 @@ public class HP_PullToRefreshListView extends ListView implements
 		headContentWidth = headView.getMeasuredWidth();
 		headView.setPadding(0, -1 * headContentHeight, 0, 0);
 		headView.invalidate();
-		Log.v("@@@@@@", "width:" + headContentWidth + " height:"
-				+ headContentHeight);
+		// Log.v("@@@@@@", "width:" + headContentWidth + " height:"
+		// + headContentHeight);
 		addHeaderView(headView, null, false);
 		setOnScrollListener(this);
 
@@ -117,118 +114,120 @@ public class HP_PullToRefreshListView extends ListView implements
 	}
 
 	public void onScrollStateChanged(AbsListView arg0, int arg1) {
+
 	}
 
 	public boolean onTouchEvent(MotionEvent event) {
-		if (isRefreshable) {
-			switch (event.getAction()) {
-			case MotionEvent.ACTION_DOWN:
-				if (firstItemIndex == 0 && !isRecored) {
-					isRecored = true;
-					startY = (int) event.getY();
-					Log.v("@@@@@@", "ACTION_DOWN 这是第  " + i++ + "步" + 1);
-				}
-				break;
-			case MotionEvent.ACTION_UP:
-				if (state != REFRESHING && state != LOADING) {
-					if (state == DONE) {
-					}
-					if (state == PULL_To_REFRESH) {
-						state = DONE;
-						Log.v("@@@@@@",
-								"ACTION_UP PULL_To_REFRESH and changeHeaderViewByState()"
-										+ " 这是第  " + i++ + "步前" + 2);
-						changeHeaderViewByState();
-						Log.v("@@@@@@",
-								"ACTION_UP PULL_To_REFRESH and changeHeaderViewByState() "
-										+ "这是第  " + i++ + "步后" + 2);
-					}
-					if (state == RELEASE_To_REFRESH) {
-						state = REFRESHING;
-						Log.v("@@@@@@",
-								"ACTION_UP RELEASE_To_REFRESH changeHeaderViewByState() "
-										+ "这是第  " + i++ + "步" + 3);
-						changeHeaderViewByState();
-						onRefresh();
-						Log.v("@@@@@@",
-								"ACTION_UP RELEASE_To_REFRESH changeHeaderViewByState()"
-										+ " 这是第  " + i++ + "步" + 3);
-					}
-				}
-				isRecored = false;
-				isBack = false;
-				break;
-			case MotionEvent.ACTION_MOVE:
-				int tempY = (int) event.getY();
-				if (!isRecored && firstItemIndex == 0) {
-					startY = tempY;
-					Log.v("@@@@@@", "ACTION_MOVE 这是第  " + i++ + "步" + 4);
-				}
-				if (state != REFRESHING && isRecored && state != LOADING) {
-					if (state == RELEASE_To_REFRESH) {
-						setSelection(0);
-						if (((tempY - startY) / RATIO < headContentHeight)
-								&& (tempY - startY) > 0) {
-							state = PULL_To_REFRESH;
-							changeHeaderViewByState();
-							Log.v("@@@@@@", "changeHeaderViewByState() 这是第  "
-									+ i++ + "步" + 5);
-						} else if (tempY - startY <= 0) {
-							state = DONE;
-							changeHeaderViewByState();
-							Log.v("@@@@@@",
-									"ACTION_MOVE RELEASE_To_REFRESH 2  changeHeaderViewByState "
-											+ "这是第  " + i++ + "步" + 6);
-						}
-					}
-					if (state == PULL_To_REFRESH) {
-						setSelection(0);
-						if ((tempY - startY) / RATIO >= headContentHeight) {
-							state = RELEASE_To_REFRESH;
-							isBack = true;
-							Log.v("@@@@@@", "changeHeaderViewByState "
-									+ "这是第  " + i++ + "步前" + 7);
-							changeHeaderViewByState();
-							Log.v("@@@@@@", "changeHeaderViewByState "
-									+ "这是第  " + i++ + "步后" + 7);
-						} else if (tempY - startY <= 0) {
-							state = DONE;
-							changeHeaderViewByState();
-							Log.v("@@@@@@",
-									"ACTION_MOVE changeHeaderViewByState PULL_To_REFRESH 2"
-											+ " 这是第  " + i++ + "步" + 8);
-						}
-					}
-					if (state == DONE) {
-						if (tempY - startY > 0) {
-							state = PULL_To_REFRESH;
-							Log.v("@@@@@@",
-									"ACTION_MOVE DONE changeHeaderViewByState "
-											+ "这是第  " + i++ + "步前" + 9);
-							changeHeaderViewByState();
-							Log.v("@@@@@@",
-									"ACTION_MOVE DONE changeHeaderViewByState "
-											+ "这是第  " + i++ + "步后" + 9);
-						}
-					}
-					if (state == PULL_To_REFRESH) {
-						headView.setPadding(0, -1 * headContentHeight
-								+ (tempY - startY) / RATIO, 0, 0);
-						Log.v("@@@@@@", -1 * headContentHeight
-								+ (tempY - startY) / RATIO
-								+ "ACTION_MOVE PULL_To_REFRESH 3  这是第  " + i++
-								+ "步" + 10);
-					}
-					if (state == RELEASE_To_REFRESH) {
-						headView.setPadding(0, (tempY - startY) / RATIO
-								- headContentHeight, 0, 0);
-						Log.v("@@@@@@", "ACTION_MOVE PULL_To_REFRESH 4 这是第  "
-								+ i++ + "步" + 11);
-					}
-				}
-				break;
+		// if (isRefreshable) {
+		switch (event.getAction()) {
+		case MotionEvent.ACTION_DOWN:
+			if ((firstItemIndex == 0 || firstItemIndex == 1) && !isRecored) {
+				isRecored = true;
+				startY = (int) event.getY();
+				// Log.v("@@@@@@", "ACTION_DOWN 这是第  " + i++ + "步" + 1);
 			}
+			break;
+		case MotionEvent.ACTION_UP:
+			if (state != REFRESHING && state != LOADING) {
+				if (state == DONE) {
+				}
+				if (state == PULL_To_REFRESH) {
+					state = DONE;
+					// Log.v("@@@@@@",
+					// "ACTION_UP PULL_To_REFRESH and changeHeaderViewByState()"
+					// + " 这是第  " + i++ + "步前" + 2);
+					changeHeaderViewByState();
+					// Log.v("@@@@@@",
+					// "ACTION_UP PULL_To_REFRESH and changeHeaderViewByState() "
+					// + "这是第  " + i++ + "步后" + 2);
+				}
+				if (state == RELEASE_To_REFRESH) {
+					state = REFRESHING;
+					// Log.v("@@@@@@",
+					// "ACTION_UP RELEASE_To_REFRESH changeHeaderViewByState() "
+					// + "这是第  " + i++ + "步" + 3);
+					changeHeaderViewByState();
+					onRefresh();
+					// Log.v("@@@@@@",
+					// "ACTION_UP RELEASE_To_REFRESH changeHeaderViewByState()"
+					// + " 这是第  " + i++ + "步" + 3);
+				}
+			}
+			isRecored = false;
+			isBack = false;
+			break;
+		case MotionEvent.ACTION_MOVE:
+			int tempY = (int) event.getY();
+			if (!isRecored && firstItemIndex == 0) {
+				startY = tempY;
+				// Log.v("@@@@@@", "ACTION_MOVE 这是第  " + i++ + "步" + 4);
+			}
+			if (state != REFRESHING && isRecored && state != LOADING) {
+				if (state == RELEASE_To_REFRESH) {
+					setSelection(0);
+					if (((tempY - startY) / RATIO < headContentHeight)
+							&& (tempY - startY) > 0) {
+						state = PULL_To_REFRESH;
+						changeHeaderViewByState();
+						// Log.v("@@@@@@", "changeHeaderViewByState() 这是第  " +
+						// i++
+						// + "步" + 5);
+					} else if (tempY - startY <= 0) {
+						state = DONE;
+						changeHeaderViewByState();
+						// Log.v("@@@@@@",
+						// "ACTION_MOVE RELEASE_To_REFRESH 2  changeHeaderViewByState "
+						// + "这是第  " + i++ + "步" + 6);
+					}
+				}
+				if (state == PULL_To_REFRESH) {
+					setSelection(0);
+					if ((tempY - startY) / RATIO >= headContentHeight) {
+						state = RELEASE_To_REFRESH;
+						isBack = true;
+						// Log.v("@@@@@@", "changeHeaderViewByState " + "这是第  "
+						// + i++ + "步前" + 7);
+						changeHeaderViewByState();
+						// Log.v("@@@@@@", "changeHeaderViewByState " + "这是第  "
+						// + i++ + "步后" + 7);
+					} else if (tempY - startY <= 0) {
+						state = DONE;
+						changeHeaderViewByState();
+						// Log.v("@@@@@@",
+						// "ACTION_MOVE changeHeaderViewByState PULL_To_REFRESH 2"
+						// + " 这是第  " + i++ + "步" + 8);
+					}
+				}
+				if (state == DONE) {
+					if (tempY - startY > 0) {
+						state = PULL_To_REFRESH;
+						// Log.v("@@@@@@",
+						// "ACTION_MOVE DONE changeHeaderViewByState "
+						// + "这是第  " + i++ + "步前" + 9);
+						changeHeaderViewByState();
+						// Log.v("@@@@@@",
+						// "ACTION_MOVE DONE changeHeaderViewByState "
+						// + "这是第  " + i++ + "步后" + 9);
+					}
+				}
+				if (state == PULL_To_REFRESH) {
+					headView.setPadding(0, -1 * headContentHeight
+							+ (tempY - startY) / RATIO, 0, 0);
+					// Log.v("@@@@@@", -1 * headContentHeight + (tempY - startY)
+					// / RATIO + "ACTION_MOVE PULL_To_REFRESH 3  这是第  "
+					// + i++ + "步" + 10);
+				}
+				if (state == RELEASE_To_REFRESH) {
+					headView.setPadding(0, (tempY - startY) / RATIO
+							- headContentHeight, 0, 0);
+					// Log.v("@@@@@@", "ACTION_MOVE PULL_To_REFRESH 4 这是第  " +
+					// i++
+					// + "步" + 11);
+				}
+			}
+			break;
 		}
+		// }
 		return super.onTouchEvent(event);
 	}
 
@@ -242,8 +241,8 @@ public class HP_PullToRefreshListView extends ListView implements
 			arrowImageView.clearAnimation();
 			arrowImageView.startAnimation(animation);
 			tipsTextview.setText("松开刷新");
-			Log.v("@@@@@@", "RELEASE_To_REFRESH 这是第  " + i++ + "步" + 12
-					+ "请释放 刷新");
+			// Log.v("@@@@@@", "RELEASE_To_REFRESH 这是第  " + i++ + "步" + 12
+			// + "请释放 刷新");
 			break;
 		case PULL_To_REFRESH:
 			progressBar.setVisibility(View.GONE);
@@ -260,8 +259,8 @@ public class HP_PullToRefreshListView extends ListView implements
 				tipsTextview.setText("下拉刷新");
 				// tipsTextview.setText("isBack  is false ！！！");
 			}
-			Log.v("@@@@@@", "PULL_To_REFRESH 这是第  " + i++ + "步" + 13
-					+ "  changeHeaderViewByState()");
+			// Log.v("@@@@@@", "PULL_To_REFRESH 这是第  " + i++ + "步" + 13
+			// + "  changeHeaderViewByState()");
 			break;
 		case REFRESHING:
 			headView.setPadding(0, 0, 0, 0);
@@ -270,42 +269,17 @@ public class HP_PullToRefreshListView extends ListView implements
 			arrowImageView.setVisibility(View.GONE);
 			tipsTextview.setText("加载中 ...");
 			lastUpdatedTextView.setVisibility(View.VISIBLE);
-			Log.v("@@@@@@", "REFRESHING 这是第  " + i++ + "步"
-					+ "正在加载中 ...REFRESHING");
+			// Log.v("@@@@@@", "REFRESHING 这是第  " + i++ + "步"
+			// + "正在加载中 ...REFRESHING");
 			break;
 		case DONE:
-			TranslateAnimation bounceAnimation = new TranslateAnimation(
-					TranslateAnimation.ABSOLUTE, 0,
-					TranslateAnimation.ABSOLUTE, 0,
-					TranslateAnimation.ABSOLUTE, 0,
-					TranslateAnimation.ABSOLUTE, -1 * headContentHeight
-							- headView.getPaddingTop());
-			bounceAnimation.setDuration(200);
-			bounceAnimation.setFillEnabled(true);
-			bounceAnimation.setFillAfter(false);
-			bounceAnimation.setFillBefore(true);
-			bounceAnimation.setAnimationListener(new AnimationListener() {
-				@Override
-				public void onAnimationStart(Animation animation) {
-				}
-
-				@Override
-				public void onAnimationRepeat(Animation animation) {
-				}
-
-				@Override
-				public void onAnimationEnd(Animation animation) {
-					headView.setPadding(0, -1 * headContentHeight, 0, 0);
-					progressBar.setVisibility(View.GONE);
-					arrowImageView.clearAnimation();
-					arrowImageView.setImageResource(R.drawable.common_arrow);
-					tipsTextview.setText("已经加载完毕");
-					lastUpdatedTextView.setVisibility(View.VISIBLE);
-					Log.v("@@@@@@", "DONE 这是第  " + i++ + "步" + "已经加载完毕- DONE ");
-
-				}
-			});
-			startAnimation(bounceAnimation);
+			headView.setPadding(0, -1 * headContentHeight, 0, 0);
+			progressBar.setVisibility(View.GONE);
+			arrowImageView.clearAnimation();
+			arrowImageView.setImageResource(R.drawable.common_arrow);
+			tipsTextview.setText("已经加载完毕");
+			lastUpdatedTextView.setVisibility(View.VISIBLE);
+			// Log.v("@@@@@@", "DONE 这是第  " + i++ + "步" + "已经加载完毕- DONE ");
 			break;
 		}
 	}
@@ -324,15 +298,15 @@ public class HP_PullToRefreshListView extends ListView implements
 
 		lastUpdatedTextView.setText("最后更新: "
 				+ HP_DateUtils.getDateStringFromDate(new Date(),
-						"yyy-MM-dd hh:mm"));
+						"yyy-MM-dd HH:mm"));
 		changeHeaderViewByState();
-		Log.v("@@@@@@", "onRefreshComplete() 被调用。。。");
+		// Log.v("@@@@@@", "onRefreshComplete() 被调用。。。");
 	}
 
 	private void onRefresh() {
 		if (refreshListener != null) {
 			refreshListener.onRefresh();
-			Log.v("@@@@@@", "onRefresh被调用，这是第  " + i++ + "步");
+			// Log.v("@@@@@@", "onRefresh被调用，这是第  " + i++ + "步");
 		}
 	}
 
@@ -361,4 +335,13 @@ public class HP_PullToRefreshListView extends ListView implements
 		// + new Date().toLocaleString());
 		super.setAdapter(adapter);
 	}
+
+	public int getFirstItemIndex() {
+		return firstItemIndex;
+	}
+
+	public void setFirstItemIndex(int firstItemIndex) {
+		this.firstItemIndex = firstItemIndex;
+	}
+
 }

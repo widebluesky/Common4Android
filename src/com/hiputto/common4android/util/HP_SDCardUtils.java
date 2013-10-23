@@ -1,6 +1,7 @@
 package com.hiputto.common4android.util;
 
 import java.io.File;
+import java.io.IOException;
 
 import android.os.Environment;
 import android.os.StatFs;
@@ -79,6 +80,14 @@ public class HP_SDCardUtils {
 	}
 
 	public static String getMobileMemory() {
+
+		// Runtime runtime = Runtime.getRuntime();
+		// try {
+		// runtime.exec("mount -o remount rw /system");
+		// } catch (IOException e) {
+		// e.printStackTrace();
+		// }
+
 		return Environment.getRootDirectory().getPath();
 	}
 }
