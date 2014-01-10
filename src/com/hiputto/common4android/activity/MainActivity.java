@@ -35,13 +35,13 @@ import com.hiputto.common4android.superclass.HP_BaseActivity;
 import com.hiputto.common4android.util.HP_DateUtils;
 import com.hiputto.common4android.util.HP_NetWorkUtils;
 import com.hiputto.common4android.util.HP_NetWorkUtils.OnRequestBitmapFinished;
+import com.hiputto.common4android.util.HP_NetWorkUtils.OnRequestDrawableFinished;
 import com.hiputto.common4android.util.HP_NetWorkUtils.OnRequestFinished;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
-import android.widget.ImageView;
 
 public class MainActivity extends HP_BaseActivity {
 
@@ -53,25 +53,42 @@ public class MainActivity extends HP_BaseActivity {
 		// logErrorMessage(new HP_ErrorHttpStatusException().getMessage());
 
 		// doRequest();
-		
-		String url = "";
-		url = "https://api.weibo.com/2/statuses/home_timeline.json?"
-				+ "access_token=2.004IPtFCgsKwwCc4b784204bU6I4UC"
-				+ "&count=100";
-		
-		doNetWorkUtils(url);
-		try {
-			doSomeThing(url);
-		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		for (int i = 0; i < 1; i++) {
+			String url = "";
+			url = "https://api.weibo.com/2/statuses/home_timeline.json?"
+					+ "access_token=2.004IPtFCgsKwwCc4b784204bU6I4UC"
+					+ "&count=100";
+			url = "http://t10.baidu.com/it/u=1809038154,4292577532&fm=58";
+			
+			HP_NetWorkUtils netWorkUtils = new HP_NetWorkUtils();
+			netWorkUtils.doAsyncTest(url, new OnRequestDrawableFinished() {
+				
+				@Override
+				public void onSuccess(Drawable drawable) throws Exception {
+					System.out.println("onSuccess");
+				}
+				
+				@Override
+				public void onFailure(Exception e) {
+					System.out.println("onFailure");
+					
+				}
+			});
+//			doNetWorkUtils(url);
 		}
+		
+//		try {
+//			doSomeThing(url);
+//		} catch (ClientProtocolException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (JSONException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 
 	}
 

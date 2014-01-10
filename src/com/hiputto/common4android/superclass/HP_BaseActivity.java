@@ -15,7 +15,6 @@ import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.IBinder;
-import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -55,15 +54,15 @@ public class HP_BaseActivity extends ActivityGroup {
 		strVer = strVer.substring(0, 3).trim();
 		float fv = Float.valueOf(strVer);
 		if (fv > 2.3) {
-			StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-					.detectDiskReads().detectDiskWrites().detectNetwork() // 这里可以替换为detectAll()
-																			// 就包括了磁盘读写和网络I/O
-					.penaltyLog() // 打印logcat，当然也可以定位到dropbox，通过文件保存相应的log
-					.build());
-			StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
-					.detectLeakedSqlLiteObjects() // 探测SQLite数据库操作
-					.penaltyLog() // 打印logcat
-					.penaltyDeath().build());
+//			StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+//					.detectDiskReads().detectDiskWrites().detectNetwork() // 这里可以替换为detectAll()
+//																			// 就包括了磁盘读写和网络I/O
+//					.penaltyLog() // 打印logcat，当然也可以定位到dropbox，通过文件保存相应的log
+//					.build());
+//			StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+//					.detectLeakedSqlLiteObjects() // 探测SQLite数据库操作
+//					.penaltyLog() // 打印logcat
+//					.penaltyDeath().build());
 		}
 
 		display = getWindowManager().getDefaultDisplay();

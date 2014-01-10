@@ -38,7 +38,6 @@ import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
@@ -46,7 +45,6 @@ import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.protocol.HTTP;
 
 import com.hiputto.common4android.exception.HP_ErrorHttpStatusException;
-import com.hiputto.common4android.manager.HP_ImageMemoryCache;
 import com.hiputto.common4android.util.HP_AsyncTaskUtils.AsyncTaskSteps;
 
 import android.content.Context;
@@ -60,8 +58,10 @@ import android.util.Log;
 
 public class HP_NetWorkUtils {
 
+	/**
+	 * Http请求方式
+	 */
 	public static enum HTTP_METHOD {
-		// newest不是latest...
 		POST("POST"), GET("GET");
 
 		private String value;
@@ -75,28 +75,42 @@ public class HP_NetWorkUtils {
 		}
 	}
 
+	private int REQUEST_TIMEOUT = 30 * 1000;// 请求超时
+	private int SOCKET_TIMEOUT = 30 * 1000; // 数据接收超时
+
+	public void setRequestTimeOut(int time) {
+		this.REQUEST_TIMEOUT = time;
+	}
+
+	public void setSoTimeOut(int time) {
+		this.SOCKET_TIMEOUT = time;
+	}
+
+	public int getRequestTimeOut() {
+		return this.REQUEST_TIMEOUT;
+	}
+
+	public int getSoTimeOut() {
+		return this.SOCKET_TIMEOUT;
+	}
+
 	private HttpClient client = null;
 
 	private HttpClient getHttpClient() {
 		try {
-			// BasicHttpParams httpParams = new BasicHttpParams();
-			// HttpConnectionParams.setConnectionTimeout(httpParams,
-			// REQUEST_TIMEOUT);
-			// HttpConnectionParams.setSoTimeout(httpParams, SOCKET_TIMEOUT);
-			// HttpClient client = new DefaultHttpClient(httpParams);
-
 			if (client == null) {
 				KeyStore trustStore = KeyStore.getInstance(KeyStore
 						.getDefaultType());
 				trustStore.load(null, null);
 
-				SSLSocketFactory sf = new MySSLSocketFactory(trustStore);
+				SSLSocketFactory sf = new NetSSLSocketFactory(trustStore);
 				sf.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
 
 				HttpParams params = new BasicHttpParams();
 
-				HttpConnectionParams.setConnectionTimeout(params, 30000);
-				HttpConnectionParams.setSoTimeout(params, 30000);
+				HttpConnectionParams.setConnectionTimeout(params,
+						REQUEST_TIMEOUT);
+				HttpConnectionParams.setSoTimeout(params, SOCKET_TIMEOUT);
 
 				HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
 				HttpProtocolParams.setContentCharset(params, HTTP.UTF_8);
@@ -129,7 +143,6 @@ public class HP_NetWorkUtils {
 
 		public void onFailure(HttpRequestBase httpRequest,
 				HttpResponse httpResponse, Exception e);
-
 	}
 
 	public interface OnRequestDataFinished {
@@ -156,38 +169,20 @@ public class HP_NetWorkUtils {
 		public void onFailure(Exception e);
 	}
 
-	private int REQUEST_TIMEOUT = 30 * 1000;// 请求超时
-	private int SOCKET_TIMEOUT = 30 * 1000; // 数据接收超时
-
-	public void setRequestTimeOut(int time) {
-		REQUEST_TIMEOUT = time;
-	}
-
-	public void setSoTimeOut(int time) {
-		SOCKET_TIMEOUT = time;
-	}
-
-	public int getRequestTimeOut() {
-		return this.REQUEST_TIMEOUT;
-	}
-
-	public int getSoTimeOut() {
-		return this.SOCKET_TIMEOUT;
-
-	}
-
-	// 判断网络是否可用
+	/**
+	 * 判断网络是否可用
+	 * 
+	 * @param context
+	 * @return
+	 */
 	public static boolean isNetworkAvailable(Context context) {
 		ConnectivityManager cm = (ConnectivityManager) context
 				.getSystemService(Context.CONNECTIVITY_SERVICE);
-		// return cm.getActiveNetworkInfo().isAvailable();
 		if (cm == null) {
 		} else {
 			// 如果仅仅是用来判断网络连接　　　　　　
 			// 则可以使用 cm.getActiveNetworkInfo().isAvailable();
-
 			NetworkInfo[] info = cm.getAllNetworkInfo();
-
 			if (info != null) {
 				for (int i = 0; i < info.length; i++) {
 					if (info[i].getState() == NetworkInfo.State.CONNECTED) {
@@ -199,8 +194,13 @@ public class HP_NetWorkUtils {
 		return false;
 	}
 
-	// 判断是否是3G网络
-	public static boolean is3rd(Context context) {
+	/**
+	 * 判断是否是3G网络
+	 * 
+	 * @param context
+	 * @return
+	 */
+	public static boolean is3G(Context context) {
 		ConnectivityManager cm = (ConnectivityManager) context
 				.getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo networkINfo = cm.getActiveNetworkInfo();
@@ -211,7 +211,12 @@ public class HP_NetWorkUtils {
 		return false;
 	}
 
-	// 判断是否是wifi网络
+	/**
+	 * 判断是否是wifi网络
+	 * 
+	 * @param context
+	 * @return
+	 */
 	public static boolean isWifi(Context context) {
 		ConnectivityManager cm = (ConnectivityManager) context
 				.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -364,7 +369,7 @@ public class HP_NetWorkUtils {
 			httpRequest = new HttpPost(url);
 
 			httpResponse = httpClient.execute(httpRequest);
-			
+
 			if (httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 
 				DataInputStream dataInputStream = new DataInputStream(
@@ -449,7 +454,16 @@ public class HP_NetWorkUtils {
 		} else {
 			Log.d("test", "not null drawable");
 		}
+	}
 
+	public void doAsyncTest(final String url,
+			final OnRequestDrawableFinished onRequestDrawableFinished) {
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				doRequestDrawable(url, onRequestDrawableFinished);
+			}
+		});
 	}
 
 	public AsyncTask<String, Integer, HashMap<String, Object>> doAsyncRequestDrawable(
@@ -758,7 +772,7 @@ public class HP_NetWorkUtils {
 
 			@Override
 			public void onCancelled() {
-				
+
 			}
 		}).execute("");
 	}
@@ -1010,10 +1024,10 @@ public class HP_NetWorkUtils {
 		}).execute("");
 	}
 
-	private static class MySSLSocketFactory extends SSLSocketFactory {
+	private static class NetSSLSocketFactory extends SSLSocketFactory {
 		SSLContext sslContext = SSLContext.getInstance("TLS");
 
-		public MySSLSocketFactory(KeyStore truststore)
+		public NetSSLSocketFactory(KeyStore truststore)
 				throws NoSuchAlgorithmException, KeyManagementException,
 				KeyStoreException, UnrecoverableKeyException {
 			super(truststore);
