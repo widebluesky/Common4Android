@@ -117,6 +117,8 @@ public class HP_SDCardUtils {
 	 * @return
 	 */
 	public static String getMobileMemoryPath() {
+		
 		return Environment.getRootDirectory().getPath();
+		
 	}
 }
