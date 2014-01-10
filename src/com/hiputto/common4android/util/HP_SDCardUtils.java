@@ -1,12 +1,17 @@
 package com.hiputto.common4android.util;
 
 import java.io.File;
-import java.io.IOException;
 
 import android.os.Environment;
 import android.os.StatFs;
 
 public class HP_SDCardUtils {
+
+	/**
+	 * 判断SD卡是否存在
+	 * 
+	 * @return
+	 */
 	public static boolean isSDCardExist() {
 		if (android.os.Environment.getExternalStorageState().equals(
 				android.os.Environment.MEDIA_MOUNTED)) {
@@ -15,6 +20,11 @@ public class HP_SDCardUtils {
 			return false;
 	}
 
+	/**
+	 * 获得SD卡存储空间大小
+	 * 
+	 * @return
+	 */
 	public static long getSDCardAllSize() {
 		if (isSDCardExist()) {
 			// 取得SD卡文件路径
@@ -34,6 +44,11 @@ public class HP_SDCardUtils {
 
 	}
 
+	/**
+	 * 获得SD卡剩余空间
+	 * 
+	 * @return
+	 */
 	public static long getSDCardFreeSize() {
 		if (isSDCardExist()) {
 			// 取得SD卡文件路径
@@ -52,6 +67,12 @@ public class HP_SDCardUtils {
 		}
 	}
 
+	/**
+	 * 文件是否存在
+	 * 
+	 * @param path
+	 * @return
+	 */
 	public static boolean isExistInSDCard(String path) {
 		if (isSDCardExist()) {
 			File file = new File(path);
@@ -61,6 +82,12 @@ public class HP_SDCardUtils {
 		}
 	}
 
+	/**
+	 * 获得文件
+	 * 
+	 * @param path
+	 * @return
+	 */
 	public static File getFileWithPath(String path) {
 		if (isSDCardExist()) {
 			File file = new File(path);
@@ -70,6 +97,11 @@ public class HP_SDCardUtils {
 		}
 	}
 
+	/**
+	 * 获得SD卡路径
+	 * 
+	 * @return
+	 */
 	public static String getSDCardPath() {
 		if (isSDCardExist()) {
 			File file = Environment.getExternalStorageDirectory();
@@ -79,15 +111,12 @@ public class HP_SDCardUtils {
 		}
 	}
 
-	public static String getMobileMemory() {
-
-		// Runtime runtime = Runtime.getRuntime();
-		// try {
-		// runtime.exec("mount -o remount rw /system");
-		// } catch (IOException e) {
-		// e.printStackTrace();
-		// }
-
+	/**
+	 * 获得手机内存路径
+	 * 
+	 * @return
+	 */
+	public static String getMobileMemoryPath() {
 		return Environment.getRootDirectory().getPath();
 	}
 }

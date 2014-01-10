@@ -30,19 +30,19 @@ public class HP_AnimationUtils {
 	// view.startAnimation(new HP_AnimationUtils().animTranslate(0,100,0, 100,
 	// 500,new AnimationListener() {
 	//
-	// 
+	//
 	// public void onAnimationStart(Animation animation) {
 	// // TODO Auto-generated method stub
 	//
 	// }
 	//
-	// 
+	//
 	// public void onAnimationRepeat(Animation animation) {
 	// // TODO Auto-generated method stub
 	//
 	// }
 	//
-	// 
+	//
 	// public void onAnimationEnd(Animation animation) {
 	// // TODO Auto-generated method stub
 	// LayoutParams params = (LayoutParams) imageView.getLayoutParams();
@@ -56,8 +56,19 @@ public class HP_AnimationUtils {
 	// }));
 
 	private Animation animationTranslate, animationRotate, animationScale,
-			animationAlpha,animationRotateX,animationRotateY,animationRotateZ;
+			animationAlpha, animationRotateX, animationRotateY,
+			animationRotateZ;
 
+	/**
+	 * 动画缩放
+	 * 
+	 * @param fromX
+	 * @param toX
+	 * @param fromY
+	 * @param toY
+	 * @param duration
+	 * @return
+	 */
 	public Animation animScale(float fromX, float toX, float fromY, float toY,
 			long duration) {
 		animationScale = new ScaleAnimation(1f, toX, 1f, toY,
@@ -68,6 +79,17 @@ public class HP_AnimationUtils {
 		return animationScale;
 	}
 
+	/**
+	 * 动画缩放
+	 * 
+	 * @param fromX
+	 * @param toX
+	 * @param fromY
+	 * @param toY
+	 * @param duration
+	 * @param animationListener
+	 * @return
+	 */
 	public Animation animScale(float fromX, float toX, float fromY, float toY,
 			long duration, AnimationListener animationListener) {
 		animationScale = new ScaleAnimation(1f, toX, 1f, toY,
@@ -79,6 +101,16 @@ public class HP_AnimationUtils {
 		return animationScale;
 	}
 
+	/**
+	 * 动画旋转
+	 * 
+	 * @param fromDegrees
+	 * @param toDegrees
+	 * @param pivotXValue
+	 * @param pivotYValue
+	 * @param duration
+	 * @return
+	 */
 	public Animation animRotate(float fromDegrees, float toDegrees,
 			float pivotXValue, float pivotYValue, long duration) {
 		animationRotate = new RotateAnimation(fromDegrees, toDegrees,
@@ -89,6 +121,17 @@ public class HP_AnimationUtils {
 		return animationRotate;
 	}
 
+	/**
+	 * 动画旋转
+	 * 
+	 * @param fromDegrees
+	 * @param toDegrees
+	 * @param pivotXValue
+	 * @param pivotYValue
+	 * @param duration
+	 * @param animationListener
+	 * @return
+	 */
 	public Animation animRotate(float fromDegrees, float toDegrees,
 			float pivotXValue, float pivotYValue, long duration,
 			AnimationListener animationListener) {
@@ -101,6 +144,16 @@ public class HP_AnimationUtils {
 		return animationRotate;
 	}
 
+	/**
+	 * 动画位移
+	 * 
+	 * @param fromX
+	 * @param toX
+	 * @param fromY
+	 * @param toY
+	 * @param duration
+	 * @return
+	 */
 	public Animation animTranslate(float fromX, float toX, float fromY,
 			float toY, long duration) {
 		animationTranslate = new TranslateAnimation(fromX, toX, fromY, toY);
@@ -109,6 +162,17 @@ public class HP_AnimationUtils {
 		return animationTranslate;
 	}
 
+	/**
+	 * 动画位移
+	 * 
+	 * @param fromX
+	 * @param toX
+	 * @param fromY
+	 * @param toY
+	 * @param duration
+	 * @param animationListener
+	 * @return
+	 */
 	public Animation animTranslate(float fromX, float toX, float fromY,
 			float toY, long duration, AnimationListener animationListener) {
 		animationTranslate = new TranslateAnimation(fromX, toX, fromY, toY);
@@ -118,6 +182,14 @@ public class HP_AnimationUtils {
 		return animationTranslate;
 	}
 
+	/**
+	 * 动画透明度
+	 * 
+	 * @param fromAlpha
+	 * @param toAlpha
+	 * @param duration
+	 * @return
+	 */
 	public Animation animAlpha(float fromAlpha, float toAlpha, long duration) {
 		animationAlpha = new AlphaAnimation(fromAlpha, toAlpha);
 		animationAlpha.setDuration(duration);
@@ -125,6 +197,15 @@ public class HP_AnimationUtils {
 		return animationAlpha;
 	}
 
+	/**
+	 * 动画透明度
+	 * 
+	 * @param fromAlpha
+	 * @param toAlpha
+	 * @param duration
+	 * @param animationListener
+	 * @return
+	 */
 	public Animation animAlpha(float fromAlpha, float toAlpha, long duration,
 			AnimationListener animationListener) {
 		animationAlpha = new AlphaAnimation(fromAlpha, toAlpha);
@@ -133,28 +214,67 @@ public class HP_AnimationUtils {
 		animationAlpha.setAnimationListener(animationListener);
 		return animationAlpha;
 	}
-	
-	public Animation animRotateX(float fromDegree, float toDegree, long duration,int centerX,int centerY,
+
+	/**
+	 * 动画围绕x轴旋转
+	 * 
+	 * @param fromDegree
+	 * @param toDegree
+	 * @param duration
+	 * @param centerX
+	 * @param centerY
+	 * @param animationListener
+	 * @return
+	 */
+	public Animation animRotateX(float fromDegree, float toDegree,
+			long duration, int centerX, int centerY,
 			AnimationListener animationListener) {
-		animationRotateX = new HP_RotateXAnimation(fromDegree, toDegree, centerX, centerY);
+		animationRotateX = new HP_RotateXAnimation(fromDegree, toDegree,
+				centerX, centerY);
 		animationRotateX.setDuration(duration);
 		animationRotateX.setFillAfter(true);
 		animationRotateX.setAnimationListener(animationListener);
 		return animationRotateX;
 	}
-	
-	public Animation animRotateY(float fromDegree, float toDegree, long duration,int centerX,int centerY,
+
+	/**
+	 * 动画围绕Y轴旋转
+	 * 
+	 * @param fromDegree
+	 * @param toDegree
+	 * @param duration
+	 * @param centerX
+	 * @param centerY
+	 * @param animationListener
+	 * @return
+	 */
+	public Animation animRotateY(float fromDegree, float toDegree,
+			long duration, int centerX, int centerY,
 			AnimationListener animationListener) {
-		animationRotateY = new HP_RotateYAnimation(fromDegree, toDegree, centerX, centerY);
+		animationRotateY = new HP_RotateYAnimation(fromDegree, toDegree,
+				centerX, centerY);
 		animationRotateY.setDuration(duration);
 		animationRotateY.setFillAfter(true);
 		animationRotateY.setAnimationListener(animationListener);
 		return animationRotateY;
 	}
-	
-	public Animation animRotateZ(float fromDegree, float toDegree, long duration,int centerX,int centerY,
+
+	/**
+	 * 动画围绕Y轴旋转
+	 * 
+	 * @param fromDegree
+	 * @param toDegree
+	 * @param duration
+	 * @param centerX
+	 * @param centerY
+	 * @param animationListener
+	 * @return
+	 */
+	public Animation animRotateZ(float fromDegree, float toDegree,
+			long duration, int centerX, int centerY,
 			AnimationListener animationListener) {
-		animationRotateZ = new HP_RotateZAnimation(fromDegree, toDegree, centerX, centerY);
+		animationRotateZ = new HP_RotateZAnimation(fromDegree, toDegree,
+				centerX, centerY);
 		animationRotateZ.setDuration(duration);
 		animationRotateZ.setFillAfter(true);
 		animationRotateZ.setAnimationListener(animationListener);
@@ -281,7 +401,7 @@ public class HP_AnimationUtils {
 
 	/**
 	 * 向前甩一定值后再回到原来位置
-	 *  
+	 * 
 	 * @return
 	 */
 	public static OvershootInterpolator getOvershootInterpolator(float tension) {

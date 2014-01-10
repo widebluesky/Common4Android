@@ -15,6 +15,13 @@ public class HP_BitmapCacheUtils {
 	int MB = 1024;
 	int FREE_SD_SPACE_NEEDED_TO_CACHE = 50;// MB
 
+	/**
+	 * 保存Bitmap到SD卡
+	 * 
+	 * @param bm
+	 * @param savePath
+	 * @param fileName
+	 */
 	public void saveBitmapToSDCard(Bitmap bm, String savePath, String fileName) {
 		if (bm == null) {
 			Log.w(TAG, " trying to savenull bitmap");
@@ -58,6 +65,14 @@ public class HP_BitmapCacheUtils {
 
 	}
 
+	/**
+	 * 保存Bitmap到手机缓存
+	 * 
+	 * @param bm
+	 * @param savePath
+	 * @param fileName
+	 * @param context
+	 */
 	public void saveBitmapToMobileCache(Bitmap bm, String savePath,
 			String fileName, Context context) {
 		if (bm == null) {
