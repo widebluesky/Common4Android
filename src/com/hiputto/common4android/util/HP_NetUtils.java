@@ -691,11 +691,11 @@ public class HP_NetUtils {
 		};
 		HP_DefaultThreadPool.getInstance().execute(runnable);
 		return runnable;
-	}
+	} 
 
 	/**
 	 * 同步PostDrawable请求
-	 * 
+	 *  
 	 * @param url
 	 * @param onRequestDrawableFinished
 	 */
@@ -706,7 +706,7 @@ public class HP_NetUtils {
 			// 可以在这里通过文件名来判断，是否本地有此图片
 			drawable = Drawable.createFromStream(new URL(url).openStream(),
 					"drawable");
-			onRequestDrawableFinished.onSuccess(drawable);
+			onRequestDrawableFinished.onSuccess(drawable); 
 		} catch (Exception e) {
 			onRequestDrawableFinished.onFailure(e);
 		}
@@ -737,4 +737,5 @@ public class HP_NetUtils {
 		HP_DefaultThreadPool.getInstance().execute(runnable);
 		return runnable;
 	}
+	
 }

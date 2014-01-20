@@ -55,7 +55,6 @@ public class HP_BitmapCacheUtils {
 				bm.compress(Bitmap.CompressFormat.JPEG, 60, outStream);
 				outStream.flush();
 				outStream.close();
-
 				Log.e("saveFile", saveFile.length() + "");
 				Log.i(TAG, "Image saved tosd");
 			}
@@ -98,7 +97,6 @@ public class HP_BitmapCacheUtils {
 
 				outStream.flush();
 				outStream.close();
-
 				Log.e("saveFile", saveFile.length() + "");
 				Log.i(TAG, "Image saved tosd");
 			}

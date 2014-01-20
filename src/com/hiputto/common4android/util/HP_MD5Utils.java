@@ -24,8 +24,8 @@ public class HP_MD5Utils {
 	}
 
 	public static String getFileMD5String(File file) throws IOException {
-		FileInputStream in = new FileInputStream(file);
-		FileChannel ch = in.getChannel();
+		FileInputStream inputStream = new FileInputStream(file);
+		FileChannel ch = inputStream.getChannel();
 		MappedByteBuffer byteBuffer = ch.map(FileChannel.MapMode.READ_ONLY, 0,
 				file.length());
 		messagedigest.update(byteBuffer);

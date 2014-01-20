@@ -12,13 +12,12 @@ public class HP_FileUtils {
 		long s = 0;
 		try {
 			if (f.exists()) {
-				FileInputStream fis = new FileInputStream(f);
-				s = fis.available();
+				FileInputStream fileInputStream = new FileInputStream(f);
+				s = fileInputStream.available();
 			} else {
 				f.createNewFile();
 				System.out.println("文件不存在");
 			}
-
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

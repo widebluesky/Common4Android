@@ -21,7 +21,7 @@ public class HP_RotateXAnimation extends Animation {
 		this.toDegree = toDegree;
 		this.mCenterX = centerX;
 		this.mCenterY = centerY;
-		
+
 		setDuration(1500);
 	}
 

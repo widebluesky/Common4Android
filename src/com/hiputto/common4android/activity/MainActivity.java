@@ -1,9 +1,6 @@
 package com.hiputto.common4android.activity;
 
-import java.io.BufferedReader;
-import java.io.DataInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.HashMap;
 
 import org.apache.http.Header;
@@ -14,12 +11,9 @@ import org.apache.http.HttpRequest;
 import org.apache.http.HttpRequestInterceptor;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.entity.GzipDecompressingEntity;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.CoreConnectionPNames;
@@ -30,9 +24,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.hiputto.common4android.R;
-import com.hiputto.common4android.exception.HP_ErrorHttpStatusException;
 import com.hiputto.common4android.superclass.HP_BaseActivity;
-import com.hiputto.common4android.util.HP_DateUtils;
 import com.hiputto.common4android.util.HP_NetWorkUtils;
 import com.hiputto.common4android.util.HP_NetWorkUtils.OnRequestBitmapFinished;
 import com.hiputto.common4android.util.HP_NetWorkUtils.OnRequestDrawableFinished;

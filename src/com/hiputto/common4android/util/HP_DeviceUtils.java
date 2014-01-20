@@ -10,39 +10,39 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
-import android.util.TypedValue;
 
 public class HP_DeviceUtils {
 
-	// 获取设备型号
-	public static String getModel() {
-		return android.os.Build.MANUFACTURER + " " + android.os.Build.MODEL;
-	}
-
-	// 获取操作版本
-	public static String getOperatingSystem() {
-		return "Android " + android.os.Build.VERSION.RELEASE;
-	}
-
-	public static String getProduct() {
-		return "Product: " + android.os.Build.PRODUCT;
-	}
-
-	// 获取屏幕宽度
+	/**
+	 * 获取屏幕宽度
+	 * 
+	 * @param context
+	 * @return
+	 */
 	public static int getScreenWidth(Context context) {
 		new DisplayMetrics();
 		return context.getApplicationContext().getResources()
 				.getDisplayMetrics().widthPixels;
 	}
 
-	// 获取屏幕高度
+	/**
+	 * 获取屏幕高度
+	 * 
+	 * @param context
+	 * @return
+	 */
 	public static int getScreenHeight(Context context) {
 		new DisplayMetrics();
 		return context.getApplicationContext().getResources()
 				.getDisplayMetrics().heightPixels;
 	}
 
-	// 判断GPS是否打开
+	/**
+	 * 判断GPS是否打开
+	 * 
+	 * @param context
+	 * @return
+	 */
 	public static boolean isGPSEnabled(Context context) {
 		LocationManager lm = ((LocationManager) context
 				.getSystemService(Context.LOCATION_SERVICE));
@@ -50,7 +50,12 @@ public class HP_DeviceUtils {
 		return accessibleProviders != null && accessibleProviders.size() > 0;
 	}
 
-	// 判断WIFI是否打开
+	/**
+	 * 判断WIFI是否打开
+	 * 
+	 * @param context
+	 * @return
+	 */
 	public static boolean isWifiEnabled(Context context) {
 		ConnectivityManager mgrConn = (ConnectivityManager) context
 				.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -137,7 +142,12 @@ public class HP_DeviceUtils {
 		return android.os.Build.USER;
 	}
 
-	// 获取mac地址
+	/**
+	 * 获取mac地址
+	 * 
+	 * @param context
+	 * @return
+	 */
 	public static String getMACAddress(Context context) {
 		WifiManager wifi = (WifiManager) context
 				.getSystemService(Context.WIFI_SERVICE);

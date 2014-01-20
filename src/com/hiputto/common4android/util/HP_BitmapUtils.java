@@ -22,7 +22,6 @@ import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.PixelFormat;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
@@ -62,19 +61,8 @@ public class HP_BitmapUtils {
 	 * 
 	 * */
 	public static Bitmap bitmapFromDrawable(Drawable drawable) {
-		
-		Bitmap bitmap = ((BitmapDrawable)drawable).getBitmap();
-//		Bitmap bitmap = Bitmap
-//				.createBitmap(
-//						drawable.getIntrinsicWidth(),
-//						drawable.getIntrinsicHeight(),
-//						drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888
-//								: Bitmap.Config.RGB_565);
-//		Canvas canvas = new Canvas();
-//		canvas.setBitmap(bitmap);
-//		drawable.setBounds(0, 0, drawable.getIntrinsicWidth(),
-//				drawable.getIntrinsicHeight());
-//		drawable.draw(canvas);
+
+		Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
 		return bitmap;
 	}
 
@@ -88,7 +76,8 @@ public class HP_BitmapUtils {
 	 * @throws Exception
 	 * 
 	 * */
-	public static byte[] bitmap2Bytes(Bitmap bitmap,Bitmap.CompressFormat format) throws Exception {
+	public static byte[] bitmap2Bytes(Bitmap bitmap,
+			Bitmap.CompressFormat format) throws Exception {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		bitmap.compress(format, 100, baos);
 		byte[] data = baos.toByteArray();
@@ -128,7 +117,7 @@ public class HP_BitmapUtils {
 	 * 
 	 * */
 	public static Bitmap bitmap2Resize(Bitmap bitmap, int width, int height) {
-		if (bitmap==null) {
+		if (bitmap == null) {
 			return null;
 		}
 		int tempWidth = bitmap.getWidth();
@@ -155,7 +144,7 @@ public class HP_BitmapUtils {
 	 * 
 	 * */
 	public static Bitmap bitmap2Round(Bitmap bitmap, float roundPx) {
-		if (bitmap==null) {
+		if (bitmap == null) {
 			return null;
 		}
 		Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
@@ -247,9 +236,6 @@ public class HP_BitmapUtils {
 		Paint paint = new Paint();
 		// 加入图片
 		if (watermark != null) {
-			int ww = watermark.getWidth();
-			int wh = watermark.getHeight();
-			// paint.setAlpha(1010);
 			cv.drawBitmap(watermark, x, y, paint);// 在src的右下角画入水印
 		}
 
@@ -307,10 +293,8 @@ public class HP_BitmapUtils {
 			textPaint.setColor(textColor);
 			textPaint.setTypeface(Typeface.DEFAULT_BOLD);// 采用默认的宽度
 			textPaint.setTextSize(textSize);
-
 			// 这里是自动换行的
 			cv.translate(x, y);
-
 			StaticLayout layout = new StaticLayout(text, textPaint, width,
 					isHorizentalCenter ? Alignment.ALIGN_CENTER
 							: Alignment.ALIGN_NORMAL, 1.0F, 0.0F, true);
@@ -323,24 +307,31 @@ public class HP_BitmapUtils {
 		return newb;
 	}
 
-	public static Bitmap bitmap2CompressBitmap(Bitmap bitmap, int scale,Bitmap.CompressFormat format) {
+	/**
+	 * 缩放图片
+	 * 
+	 * @param bitmap
+	 * @param scale
+	 * @param format
+	 * @return
+	 * @throws Exception
+	 */
+	public static Bitmap bitmap2CompressBitmap(Bitmap bitmap, int scale,
+			Bitmap.CompressFormat format) throws Exception {
 
-		byte[] data = null;
-		try {
-			data = HP_BitmapUtils.bitmap2Bytes(bitmap,format);
-		} catch (Exception e) {
-			Log.e("asdf", e.getLocalizedMessage());
-		}
-
+		byte[] data = HP_BitmapUtils.bitmap2Bytes(bitmap, format);
 		BitmapFactory.Options option = new BitmapFactory.Options();
-
 		option.inSampleSize = scale; // 将图片设为原来宽高的1/2，防止内存溢出
-
 		bitmap = BitmapFactory.decodeByteArray(data, 0, data.length, option);
-
 		return bitmap;
 	}
 
+	/**
+	 * 异步从文件获得Bitmap
+	 * 
+	 * @param pathName
+	 * @param onDecodeFileFinished
+	 */
 	public static void getBitmapByDecodeFile(String pathName,
 			final OnDecodeFileFinished onDecodeFileFinished) {
 
@@ -432,7 +423,6 @@ public class HP_BitmapUtils {
 	}
 
 	public interface OnDecodeFileListFinished {
-
 		public void onDecodeFileListFinished(List<Bitmap> bitmapList);
 	}
 
@@ -480,7 +470,6 @@ public class HP_BitmapUtils {
 	}
 
 	public static Bitmap compressJPEGImage(Bitmap image) {
-
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		image.compress(Bitmap.CompressFormat.JPEG, 100, baos);// 质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
 		int options = 100;
@@ -508,97 +497,102 @@ public class HP_BitmapUtils {
 		Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);// 把ByteArrayInputStream数据生成图片
 		return bitmap;
 	}
-	
+
 	/**
-     * make sure the color data size not more than 5M
-     * 
-     * @param rect
-     * @return
-     */
-    public static boolean makesureSizeNotTooLarge(Rect rect) {
-        final int FIVE_M = 5 * 1024 * 1024;
-        if ( rect.width() * rect.height() * 2 > FIVE_M ) {
-            // 不能超过5M
-            return false;
-        }
-        return true;
-    }
-    
-    public static int getSampleSizeOfNotTooLarge( Rect rect ) {
-        final int FIVE_M = 5 * 1024 * 1024;
-        double ratio = ( ( double ) rect.width() ) * rect.height() * 2 / FIVE_M;
-        return ratio >= 1 ? (int)ratio : 1;
-    }
+	 * make sure the color data size not more than 5M
+	 * 
+	 * @param rect
+	 * @return
+	 */
+	public static boolean makesureSizeNotTooLarge(Rect rect) {
+		final int FIVE_M = 5 * 1024 * 1024;
+		if (rect.width() * rect.height() * 2 > FIVE_M) {
+			// 不能超过5M
+			return false;
+		}
+		return true;
+	}
 
-    /**
-     * 自适应屏幕大小 得到最大的smapleSize
-     * 同时达到此目标： 自动旋转 以适应view的宽高后, 不影响界面显示效果
-     * @param vWidth view width
-     * @param vHeight view height
-     * @param bWidth bitmap width
-     * @param bHeight bitmap height
-     * @return
-     */
-    public static int getSampleSizeAutoFitToScreen( int vWidth, int vHeight, int bWidth, int bHeight ) {
-        if( vHeight == 0 || vWidth == 0 ) {
-            return 1;
-        }
+	public static int getSampleSizeOfNotTooLarge(Rect rect) {
+		final int FIVE_M = 5 * 1024 * 1024;
+		double ratio = ((double) rect.width()) * rect.height() * 2 / FIVE_M;
+		return ratio >= 1 ? (int) ratio : 1;
+	}
 
-        int ratio = Math.max( bWidth / vWidth, bHeight / vHeight );
+	/**
+	 * 自适应屏幕大小 得到最大的smapleSize 同时达到此目标： 自动旋转 以适应view的宽高后, 不影响界面显示效果
+	 * 
+	 * @param vWidth
+	 *            view width
+	 * @param vHeight
+	 *            view height
+	 * @param bWidth
+	 *            bitmap width
+	 * @param bHeight
+	 *            bitmap height
+	 * @return
+	 */
+	public static int getSampleSizeAutoFitToScreen(int vWidth, int vHeight,
+			int bWidth, int bHeight) {
+		if (vHeight == 0 || vWidth == 0) {
+			return 1;
+		}
 
-        int ratioAfterRotate = Math.max( bHeight / vWidth, bWidth / vHeight );
+		int ratio = Math.max(bWidth / vWidth, bHeight / vHeight);
 
-        return Math.min( ratio, ratioAfterRotate );
-    }
-    
-    /**
-     * 检测是否可以解析成位图
-     * 
-     * @param datas
-     * @return
-     */
-    public static boolean verifyBitmap(byte[] datas) {
-        return verifyBitmap(new ByteArrayInputStream(datas));
-    }
+		int ratioAfterRotate = Math.max(bHeight / vWidth, bWidth / vHeight);
 
-    /**
-     * 检测是否可以解析成位图
-     * 
-     * @param input
-     * @return
-     */
-    public static boolean verifyBitmap(InputStream input) {
-        if (input == null) {
-            return false;
-        }
-        final BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        input = input instanceof BufferedInputStream ? input
-                : new BufferedInputStream(input);
-        BitmapFactory.decodeStream(input, null, options);
-        try {
+		return Math.min(ratio, ratioAfterRotate);
+	}
+
+	/**
+	 * 检测是否可以解析成位图
+	 * 
+	 * @param datas
+	 * @return
+	 */
+	public static boolean verifyBitmap(byte[] datas) {
+		return verifyBitmap(new ByteArrayInputStream(datas));
+	}
+
+	/**
+	 * 检测是否可以解析成位图
+	 * 
+	 * @param input
+	 * @return
+	 */
+	public static boolean verifyBitmap(InputStream input) {
+		if (input == null) {
+			return false;
+		}
+		final BitmapFactory.Options options = new BitmapFactory.Options();
+		options.inJustDecodeBounds = true;
+		input = input instanceof BufferedInputStream ? input
+				: new BufferedInputStream(input);
+		BitmapFactory.decodeStream(input, null, options);
+		try {
 			input.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        return (options.outHeight > 0) && (options.outWidth > 0);
-    }
+		return (options.outHeight > 0) && (options.outWidth > 0);
+	}
 
-    /**
-     * 检测是否可以解析成位图
-     * 
-     * @param path
-     * @return
-     */
-    public static boolean verifyBitmap(String path) {
-        try {
-            return verifyBitmap(new FileInputStream(path));
-        } catch (final FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
+	/**
+	 * 检测是否可以解析成位图
+	 * 
+	 * @param path
+	 * @return
+	 */
+	public static boolean verifyBitmap(String path) {
+		try {
+			return verifyBitmap(new FileInputStream(path));
+		} catch (final FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 
 	/*
 	 * private Bitmap getimage(String srcPath) { BitmapFactory.Options newOpts =
@@ -641,6 +635,5 @@ public class HP_BitmapUtils {
 	 * BitmapFactory.decodeStream(isBm, null, newOpts); return bitmap;//
 	 * 压缩好比例大小后再进行质量压缩 }
 	 */
-	
 
 }
