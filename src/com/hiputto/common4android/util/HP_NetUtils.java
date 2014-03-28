@@ -349,6 +349,45 @@ public class HP_NetUtils {
 	 * @param onRequestFinished
 	 * @return
 	 */
+	public Runnable doAsyncGetRequestData(final String url,
+			final OnRequestDataFinished onRequestDataFinished) {
+		Runnable runnable = new Runnable() {
+			@Override
+			public void run() {
+				try {
+					byte[] data = null;
+					httpRequest = new HttpGet(url);
+					httpResponse = getHttpClient().execute(httpRequest);
+					if (httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+						DataInputStream dataInputStream = new DataInputStream(
+								httpResponse.getEntity().getContent());
+						ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+						int index = 0;
+						byte[] buffer = new byte[1024];
+						while ((index = dataInputStream.read(buffer, 0,
+								buffer.length)) != -1) {
+							byteArrayOutputStream.write(buffer, 0, index);
+						}
+						data = byteArrayOutputStream.toByteArray();
+						dataInputStream.close();
+						byteArrayOutputStream.close();
+						onRequestDataFinished.onSuccess(httpRequest,
+								httpResponse, data);
+					} else {
+						onRequestDataFinished
+								.onFailure(httpRequest, httpResponse,
+										new HP_ErrorHttpStatusException());
+					}
+				} catch (Exception e) {
+					onRequestDataFinished.onFailure(httpRequest, httpResponse,
+							e);
+				}
+			}
+		};
+		HP_DefaultThreadPool.getInstance().execute(runnable);
+		return runnable;
+	}
+
 	public Runnable doAsyncGetRequest(final String url,
 			final OnRequestFinished onRequestFinished) {
 		Runnable runnable = new Runnable() {
@@ -629,6 +668,62 @@ public class HP_NetUtils {
 	}
 
 	/**
+	 * 异步PostData请求
+	 * 
+	 * @param url
+	 * @param params
+	 * @param onRequestDataFinished
+	 * @return
+	 */
+	public Runnable doAsyncPostRequestData(final String url,
+			final List<NameValuePair> params,
+			final OnRequestDataFinished onRequestDataFinished) {
+
+		Runnable runnable = new Runnable() {
+			@Override
+			public void run() {
+				byte[] data = null;
+				try {
+					httpRequest = new HttpPost(url);
+					if (params != null) {
+						((HttpPost) httpRequest)
+								.setEntity(new UrlEncodedFormEntity(params,
+										HTTP.UTF_8));
+					}
+
+					httpResponse = getHttpClient().execute(httpRequest);
+					if (httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+						DataInputStream dataInputStream = new DataInputStream(
+								httpResponse.getEntity().getContent());
+						ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+						int index = 0;
+						byte[] buffer = new byte[1024];
+						while ((index = dataInputStream.read(buffer, 0,
+								buffer.length)) != -1) {
+							byteArrayOutputStream.write(buffer, 0, index);
+						}
+						data = byteArrayOutputStream.toByteArray();
+						dataInputStream.close();
+						byteArrayOutputStream.close();
+						onRequestDataFinished.onSuccess(httpRequest,
+								httpResponse, data);
+					} else {
+						onRequestDataFinished
+								.onFailure(httpRequest, httpResponse,
+										new HP_ErrorHttpStatusException());
+					}
+				} catch (Exception e) {
+					onRequestDataFinished.onFailure(httpRequest, httpResponse,
+							e);
+				}
+			}
+		};
+		HP_DefaultThreadPool.getInstance().execute(runnable);
+		return runnable;
+
+	}
+
+	/**
 	 * 同步PostBitmap请求
 	 * 
 	 * @param url
@@ -691,11 +786,11 @@ public class HP_NetUtils {
 		};
 		HP_DefaultThreadPool.getInstance().execute(runnable);
 		return runnable;
-	} 
+	}
 
 	/**
 	 * 同步PostDrawable请求
-	 *  
+	 * 
 	 * @param url
 	 * @param onRequestDrawableFinished
 	 */
@@ -706,7 +801,7 @@ public class HP_NetUtils {
 			// 可以在这里通过文件名来判断，是否本地有此图片
 			drawable = Drawable.createFromStream(new URL(url).openStream(),
 					"drawable");
-			onRequestDrawableFinished.onSuccess(drawable); 
+			onRequestDrawableFinished.onSuccess(drawable);
 		} catch (Exception e) {
 			onRequestDrawableFinished.onFailure(e);
 		}
@@ -737,5 +832,56 @@ public class HP_NetUtils {
 		HP_DefaultThreadPool.getInstance().execute(runnable);
 		return runnable;
 	}
-	
+
+	/**
+	 * 下载图片
+	 * 
+	 * @return
+	 */
+	public Runnable doAsyncGetRequestBitmap(final String imageUrl, final OnRequestBitmapFinished onRequestBitmapFinished) {
+		Runnable runnable = new Runnable() {
+			@Override
+			public void run() {
+
+				doGetRequest(imageUrl, new OnRequestFinished() {
+
+					@Override
+					public void onSuccess(HttpRequestBase httpRequest,
+							HttpResponse httpResponse) throws Exception {
+
+						try {
+							Bitmap bitmap = null;
+
+							if (httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+
+								DataInputStream dataInputStream = new DataInputStream(
+										httpResponse.getEntity().getContent());
+								bitmap = BitmapFactory.decodeStream(dataInputStream);
+
+								dataInputStream.close();
+
+								onRequestBitmapFinished.onSuccess(httpRequest, httpResponse,
+										bitmap);
+							} else {
+								onRequestBitmapFinished.onFailure(httpRequest, httpResponse,
+										new HP_ErrorHttpStatusException());
+							}
+
+						} catch (Exception e) {
+							onRequestBitmapFinished.onFailure(httpRequest, httpResponse, e);
+						}
+					}
+
+					@Override
+					public void onFailure(HttpRequestBase httpRequest,
+							HttpResponse httpResponse, Exception e) {
+						onRequestBitmapFinished.onFailure(httpRequest, httpResponse, e);
+					}
+				});
+			}
+		};
+		HP_DefaultThreadPool.getInstance().execute(runnable);
+		return runnable;
+	}
+
 }

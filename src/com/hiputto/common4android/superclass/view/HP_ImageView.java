@@ -5,14 +5,11 @@ import org.apache.http.client.methods.HttpRequestBase;
 
 import com.hiputto.common4android.manager.HP_ImageFileCache;
 import com.hiputto.common4android.manager.HP_ImageMemoryCache;
+import com.hiputto.common4android.util.HP_NetUtils;
 import com.hiputto.common4android.util.HP_NetWorkAsyncTask;
-import com.hiputto.common4android.util.HP_NetWorkUtils;
-import com.hiputto.common4android.util.HP_NetWorkUtils.OnRequestBitmapFinished;
-import com.hiputto.common4android.util.HP_NetWorkUtils.OnRequestDrawableFinished;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.ImageView;
@@ -47,35 +44,6 @@ public class HP_ImageView extends ImageView {
 		doAsyncPostRequestBitmap(url, onImageRequest);
 	}
 
-	private void doRequestDrawable(String url, OnImageRequest onImageRequest) {
-		HP_NetWorkUtils netWorkUtils = new HP_NetWorkUtils();
-		netWorkAsyncTask = (HP_NetWorkAsyncTask) netWorkUtils
-				.doAsyncRequestDrawable(url, new OnRequestDrawableFinished() {
-
-					@Override
-					public void onSuccess(Drawable drawable) throws Exception {
-						// onImageRequest.onSuccess(httpRequest, httpResponse,
-						// bitmap);
-						HP_ImageView.this.setImageDrawable(drawable);
-						isImageRequestSuccess = true;
-					}
-
-					@Override
-					public void onFailure(Exception e) {
-						// onImageRequest.onFailure(httpRequest, httpResponse,
-						// e);
-						Log.e(this.getClass().getName(), e.getMessage());
-						isImageRequestSuccess = false;
-						if (netWorkAsyncTask != null
-								&& !netWorkAsyncTask.isCancelled()) {
-							netWorkAsyncTask.cancel(true);
-						}
-
-					}
-				});
-
-	}
-
 	private void doAsyncPostRequestBitmap(final String url,
 			final OnImageRequest onImageRequest) {
 
@@ -88,48 +56,79 @@ public class HP_ImageView extends ImageView {
 			bitmap = fileCache.getImage(url);
 			if (bitmap == null) {
 				// 从网络获取
-
-				HP_NetWorkUtils netWorkUtils = new HP_NetWorkUtils();
-				netWorkAsyncTask = (HP_NetWorkAsyncTask) netWorkUtils
-						.doAsyncPostRequestBitmap(url,
-								new OnRequestBitmapFinished() {
-
-									@Override
-									public void onSuccess(
-											HttpRequestBase httpRequest,
-											HttpResponse httpResponse,
-											Bitmap bitmap) throws Exception {
-
-										if (bitmap != null) {
-											fileCache.saveBitmap(bitmap, url);
-											memoryCache.addBitmapToCache(url,
-													bitmap);
-										}
-
-										onImageRequest.onSuccess(httpRequest,
-												httpResponse, bitmap);
-										HP_ImageView.this
-												.setImageBitmap(bitmap);
-										isImageRequestSuccess = true;
-									}
-
-									@Override
-									public void onFailure(
-											HttpRequestBase httpRequest,
-											HttpResponse httpResponse,
-											Exception e) {
-										onImageRequest.onFailure(httpRequest,
-												httpResponse, e);
-										Log.e(this.getClass().getName(),
-												e.getMessage());
-										isImageRequestSuccess = false;
-										if (netWorkAsyncTask != null
-												&& !netWorkAsyncTask
-														.isCancelled()) {
-											netWorkAsyncTask.cancel(true);
-										}
-									}
-								});
+				HP_NetUtils netUtils = new HP_NetUtils();
+				netUtils.doAsyncGetRequestBitmap(url, new HP_NetUtils.OnRequestBitmapFinished() {
+					
+					@Override
+					public void onSuccess(HttpRequestBase httpRequest,
+							HttpResponse httpResponse, Bitmap bitmap) throws Exception {
+						if (bitmap != null) {
+							fileCache.saveBitmap(bitmap, url);
+							memoryCache.addBitmapToCache(url,bitmap);
+						}
+						onImageRequest.onSuccess(httpRequest, httpResponse, bitmap);
+						HP_ImageView.this.setImageBitmap(bitmap);
+						isImageRequestSuccess = true;
+					}
+					
+					@Override
+					public void onFailure(HttpRequestBase httpRequest,
+							HttpResponse httpResponse, Exception e) {
+						onImageRequest.onFailure(httpRequest,
+								httpResponse, e);
+						Log.e(this.getClass().getName(),
+								e.getMessage());
+						isImageRequestSuccess = false;
+						if (netWorkAsyncTask != null
+								&& !netWorkAsyncTask
+										.isCancelled()) {
+							netWorkAsyncTask.cancel(true);
+						}
+						
+					}
+				});
+				
+//				HP_NetWorkUtils netWorkUtils = new HP_NetWorkUtils();
+//				netWorkAsyncTask = (HP_NetWorkAsyncTask) netWorkUtils
+//						.doAsyncPostRequestBitmap(url,
+//								new HP_NetUtils.OnRequestBitmapFinished() {
+//
+//									@Override
+//									public void onSuccess(
+//											HttpRequestBase httpRequest,
+//											HttpResponse httpResponse,
+//											Bitmap bitmap) throws Exception {
+//
+//										if (bitmap != null) {
+//											fileCache.saveBitmap(bitmap, url);
+//											memoryCache.addBitmapToCache(url,
+//													bitmap);
+//										}
+//
+//										onImageRequest.onSuccess(httpRequest,
+//												httpResponse, bitmap);
+//										HP_ImageView.this
+//												.setImageBitmap(bitmap);
+//										isImageRequestSuccess = true;
+//									}
+//
+//									@Override
+//									public void onFailure(
+//											HttpRequestBase httpRequest,
+//											HttpResponse httpResponse,
+//											Exception e) {
+//										onImageRequest.onFailure(httpRequest,
+//												httpResponse, e);
+//										Log.e(this.getClass().getName(),
+//												e.getMessage());
+//										isImageRequestSuccess = false;
+//										if (netWorkAsyncTask != null
+//												&& !netWorkAsyncTask
+//														.isCancelled()) {
+//											netWorkAsyncTask.cancel(true);
+//										}
+//									}
+//								});
 
 			} else {
 				// 添加到内存缓存

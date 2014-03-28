@@ -10,20 +10,41 @@ import android.util.Log;
 /**
  * 线程池 、缓冲队列
  * 
- * @author zxy
+ * @author xuyi
  * 
  */
 public class HP_DefaultThreadPool {
+
+	/**
+	 * 线程池维护线程的最小数量
+	 */
+	private static int corePoolSize = 10;
+
+	/**
+	 * 线程池维护线程的最大数量
+	 */
+	private static int maxinumPoolSize = 20;
+
+	/**
+	 * 线程池维护线程所允许的空闲时间
+	 */
+	private static long keepAliveTime = 15L;
+
+	/**
+	 * 线程池维护线程所允许的空闲时间的单位
+	 */
+	private static TimeUnit unit = TimeUnit.SECONDS;
+
 	/**
 	 * BaseRequest任务队列
 	 */
-	static ArrayBlockingQueue<Runnable> blockingQueue = new ArrayBlockingQueue<Runnable>(
+	private static ArrayBlockingQueue<Runnable> blockingQueue = new ArrayBlockingQueue<Runnable>(
 			15);
 	/**
 	 * 线程池
 	 */
-	static AbstractExecutorService pool = new ThreadPoolExecutor(10, 20, 15L,
-			TimeUnit.SECONDS, blockingQueue,
+	static AbstractExecutorService pool = new ThreadPoolExecutor(corePoolSize,
+			maxinumPoolSize, keepAliveTime, unit, blockingQueue,
 			new ThreadPoolExecutor.DiscardOldestPolicy());
 
 	private static HP_DefaultThreadPool instance = null;
@@ -55,7 +76,6 @@ public class HP_DefaultThreadPool {
 	 */
 	public static void shutdownRightnow() {
 		if (pool != null) {
-			// List<Runnable> tasks =pool.shutdownNow();
 			pool.shutdownNow();
 			try {
 				// 设置超时极短，强制关闭所有任务
@@ -65,13 +85,17 @@ public class HP_DefaultThreadPool {
 			}
 			Log.i(HP_DefaultThreadPool.class.getName(),
 					"DefaultThreadPool shutdownRightnow");
-			// for(Runnable task:tasks){
-			// task.
-			// }
 		}
 	}
 
-	public static void removeTaskFromQueue() {
-		// blockingQueue.contains(o);
+	/**
+	 * 删除将要执行的线程
+	 * 
+	 * @param runnable
+	 */
+	public static void removeTaskFromQueue(Runnable runnable) {
+		if (blockingQueue.contains(runnable)) {
+			blockingQueue.remove(runnable);
+		}
 	}
 }

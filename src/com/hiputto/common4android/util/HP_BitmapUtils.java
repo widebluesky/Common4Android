@@ -33,7 +33,6 @@ import android.graphics.drawable.Drawable;
 import android.text.Layout.Alignment;
 import android.text.StaticLayout;
 import android.text.TextPaint;
-import android.util.Log;
 
 public class HP_BitmapUtils {
 
