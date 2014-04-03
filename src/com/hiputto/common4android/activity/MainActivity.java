@@ -27,7 +27,6 @@ import com.hiputto.common4android.R;
 import com.hiputto.common4android.superclass.HP_BaseActivity;
 import com.hiputto.common4android.util.HP_NetWorkUtils;
 import com.hiputto.common4android.util.HP_NetWorkUtils.OnRequestBitmapFinished;
-import com.hiputto.common4android.util.HP_NetWorkUtils.OnRequestDrawableFinished;
 import com.hiputto.common4android.util.HP_NetWorkUtils.OnRequestFinished;
 
 import android.graphics.Bitmap;
@@ -46,27 +45,47 @@ public class MainActivity extends HP_BaseActivity {
 
 		// doRequest();
 		for (int i = 0; i < 1; i++) {
-			String url = "";
-			url = "https://api.weibo.com/2/statuses/home_timeline.json?"
-					+ "access_token=2.004IPtFCgsKwwCc4b784204bU6I4UC"
-					+ "&count=100";
-			url = "http://t10.baidu.com/it/u=1809038154,4292577532&fm=58";
+//			String url = "";
+//			url = "https://api.weibo.com/2/statuses/home_timeline.json?"
+//					+ "access_token=2.004IPtFCgsKwwCc4b784204bU6I4UC"
+//					+ "&count=100";
+//			url = "http://t10.baidu.com/it/u=1809038154,4292577532&fm=58";
 			
-			HP_NetWorkUtils netWorkUtils = new HP_NetWorkUtils();
-			netWorkUtils.doAsyncTest(url, new OnRequestDrawableFinished() {
-				
-				@Override
-				public void onSuccess(Drawable drawable) throws Exception {
-					System.out.println("onSuccess");
-				}
-				
-				@Override
-				public void onFailure(Exception e) {
-					System.out.println("onFailure");
-					
-				}
-			});
-//			doNetWorkUtils(url);
+			String url = "http://wallpapers.wallbase.cc/rozne/wallpaper-2142001.jpg";
+			
+//			HP_NetUtils netUtils = new HP_NetUtils();
+//			netUtils.doAsyncGetRequestBitmap(url, new HP_NetUtils.OnRequestBitmapFinished() {
+//				
+//				@Override
+//				public void onSuccess(HttpRequestBase httpRequest,
+//						HttpResponse httpResponse, Bitmap bitmap) throws Exception {
+//					System.out.println("onSuccess");
+//				}
+//				
+//				@Override
+//				public void onFailure(HttpRequestBase httpRequest,
+//						HttpResponse httpResponse, Exception e) {
+//					// TODO Auto-generated method stub
+//					System.out.println("onFailure:" + e.getLocalizedMessage());
+//				}
+//			});
+			
+//			HP_NetWorkUtils netWorkUtils = new HP_NetWorkUtils();
+//			netWorkUtils.doAsyncTest(url, new OnRequestDrawableFinished() {
+//				
+//				@Override
+//				public void onSuccess(Drawable drawable) throws Exception {
+//					System.out.println("onSuccess");
+//				}
+//				
+//				@Override
+//				public void onFailure(Exception e) {
+//					System.out.println("onFailure");
+//					
+//				}
+//			});
+			
+			doNetWorkUtils(url);
 		}
 		
 //		try {
@@ -91,15 +110,13 @@ public class MainActivity extends HP_BaseActivity {
 			@Override
 			public void onSuccess(HttpRequestBase httpRequest,
 					HttpResponse httpResponse, Bitmap bitmap) throws Exception {
-				// TODO Auto-generated method stub
-				
+				System.out.println("onSuccess");
 			}
 			
 			@Override
 			public void onFailure(HttpRequestBase httpRequest,
 					HttpResponse httpResponse, Exception e) {
-				// TODO Auto-generated method stub
-				
+				System.out.println("onFailure:" + e.getLocalizedMessage());
 			}
 		});
 	}
