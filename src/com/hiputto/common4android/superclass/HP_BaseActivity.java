@@ -1,6 +1,5 @@
 package com.hiputto.common4android.superclass;
 
-import com.hiputto.common4android.R;
 import com.hiputto.common4android.manager.HP_ActivityManager;
 import com.hiputto.common4android.util.HP_DeviceUtils;
 import com.hiputto.common4android.util.HP_StringUtils;
@@ -266,7 +265,6 @@ public class HP_BaseActivity extends ActivityGroup {
 	@Override
 	public void onBackPressed() {
 		goToBackActivity();
-		overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
 	}
 
 	protected String uri2filePath(Uri uri) {

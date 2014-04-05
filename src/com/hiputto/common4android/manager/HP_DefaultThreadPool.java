@@ -56,8 +56,8 @@ public class HP_DefaultThreadPool {
 		return instance;
 	}
 
-	public void execute(Runnable r) {
-		pool.execute(r);
+	public void execute(Thread thread) {
+		pool.execute(thread);
 	}
 
 	/**
@@ -93,9 +93,10 @@ public class HP_DefaultThreadPool {
 	 * 
 	 * @param runnable
 	 */
-	public static void removeTaskFromQueue(Runnable runnable) {
-		if (blockingQueue.contains(runnable)) {
-			blockingQueue.remove(runnable);
+	public void removeTaskFromQueue(Thread thread) {
+		if (blockingQueue.contains(thread)) {
+			blockingQueue.remove(thread);
+			thread.interrupt();
 		}
 	}
 }

@@ -349,7 +349,7 @@ public class HP_NetUtils {
 	 * @param onRequestFinished
 	 * @return
 	 */
-	public Runnable doAsyncGetRequestData(final String url,
+	public Thread doAsyncGetRequestData(final String url,
 			final OnRequestDataFinished onRequestDataFinished) {
 		Runnable runnable = new Runnable() {
 			@Override
@@ -384,11 +384,12 @@ public class HP_NetUtils {
 				}
 			}
 		};
-		HP_DefaultThreadPool.getInstance().execute(runnable);
-		return runnable;
+		Thread thread = new Thread(runnable);
+		HP_DefaultThreadPool.getInstance().execute(new Thread(runnable));
+		return thread;
 	}
 
-	public Runnable doAsyncGetRequest(final String url,
+	public Thread doAsyncGetRequest(final String url,
 			final OnRequestFinished onRequestFinished) {
 		Runnable runnable = new Runnable() {
 			@Override
@@ -407,8 +408,9 @@ public class HP_NetUtils {
 				}
 			}
 		};
-		HP_DefaultThreadPool.getInstance().execute(runnable);
-		return runnable;
+		Thread thread = new Thread(runnable);
+		HP_DefaultThreadPool.getInstance().execute(new Thread(runnable));
+		return thread;
 	}
 
 	/**
@@ -439,7 +441,7 @@ public class HP_NetUtils {
 	 * @param onRequestFinished
 	 * @return
 	 */
-	public Runnable doAsyncPostRequest(final String url,
+	public Thread doAsyncPostRequest(final String url,
 			final OnRequestFinished onRequestFinished) {
 		Runnable runnable = new Runnable() {
 			@Override
@@ -458,8 +460,9 @@ public class HP_NetUtils {
 				}
 			}
 		};
-		HP_DefaultThreadPool.getInstance().execute(runnable);
-		return runnable;
+		Thread thread = new Thread(runnable);
+		HP_DefaultThreadPool.getInstance().execute(new Thread(runnable));
+		return thread;
 	}
 
 	/**
@@ -497,7 +500,7 @@ public class HP_NetUtils {
 	 * @param nameValuePairList
 	 * @param onRequestFinished
 	 */
-	public Runnable doAsyncPostRequest(final String url,
+	public Thread doAsyncPostRequest(final String url,
 			final List<NameValuePair> nameValuePairList,
 			final OnRequestFinished onRequestFinished) {
 		Runnable runnable = new Runnable() {
@@ -522,8 +525,9 @@ public class HP_NetUtils {
 				}
 			}
 		};
-		HP_DefaultThreadPool.getInstance().execute(runnable);
-		return runnable;
+		Thread thread = new Thread(runnable);
+		HP_DefaultThreadPool.getInstance().execute(new Thread(runnable));
+		return thread;
 	}
 
 	/**
@@ -559,7 +563,7 @@ public class HP_NetUtils {
 	 * @param multipartEntity
 	 * @param onRequestFinished
 	 */
-	public Runnable doAsyncPostRequest(final String url,
+	public Thread doAsyncPostRequest(final String url,
 			final MultipartEntity multipartEntity,
 			final OnRequestFinished onRequestFinished) {
 		Runnable runnable = new Runnable() {
@@ -582,8 +586,9 @@ public class HP_NetUtils {
 				}
 			}
 		};
-		HP_DefaultThreadPool.getInstance().execute(runnable);
-		return runnable;
+		Thread thread = new Thread(runnable);
+		HP_DefaultThreadPool.getInstance().execute(new Thread(runnable));
+		return thread;
 	}
 
 	/**
@@ -627,7 +632,7 @@ public class HP_NetUtils {
 	 * @param url
 	 * @param onRequestDataFinished
 	 */
-	public Runnable doAsyncPostRequestData(final String url,
+	public Thread doAsyncPostRequestData(final String url,
 			final OnRequestDataFinished onRequestDataFinished) {
 
 		Runnable runnable = new Runnable() {
@@ -663,8 +668,9 @@ public class HP_NetUtils {
 				}
 			}
 		};
-		HP_DefaultThreadPool.getInstance().execute(runnable);
-		return runnable;
+		Thread thread = new Thread(runnable);
+		HP_DefaultThreadPool.getInstance().execute(new Thread(runnable));
+		return thread;
 	}
 
 	/**
@@ -675,7 +681,7 @@ public class HP_NetUtils {
 	 * @param onRequestDataFinished
 	 * @return
 	 */
-	public Runnable doAsyncPostRequestData(final String url,
+	public Thread doAsyncPostRequestData(final String url,
 			final List<NameValuePair> params,
 			final OnRequestDataFinished onRequestDataFinished) {
 
@@ -718,8 +724,9 @@ public class HP_NetUtils {
 				}
 			}
 		};
-		HP_DefaultThreadPool.getInstance().execute(runnable);
-		return runnable;
+		Thread thread = new Thread(runnable);
+		HP_DefaultThreadPool.getInstance().execute(new Thread(runnable));
+		return thread;
 
 	}
 
@@ -757,7 +764,7 @@ public class HP_NetUtils {
 	 * @param url
 	 * @param onRequestBitmapFinished
 	 */
-	public Runnable doAsyncPostRequestBitmap(final String url,
+	public Thread doAsyncPostRequestBitmap(final String url,
 			final OnRequestBitmapFinished onRequestBitmapFinished) {
 		Runnable runnable = new Runnable() {
 			@Override
@@ -784,8 +791,9 @@ public class HP_NetUtils {
 				}
 			}
 		};
-		HP_DefaultThreadPool.getInstance().execute(runnable);
-		return runnable;
+		Thread thread = new Thread(runnable);
+		HP_DefaultThreadPool.getInstance().execute(new Thread(runnable));
+		return thread;
 	}
 
 	/**
@@ -813,7 +821,7 @@ public class HP_NetUtils {
 	 * @param url
 	 * @param onRequestDrawableFinished
 	 */
-	public Runnable doAsyncRequestDrawable(final String url,
+	public Thread doAsyncRequestDrawable(final String url,
 			final OnRequestDrawableFinished onRequestDrawableFinished) {
 		Runnable runnable = new Runnable() {
 			@Override
@@ -829,8 +837,9 @@ public class HP_NetUtils {
 				}
 			}
 		};
-		HP_DefaultThreadPool.getInstance().execute(runnable);
-		return runnable;
+		Thread thread = new Thread(runnable);
+		HP_DefaultThreadPool.getInstance().execute(new Thread(runnable));
+		return thread;
 	}
 
 	/**
@@ -838,7 +847,7 @@ public class HP_NetUtils {
 	 * 
 	 * @return
 	 */
-	public Runnable doAsyncGetRequestBitmap(final String imageUrl, final OnRequestBitmapFinished onRequestBitmapFinished) {
+	public Thread doAsyncGetRequestBitmap(final String imageUrl, final OnRequestBitmapFinished onRequestBitmapFinished) {
 		Runnable runnable = new Runnable() {
 			@Override
 			public void run() {
@@ -880,8 +889,9 @@ public class HP_NetUtils {
 				});
 			}
 		};
-		HP_DefaultThreadPool.getInstance().execute(runnable);
-		return runnable;
+		Thread thread = new Thread(runnable);
+		HP_DefaultThreadPool.getInstance().execute(thread);
+		return thread;
 	}
 
 }

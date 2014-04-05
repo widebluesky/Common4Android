@@ -19,7 +19,7 @@ public class HP_ImageFileCache {
 	private static final String WHOLESALE_CONV = ".cach";
 
 	private static final int MB = 1024 * 1024;
-	private static final int CACHE_SIZE = 10;
+	private static final int CACHE_SIZE = 50;
 	private static final int FREE_SD_SPACE_NEEDED_TO_CACHE = 10;
 
 	public HP_ImageFileCache() {
