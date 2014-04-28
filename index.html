@@ -46,37 +46,205 @@
 
 
       <section id="main_content">
-        <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
+        <h1>
+<a name="common4android" class="anchor" href="#common4android"><span class="octicon octicon-link"></span></a>Common4Android</h1>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+<p>Common methods for android developer.</p>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
+<h2>
+<a name="overview" class="anchor" href="#overview"><span class="octicon octicon-link"></span></a>Overview</h2>
+
+<h3>
+<a name="-%E5%9F%BA%E7%B1%BB" class="anchor" href="#-%E5%9F%BA%E7%B1%BB"><span class="octicon octicon-link"></span></a>-基类</h3>
+
+<table>
+<thead><tr>
+<th>ClassName</th>
+<th>Description</th>
+</tr></thead>
+<tbody><tr>
+<td>HP_BaseActiivty.java</td>
+<td>Activity基类，封装常用方法及Activity管理。</td>
+</tr></tbody>
+</table><h3>
+<a name="-%E7%AE%A1%E7%90%86%E5%99%A8" class="anchor" href="#-%E7%AE%A1%E7%90%86%E5%99%A8"><span class="octicon octicon-link"></span></a>-管理器</h3>
+
+<table>
+<thead><tr>
+<th>ClassName</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>HP_ActivityManager.java</td>
+<td>Activity管理工具类，可以获得当前引用启动的Activity实例。</td>
+</tr>
+<tr>
+<td>HP_DefaultThreadPool.java</td>
+<td>应用线程池管理。</td>
+</tr>
+<tr>
+<td>HP_ImageFileCache.java</td>
+<td>图片文件物理缓存管理。</td>
+</tr>
+<tr>
+<td>HP_ImageMemoryCache.java</td>
+<td>图片文件内存缓存管理。</td>
+</tr>
+</tbody>
+</table><h3>
+<a name="-%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BB%84%E4%BB%B6" class="anchor" href="#-%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BB%84%E4%BB%B6"><span class="octicon octicon-link"></span></a>-自定义组件</h3>
+
+<table>
+<thead><tr>
+<th>ClassName</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>HP_ImageView.java</td>
+<td>自定义ImageView组件，集成异步下载图片方法。</td>
+</tr>
+<tr>
+<td>HP_PullToRefreshListView</td>
+<td>自定义ListView组件，集成下拉刷新效果。</td>
+</tr>
+</tbody>
+</table><h3>
+<a name="-%E5%B7%A5%E5%85%B7%E7%B1%BB" class="anchor" href="#-%E5%B7%A5%E5%85%B7%E7%B1%BB"><span class="octicon octicon-link"></span></a>-工具类</h3>
+
+<table>
+<thead><tr>
+<th>ClassName</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>HP_AnimationUtils.java</td>
+<td>动画效果工具类，提供缩放、透明度、位移、旋转动画方法。</td>
+</tr>
+<tr>
+<td>HP_AppUtils.java</td>
+<td>应用信息工具类，获取应用版本号、版本编码。</td>
+</tr>
+<tr>
+<td>HP_AsyncTaskUtils.java</td>
+<td>AsyncTask继承封装类，方便生成、启动AsycTask。</td>
+</tr>
+<tr>
+<td>HP_BitmapCacheUtils.java</td>
+<td>Bitmap缓存工具类，封装bitmap本地存储方法。</td>
+</tr>
+<tr>
+<td>HP_BitmapEffectUtils.java</td>
+<td>Bitmap特效实现类，封装bitmap特效实现方法，如：老照片、RGB偏移等。</td>
+</tr>
+<tr>
+<td>HP_BitmapUtils.java</td>
+<td>Bitmap常用工具类，Bitmap数据类型转换、圆角、缩放、倒影。</td>
+</tr>
+<tr>
+<td>HP_ConvertUtils.java</td>
+<td>转换工具类，进行对象的类型转换。</td>
+</tr>
+<tr>
+<td>HP_DateUtils.java</td>
+<td>日期工具类，日期转换生肖、日期转换星座、日期相互转换。</td>
+</tr>
+<tr>
+<td>HP_DesUtil.java</td>
+<td>DES加密工具类。</td>
+</tr>
+<tr>
+<td>HP_DeviceUtils.java</td>
+<td>设备信息获取工具类，获得设备型号、设备生产厂商、屏幕尺寸、GPS状态、wifi状态等。</td>
+</tr>
+<tr>
+<td>HP_DialogUtils.java</td>
+<td>弹窗工具类，ProgressDialog，AlertDialog，Toast弹出封装。</td>
+</tr>
+<tr>
+<td>HP_FileUtils.java</td>
+<td>文件工具类，文件常用方法，获得文件大小、文件大小转换。</td>
+</tr>
+<tr>
+<td>HP_MD5Utils.java</td>
+<td>MD5加密工具类。</td>
+</tr>
+<tr>
+<td>HP_NetUtils.java</td>
+<td>网络请求工具类，Thread实现。</td>
+</tr>
+<tr>
+<td>HP_NetWorkUtils.java</td>
+<td>网络请求工具类，AsyncTask实现。</td>
+</tr>
+<tr>
+<td>HP_RegexUtils.java</td>
+<td>常用正则表达式工具类。</td>
+</tr>
+<tr>
+<td>HP_SDCardUtils.java</td>
+<td>SD卡信息管理工具类。</td>
+</tr>
+<tr>
+<td>HP_SharedPreferencesUtils.java</td>
+<td>SharedPreferences工具类。</td>
+</tr>
+<tr>
+<td>HP_StringUtils.java</td>
+<td>字符串处理工具类。</td>
+</tr>
+<tr>
+<td>HP_SystemIntentUtils.java</td>
+<td>系统Intent工具类，常用的系统Intent跳转函数，如：打电话、发短信等。</td>
+</tr>
+</tbody>
+</table><h2>
+<a name="example-usage" class="anchor" href="#example-usage"><span class="octicon octicon-link"></span></a>Example Usage</h2>
+
+<h3>
+<a name="hp_networkutilsjava" class="anchor" href="#hp_networkutilsjava"><span class="octicon octicon-link"></span></a>HP_NetWorkUtils.java</h3>
+
+<h4>
+<a name="--doasyncgetrequest" class="anchor" href="#--doasyncgetrequest"><span class="octicon octicon-link"></span></a>- doAsyncGetRequest</h4>
+
+<pre><code>HP_NetWorkUtils netWorkUtils = new HP_NetWorkUtils();
+netWorkUtils.doAsyncGetRequest(url, new OnRequestFinished() {
+
+    @Override
+    public void onSuccess(HttpRequestBase httpRequest, HttpResponse httpResponse) throws Exception {
+            // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void onFailure(HttpRequestBase httpRequest,
+                HttpResponse httpResponse, Exception e) {
+            // TODO Auto-generated method stub
+
+    }
+});
 </code></pre>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
-
 <h3>
-<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
+<a name="hp_systemintentutilsjava" class="anchor" href="#hp_systemintentutilsjava"><span class="octicon octicon-link"></span></a>HP_SystemIntentUtils.java</h3>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+<h4>
+<a name="--phonecall" class="anchor" href="#--phonecall"><span class="octicon octicon-link"></span></a>- PhoneCall</h4>
 
-<h3>
-<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
+<pre><code>HP_SystemIntentUtils systemIntentUtils = new HP_SystemIntentUtils();
+Intent intent = systemIntentUtils.getPhoneCallIntent(1391391313);
+this.startActivity(intent);
+</code></pre>
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+<h4>
+<a name="--sendmessage" class="anchor" href="#--sendmessage"><span class="octicon octicon-link"></span></a>- SendMessage</h4>
 
-<h3>
-<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
-
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
-
-<h3>
-<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
-
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
+<pre><code>HP_SystemIntentUtils systemIntentUtils = new HP_SystemIntentUtils();
+Intent intent = systemIntentUtils.getSendMessageIntent("Test Message.");
+this.startActivity(intent);
+</code></pre>
       </section>
 
       <footer>
