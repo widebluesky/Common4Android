@@ -2,20 +2,29 @@
   Common methods for android developer.
   
 ##Overview
+###-基类
 
 ClassName                  | Description  
 ---------------------------|--------------------------------------
-                           |
 HP_BaseActiivty.java       | Activity基类，封装常用方法及Activity管理。
-                           |
+
+###-管理器                       
+ClassName                  | Description  
+---------------------------|--------------------------------------
 HP_ActivityManager.java    | Activity管理工具类，可以获得当前引用启动的Activity实例。
 HP_DefaultThreadPool.java  | 应用线程池管理。
 HP_ImageFileCache.java     | 图片文件物理缓存管理。
 HP_ImageMemoryCache.java   | 图片文件内存缓存管理。
-                           |
+
+###-自定义组件
+ClassName                  | Description  
+---------------------------|--------------------------------------
 HP_ImageView.java          | 自定义ImageView组件，集成异步下载图片方法。
 HP_PullToRefreshListView   | 自定义ListView组件，集成下拉刷新效果。     
-                           | 
+   
+###-工具类
+ClassName                  | Description  
+---------------------------|--------------------------------------
 HP_AnimationUtils.java     | 动画效果工具类，提供缩放、透明度、位移、旋转动画方法。
 HP_AppUtils.java           | 应用信息工具类，获取应用版本号、版本编码。
 HP_AsyncTaskUtils.java     | AsyncTask继承封装类，方便生成、启动AsycTask。 
