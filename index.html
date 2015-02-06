@@ -7,6 +7,7 @@
 
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -15,47 +16,56 @@
   <body>
     <div class="wrapper">
       <header>
-        <h1>Common4android</h1>
-        <p>Common methods for android developer.</p>
-
-        <p class="view"><a href="https://github.com/widebluesky/Common4Android">View the Project on GitHub <small>widebluesky/Common4Android</small></a></p>
-
+        <h1 class="header">Common4android</h1>
+        <p class="header">Common methods for android developer.</p>
 
         <ul>
-          <li><a href="https://github.com/widebluesky/Common4Android/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/widebluesky/Common4Android/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/widebluesky/Common4Android">View On <strong>GitHub</strong></a></li>
+          <li class="download"><a class="buttons" href="https://github.com/widebluesky/Common4Android/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/widebluesky/Common4Android/tarball/master">Download TAR</a></li>
+          <li><a class="buttons github" href="https://github.com/widebluesky/Common4Android">View On GitHub</a></li>
         </ul>
+
+        <p class="header">This project is maintained by <a class="header name" href="https://github.com/widebluesky">widebluesky</a></p>
+
+
       </header>
       <section>
         <h1>
-<a name="common4android" class="anchor" href="#common4android"><span class="octicon octicon-link"></span></a>Common4Android</h1>
+<a id="common4android" class="anchor" href="#common4android" aria-hidden="true"><span class="octicon octicon-link"></span></a>Common4Android</h1>
 
 <p>Common methods for android developer.</p>
 
 <h2>
-<a name="overview" class="anchor" href="#overview"><span class="octicon octicon-link"></span></a>Overview</h2>
+<a id="overview" class="anchor" href="#overview" aria-hidden="true"><span class="octicon octicon-link"></span></a>Overview</h2>
 
 <h3>
-<a name="-%E5%9F%BA%E7%B1%BB" class="anchor" href="#-%E5%9F%BA%E7%B1%BB"><span class="octicon octicon-link"></span></a>-基类</h3>
+<a id="-基类" class="anchor" href="#-%E5%9F%BA%E7%B1%BB" aria-hidden="true"><span class="octicon octicon-link"></span></a>-基类</h3>
 
 <table>
-<thead><tr>
+<thead>
+<tr>
 <th>ClassName</th>
 <th>Description</th>
-</tr></thead>
-<tbody><tr>
+</tr>
+</thead>
+<tbody>
+<tr>
 <td>HP_BaseActiivty.java</td>
 <td>Activity基类，封装常用方法及Activity管理。</td>
-</tr></tbody>
-</table><h3>
-<a name="-%E7%AE%A1%E7%90%86%E5%99%A8" class="anchor" href="#-%E7%AE%A1%E7%90%86%E5%99%A8"><span class="octicon octicon-link"></span></a>-管理器</h3>
+</tr>
+</tbody>
+</table>
+
+<h3>
+<a id="-管理器" class="anchor" href="#-%E7%AE%A1%E7%90%86%E5%99%A8" aria-hidden="true"><span class="octicon octicon-link"></span></a>-管理器</h3>
 
 <table>
-<thead><tr>
+<thead>
+<tr>
 <th>ClassName</th>
 <th>Description</th>
-</tr></thead>
+</tr>
+</thead>
 <tbody>
 <tr>
 <td>HP_ActivityManager.java</td>
@@ -74,14 +84,18 @@
 <td>图片文件内存缓存管理。</td>
 </tr>
 </tbody>
-</table><h3>
-<a name="-%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BB%84%E4%BB%B6" class="anchor" href="#-%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BB%84%E4%BB%B6"><span class="octicon octicon-link"></span></a>-自定义组件</h3>
+</table>
+
+<h3>
+<a id="-自定义组件" class="anchor" href="#-%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BB%84%E4%BB%B6" aria-hidden="true"><span class="octicon octicon-link"></span></a>-自定义组件</h3>
 
 <table>
-<thead><tr>
+<thead>
+<tr>
 <th>ClassName</th>
 <th>Description</th>
-</tr></thead>
+</tr>
+</thead>
 <tbody>
 <tr>
 <td>HP_ImageView.java</td>
@@ -92,14 +106,18 @@
 <td>自定义ListView组件，集成下拉刷新效果。</td>
 </tr>
 </tbody>
-</table><h3>
-<a name="-%E5%B7%A5%E5%85%B7%E7%B1%BB" class="anchor" href="#-%E5%B7%A5%E5%85%B7%E7%B1%BB"><span class="octicon octicon-link"></span></a>-工具类</h3>
+</table>
+
+<h3>
+<a id="-工具类" class="anchor" href="#-%E5%B7%A5%E5%85%B7%E7%B1%BB" aria-hidden="true"><span class="octicon octicon-link"></span></a>-工具类</h3>
 
 <table>
-<thead><tr>
+<thead>
+<tr>
 <th>ClassName</th>
 <th>Description</th>
-</tr></thead>
+</tr>
+</thead>
 <tbody>
 <tr>
 <td>HP_AnimationUtils.java</td>
@@ -182,14 +200,16 @@
 <td>系统Intent工具类，常用的系统Intent跳转函数，如：打电话、发短信等。</td>
 </tr>
 </tbody>
-</table><h2>
-<a name="example-usage" class="anchor" href="#example-usage"><span class="octicon octicon-link"></span></a>Example Usage</h2>
+</table>
+
+<h2>
+<a id="example-usage" class="anchor" href="#example-usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example Usage</h2>
 
 <h3>
-<a name="hp_networkutilsjava" class="anchor" href="#hp_networkutilsjava"><span class="octicon octicon-link"></span></a>HP_NetWorkUtils.java</h3>
+<a id="hp_networkutilsjava" class="anchor" href="#hp_networkutilsjava" aria-hidden="true"><span class="octicon octicon-link"></span></a>HP_NetWorkUtils.java</h3>
 
 <h4>
-<a name="--doasyncgetrequest" class="anchor" href="#--doasyncgetrequest"><span class="octicon octicon-link"></span></a>- doAsyncGetRequest</h4>
+<a id="--doasyncgetrequest" class="anchor" href="#--doasyncgetrequest" aria-hidden="true"><span class="octicon octicon-link"></span></a>- doAsyncGetRequest</h4>
 
 <pre><code>HP_NetWorkUtils netWorkUtils = new HP_NetWorkUtils();
 netWorkUtils.doAsyncGetRequest(url, new OnRequestFinished() {
@@ -210,10 +230,10 @@ netWorkUtils.doAsyncGetRequest(url, new OnRequestFinished() {
 </code></pre>
 
 <h3>
-<a name="hp_systemintentutilsjava" class="anchor" href="#hp_systemintentutilsjava"><span class="octicon octicon-link"></span></a>HP_SystemIntentUtils.java</h3>
+<a id="hp_systemintentutilsjava" class="anchor" href="#hp_systemintentutilsjava" aria-hidden="true"><span class="octicon octicon-link"></span></a>HP_SystemIntentUtils.java</h3>
 
 <h4>
-<a name="--phonecall" class="anchor" href="#--phonecall"><span class="octicon octicon-link"></span></a>- PhoneCall</h4>
+<a id="--phonecall" class="anchor" href="#--phonecall" aria-hidden="true"><span class="octicon octicon-link"></span></a>- PhoneCall</h4>
 
 <pre><code>HP_SystemIntentUtils systemIntentUtils = new HP_SystemIntentUtils();
 Intent intent = systemIntentUtils.getPhoneCallIntent(1391391313);
@@ -221,7 +241,7 @@ this.startActivity(intent);
 </code></pre>
 
 <h4>
-<a name="--sendmessage" class="anchor" href="#--sendmessage"><span class="octicon octicon-link"></span></a>- SendMessage</h4>
+<a id="--sendmessage" class="anchor" href="#--sendmessage" aria-hidden="true"><span class="octicon octicon-link"></span></a>- SendMessage</h4>
 
 <pre><code>HP_SystemIntentUtils systemIntentUtils = new HP_SystemIntentUtils();
 Intent intent = systemIntentUtils.getSendMessageIntent("Test Message.");
@@ -229,11 +249,10 @@ this.startActivity(intent);
 </code></pre>
       </section>
       <footer>
-        <p>This project is maintained by <a href="https://github.com/widebluesky">widebluesky</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+        <p><small>Hosted on <a href="http://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
       </footer>
     </div>
-    <script src="javascripts/scale.fix.js"></script>
-    
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+		
   </body>
 </html>
