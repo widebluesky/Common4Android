@@ -1,8 +1,5 @@
 #Common4Android
 
-我是周媛媛
-SOURCE TREE TEST HEHE
-
   Common methods for android developer.
   
   注：此版本库版本并不是最新，目前正在不断优化中，需要最新版本的同学请e-mail:widebluesky@foxmail.com
