@@ -4,7 +4,7 @@
   
 ## Contact
 
-  E-mail:widebluesky@qq.com
+  E-mail：widebluesky@qq.com
   
   WeChat：widebluesky
   
