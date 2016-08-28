@@ -5,8 +5,8 @@ import com.picperweek.common4android.api.HttpTag;
 import com.picperweek.common4android.base.BaseActivity;
 import com.picperweek.common4android.config.Constants;
 import com.picperweek.common4android.http.HttpEngine.HttpCode;
+import com.picperweek.common4android.http.command.HttpDataRequest;
 import com.picperweek.common4android.http.command.HttpDataResponse;
-import com.picperweek.common4android.http.command.HttpPostRequest;
 import com.picperweek.common4android.http.task.TaskManager;
 import com.picperweek.common4android.util.DialogUtil;
 
@@ -65,13 +65,13 @@ public class MainActivity extends BaseActivity implements HttpDataResponse {
 	}
 
 	private void sendRequest() {
-		HttpPostRequest request = new HttpPostRequest();
+		HttpDataRequest request = new HttpDataRequest();
 		request.setTag(HttpTag.TEST);
 		request.setSort(Constants.REQUEST_METHOD_GET);
 		request.setGzip(true);
 		request.setRetry(false);
 		request.setNeedAuth(false);
-		TaskManager.startHttpDataRequset(request, this);
+		TaskManager.startHttpDataRequset(request,this);
 
 	}
 
