@@ -81,7 +81,7 @@ SystemIntentUtil.java      | 系统Intent工具类，常用的系统Intent跳转
   WeChat：widebluesky
   
 <p align="center" >
-  <img src="https://raw.githubusercontent.com/widebluesky/Common4Android/master/wechat_qrcode.jpg" alt="Common4Android" title="Common4Android">
+  <img width="300" height="300" src="https://raw.githubusercontent.com/widebluesky/Common4Android/master/wechat_qrcode.jpg" alt="Common4Android" title="Common4Android">
 </p>
   
   
