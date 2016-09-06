@@ -14,6 +14,7 @@ ClassName                  | Description
 ---------------------------|--------------------------------------
 ActivityManager.java       | Activity管理工具类，可以获得当前引用启动的Activity实例。
 HotFixManager.java         | 热修复patch加载工具类。
+SystemBarTintManager.java  | 沉浸式管理。
 LRUCache.java              | LRUCache。
 ThreadPoolManager.java     | 应用线程池管理。
 
