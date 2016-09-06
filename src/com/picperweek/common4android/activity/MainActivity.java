@@ -17,7 +17,7 @@ import android.widget.Toast;
 public class MainActivity extends BaseActivity implements HttpDataResponse {
 
 	private Button mBtn;
-
+	
 	@Override
 	public boolean needTranslucent() {
 		return true;
@@ -40,9 +40,8 @@ public class MainActivity extends BaseActivity implements HttpDataResponse {
 
 	@Override
 	public void initView() {
-		setStatusBarColor(123, 233, 233, 123);
+		setStatusBarAlpha(0);
 		mBtn = (Button) findViewById(R.id.test_send_request);
-		setCanSlideBack(true);
 	}
 
 	@Override
@@ -51,6 +50,7 @@ public class MainActivity extends BaseActivity implements HttpDataResponse {
 
 			@Override
 			public void onClick(View v) {
+				goToActivity(NextActivity.class, false);
 				sendRequest();
 			}
 		});

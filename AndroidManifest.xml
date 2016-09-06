@@ -22,18 +22,20 @@
     </uses-permission>
 
     <application
-        android:name="com.picperweek.common4android.base.BaseApplication"
+        android:name=".base.BaseApplication"
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
-        android:theme="@style/TranslucentTheme" >
+        android:label="@string/app_name" >
         <activity
             android:name="com.picperweek.common4android.activity.MainActivity"
-            android:label="@string/title_activity_main" >
+            android:theme="@style/TranslucentTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="com.picperweek.common4android.activity.NextActivity"
+            android:theme="@style/TranslucentTheme" >
         </activity>
     </application>
 

@@ -2,6 +2,9 @@
 
     <style name="TranslucentTheme" parent="android:Theme.Light.NoTitleBar">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
     </style>
 
 </resources>

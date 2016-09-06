@@ -7,7 +7,6 @@ import com.picperweek.common4android.manager.SystemBarTintManager;
 import com.picperweek.common4android.util.DeviceUtil;
 import com.picperweek.common4android.util.DialogUtil;
 import com.picperweek.common4android.util.LogUtil;
-import com.picperweek.common4android.widget.SwipeBackLayout;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -15,17 +14,20 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.FragmentActivity;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.Window;
 
 abstract public class BaseActivity extends FragmentActivity {
 
+	/**
+	 * Activity管理
+	 */
 	private ActivityManager activityManager = ActivityManager.getInstance();
 
+	/**
+	 * 沉浸式管理
+	 */
 	private SystemBarTintManager mTintManager;
-	
-	private SwipeBackLayout mSwipeBackLayout;
 	
 	/**
 	 * 是否可以滑动返回变量
@@ -101,11 +103,6 @@ abstract public class BaseActivity extends FragmentActivity {
 	 * @param mCanSlideBack
 	 */
 	public void setCanSlideBack(boolean mCanSlideBack) {
-		if (mCanSlideBack) {
-			mSwipeBackLayout = (SwipeBackLayout) LayoutInflater.from(this).inflate(
-					com.picperweek.common4android.R.layout.layout_swipe_back_base, null);
-			mSwipeBackLayout.attachToActivity(this);
-		}
 		this.mCanSlideBack = mCanSlideBack;
 	}
 
@@ -254,14 +251,14 @@ abstract public class BaseActivity extends FragmentActivity {
 	/**
 	 * 跳转到目标 Activity
 	 * 
-	 * @param activityString
+	 * @param clazz
 	 * @param isFinishCurrentActivity
 	 *            是否关闭当前Activity
 	 */
-	public void goToActivity(String activityString, boolean isFinishCurrentActivity) {
+	public void goToActivity(Class<?> clazz, boolean isFinishCurrentActivity) {
 		Intent intent = new Intent();
 		intent.setAction(Intent.ACTION_VIEW);
-		intent.setClassName(this, activityString);
+		intent.setClassName(this, clazz.getName());
 		startActivity(intent);
 		if (isFinishCurrentActivity) {
 			this.finish();

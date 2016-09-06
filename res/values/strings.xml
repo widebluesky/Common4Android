@@ -12,5 +12,6 @@
     <string name="header_hint_refresh_time">更新于：</string>
     <string name="footer_hint_load_normal">查看更多</string>
     <string name="footer_hint_load_ready">松开载入更多</string>
+    <string name="title_activity_next">NextActivity</string>
 
 </resources>
