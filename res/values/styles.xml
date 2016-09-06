@@ -1,9 +1,7 @@
 <resources>
 
-    <style name="AppTheme" parent="android:Theme.Light" />
-
-    <style name="TranslucentTheme" parent="AppTheme">
-        <!-- 在Android 4.4之前的版本上运行，直接跟随系统主题 -->
+    <style name="TranslucentTheme" parent="android:Theme.Light.NoTitleBar">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
 
 </resources>
