@@ -4,8 +4,6 @@ public class Constants {
 
 	public final static boolean IS_TEST = true;
 
-	// public final static int SDK_VERSION_CODE = 1;
-	// public final static String SDK_VERSION_NAME = "SDK_YOUYANG";
 
 	/**
 	 * 应用基本常量
@@ -13,9 +11,6 @@ public class Constants {
 	public final static String APP_NAME = "Mobile";
 	public final static String APP_TAG = APP_NAME;
 	public final static String APP_MAIN_PATH = "Common4Android";
-	//
-	//
-	// public static final int READ_BUFFER = 1024;
 
 	public static final String UTF8 = "UTF-8";
 
@@ -40,14 +35,7 @@ public class Constants {
 	 * 线程优先级 线程优先级MAX_PRIORITY = 10;NORM_PRIORITY = 5;MIN_PRIORITY = 1;
 	 */
 	public final static int THREAD_PRIORITY = 3;
-	//
-	//
-	// /**
-	// * 找回密码，访问地址
-	// */
-	// public static final String URL_FORGET_PASS =
-	// "http://wappass.baidu.com/passport/?getpass";
-	//
+
 	public static final String HTTP_DATA_NONET = "无法连接到网络\n请稍后再试";
 	public static final String HTTP_DATA_BUSY = "网络不稳定\n请稍后再试";
 	public static final String HTTP_DATA_CONNECT_TIMEOUT = "连接超时\n请稍后再试";
@@ -63,12 +51,6 @@ public class Constants {
 	public final static int TAG_TYPE_JSON_OBJECT = 3;
 	public final static int TAG_TYPE_JSON_ARRAY = 4;
 
-	//
-	// /**
-	// * 客服电话
-	// */
-	// public static final String PHONE_NUMBER_CUSTOM_SERVICE = "010-59059588";
-	//
 	// /**
 	// * SDK DATA CODE
 	// */

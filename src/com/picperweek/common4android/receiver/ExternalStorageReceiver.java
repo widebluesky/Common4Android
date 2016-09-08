@@ -8,10 +8,9 @@ import android.os.Environment;
 /**
  * 外部存储设备状态广播
  * 
- *
  */
 public class ExternalStorageReceiver extends BroadcastReceiver {
-	
+
 	public static boolean isSDCardMounted = false;
 
 	@Override
@@ -23,8 +22,8 @@ public class ExternalStorageReceiver extends BroadcastReceiver {
 				|| intent.getAction().equals("android.intent.action.ACTION_MEDIA_BAD_REMOVAL")) {
 			isSDCardMounted = false;
 		} else {
-			ExternalStorageReceiver.isSDCardMounted = Environment.MEDIA_MOUNTED.equals(
-					Environment.getExternalStorageState());
+			ExternalStorageReceiver.isSDCardMounted = Environment.MEDIA_MOUNTED
+					.equals(Environment.getExternalStorageState());
 		}
 	}
 }
