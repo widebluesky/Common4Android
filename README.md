@@ -15,6 +15,7 @@ ClassName                  | Description
 ActivityManager.java       | Activity管理工具类，可以获得当前引用启动的Activity实例。
 HotFixManager.java         | 热修复patch加载工具类。
 SystemBarTintManager.java  | 沉浸式管理。
+ThemeSettingsHelper.java   | 主题模式切换管理（日间/夜间模式）。
 LRUCache.java              | LRUCache。
 ThreadPoolManager.java     | 应用线程池管理。
 
@@ -50,9 +51,36 @@ SystemIntentUtil.java      | 系统Intent工具类，常用的系统Intent跳转
 ##Example Usage
 
 #### - NetWork
-	HttpDataRequest request = new HttpDataRequest();
+#### Create a Get Request
+	HttpGetRequest request = new HttpGetRequest();
 	request.setTag(HttpTag.TEST);
 	request.setSort(Constants.REQUEST_METHOD_GET);
+	request.setGzip(true);
+	request.setRetry(false);
+	request.setNeedAuth(false);
+	TaskManager.startHttpDataRequset(request, new HttpDataResponse() {
+			
+		@Override
+		public void onHttpRecvOK(HttpTag tag, Object extraInfo, Object result) {
+			DialogUtil.showToast(MainActivity.this, (String) result, Toast.LENGTH_LONG);
+		}
+			
+		@Override
+		public void onHttpRecvError(HttpTag tag, HttpCode retCode, String msg) {
+			DialogUtil.showToast(MainActivity.this, "onHttpRecvError retCode:" + retCode + " msg:" + msg, Toast.LENGTH_LONG);
+		}
+			
+		@Override
+		public void onHttpRecvCancelled(HttpTag tag) {
+			DialogUtil.showToast(MainActivity.this, "onHttpRecvCancelled", Toast.LENGTH_LONG);
+		}
+	});
+	
+#### Create a Post Request
+	HttpPostRequest request = new HttpPostRequest();
+	request.setTag(HttpTag.TEST);
+	request.setSort(Constants.REQUEST_METHOD_POST); // application/x-www-form-urlencoded
+	//request.setSort(Constants.REQUEST_METHOD_POST_MULTIPLE); // multipart/form-data
 	request.setGzip(true);
 	request.setRetry(false);
 	request.setNeedAuth(false);

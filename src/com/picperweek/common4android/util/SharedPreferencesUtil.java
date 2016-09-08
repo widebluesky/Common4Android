@@ -3,6 +3,10 @@
  */
 package com.picperweek.common4android.util;
 
+import com.picperweek.common4android.base.BaseApplication;
+import com.picperweek.common4android.config.Constants;
+
+import android.content.Context;
 import android.content.SharedPreferences;
 
 /**
@@ -24,9 +28,8 @@ public class SharedPreferencesUtil {
 	 */
 
 	private static SharedPreferences getInstance() {
-//		return CustomApplication.getInstance().getSharedPreferences(
-//				SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
-		return null;
+		return BaseApplication.getInstance().getSharedPreferences(
+				Constants.APP_NAME, Context.MODE_PRIVATE);
 	}
 
 	public static String getString(String key, String defValue) {

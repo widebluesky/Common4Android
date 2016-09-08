@@ -27,6 +27,14 @@ public class Constants {
 	public static final String REQUEST_METHOD_PUT = "PUT";
 	public static final String REQUEST_METHOD_DELETE = "DELETE";
 	public static final String REQUEST_METHOD_POST_MULTIPLE = "POST_MULTIPLE";
+	
+	
+	/**
+	 * 夜间模式
+	 */
+    public static final String SETTING_THEME = "setting_theme";
+    public static final int SETTING_THEME_DEFAULT_MODE = 0;
+    public static final int SETTING_THEME_NIGHT_MODE = 1;
 
 	/**
 	 * 线程优先级 线程优先级MAX_PRIORITY = 10;NORM_PRIORITY = 5;MIN_PRIORITY = 1;
@@ -108,47 +116,5 @@ public class Constants {
 	 * Event Message
 	 */
 	public static final String MSG_OK = "ok";
-	// public static final String MSG_RESPONSE_USER_ID_IS_EMPTY = "response
-	// user_id is empty";
-	// public static final String MSG_RESPONSE_USER_NAME_IS_EMPTY = "response
-	// user_name is empty";
-	// public static final String MSG_RESPONSE_INVALID_USER_ID= "response
-	// invalid user_id";
-	// public static final String MSG_RESPONSE_ERROR_CODE = "response error
-	// code";
-	// public static final String MSG_RESPONSE_ERROR = "response error";
-	// public static final String MSG_ERROR_NETWORK_CONNECTION = "network
-	// connection";
-	// public static final String MSG_ERROR_INVALID_USERNAME = "invalid
-	// username";
-	// public static final String MSG_ERROR_INVALID_PASSWORD = "invalid
-	// password";
-	// public static final String MSG_ERROR_NEED_LOGIN_PROTECTION= "nedd login
-	// protection";
-	// public static final String MSG_ERROR_USERNAME_EXIST = "username exist";
-	// public static final String MSG_ERROR_INVALID_VERIFY_CODE = "invalid
-	// verify code";
-	// public static final String MSG_ERROR_INVALID_PARAMETER = "invalid
-	// parameter";
-	// public static final String MSG_ERROR_VERIFY_CODE_EXPIRED = "verify code
-	// expired";
-	// public static final String MSG_ERROR_PHONE_NUM_BINDED = "phone number
-	// binded";
-	// public static final String MSG_ERROR_ANTI_CHEAT = "anti cheat";
-	// public static final String MSG_ERROR_NEED_ACTIVATE_EMAIL = "need activate
-	// email";
-	// public static final String MSG_ERROR_SYSTEM = "system error";
-	// public static final String MSG_ERROR_COMMON = "common error";
-	// public static final String MSG_ERROR_ACTIVE_CODE_SYSTEM = "active code
-	// system error";
-	// public static final String MSG_ERROR_TESTING_GAME = "testing game refuse
-	// to login";
-	// public static final String MSG_ERROR_NEED_ACTIVE_CODE = "need active
-	// code";
-	// public static final String MSG_ERROR_INVALID_ACTIVE_CODE = "invalid
-	// active code";
-	// public static final String MSG_ERROR_INVALID_APP_KEY = "invalid appkey";
-	// public static final String MSG_ERROR_INVALID_SIGN_OR_PARAMS = "invilid
-	// sign or params";
-	// public static final String MSG_OPERATION_CANCEL = "operation cancel";
+
 }

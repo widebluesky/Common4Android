@@ -7,6 +7,7 @@ import com.picperweek.common4android.manager.SystemBarTintManager;
 import com.picperweek.common4android.util.DeviceUtil;
 import com.picperweek.common4android.util.DialogUtil;
 import com.picperweek.common4android.util.LogUtil;
+import com.picperweek.common4android.widget.SwipeBackLayout;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -28,7 +29,12 @@ abstract public class BaseActivity extends FragmentActivity {
 	 * 沉浸式管理
 	 */
 	private SystemBarTintManager mTintManager;
-	
+
+	/**
+	 * 横滑返回 - 与沉浸式有冲突慎用
+	 */
+	private SwipeBackLayout mSwipeBackLayout;
+
 	/**
 	 * 是否可以滑动返回变量
 	 */
@@ -103,6 +109,11 @@ abstract public class BaseActivity extends FragmentActivity {
 	 * @param mCanSlideBack
 	 */
 	public void setCanSlideBack(boolean mCanSlideBack) {
+//		if (mCanSlideBack && mSwipeBackLayout == null) {
+//			mSwipeBackLayout = (SwipeBackLayout) LayoutInflater.from(this).inflate(R.layout.layout_swipe_back_base,
+//					null);
+//			mSwipeBackLayout.attachToActivity(this);
+//		}
 		this.mCanSlideBack = mCanSlideBack;
 	}
 
