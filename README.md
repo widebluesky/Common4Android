@@ -101,6 +101,13 @@ SystemIntentUtil.java      | 系统Intent工具类，常用的系统Intent跳转
 			DialogUtil.showToast(MainActivity.this, "onHttpRecvCancelled", Toast.LENGTH_LONG);
 		}
 	});
+
+#### NetWork add parameters & file upload
+
+	request.addUrlParams(key, value);  // URL params
+	request.addHeadParams(key, value); // Head params
+	request.addBodyParams(key, value); // Body params only post
+	request.addFileParams(key, file);  // File params only post
   
   
 ## Contact
