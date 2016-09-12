@@ -25,6 +25,7 @@ ClassName                  | Description
 HttpTag.java               | Api接口配置类。
 TaskManager.java           | 网络任务管理类。
 HttpDataRequest.java       | 通用请求类。
+HttpGetRequest.java        | Get请求类。
 HttpPostRequest.java       | Post请求类。
 
 ###-工具类
