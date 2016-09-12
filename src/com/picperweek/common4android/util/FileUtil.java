@@ -15,7 +15,7 @@ import com.picperweek.common4android.config.Constants;
 import com.picperweek.common4android.receiver.ExternalStorageReceiver;
 
 /**
- * 
+ * 文件工具类
  * @author widebluesky
  *
  */

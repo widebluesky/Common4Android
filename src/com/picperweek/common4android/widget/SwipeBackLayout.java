@@ -21,7 +21,7 @@ import android.widget.FrameLayout;
 import android.widget.Scroller;
 
 /**
- * 
+ * 横滑返回组件
  * @author widebluesky
  *
  */

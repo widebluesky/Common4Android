@@ -8,11 +8,10 @@ import java.security.NoSuchAlgorithmException;
 import com.picperweek.common4android.config.Constants;
 
 /**
- * 
- * @author xuyi05
+ * 字符串工具类
+ * @author widebluesky
  *
  */
-
 public class StringUtil {
 
 	public static boolean isEmptyString(String string) {

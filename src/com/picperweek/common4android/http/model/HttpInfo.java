@@ -3,8 +3,11 @@ package com.picperweek.common4android.http.model;
 import com.picperweek.common4android.http.command.HttpDataRequest;
 import com.picperweek.common4android.http.command.HttpDataResponse;
 
-
-
+/**
+ * Http网络信息Model
+ * @author widebluesky
+ *
+ */
 public class HttpInfo {
 	private HttpDataRequest request;
 	private HttpDataResponse response;

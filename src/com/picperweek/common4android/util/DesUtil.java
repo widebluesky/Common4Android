@@ -7,6 +7,11 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESedeKeySpec;
 import javax.crypto.spec.IvParameterSpec;
 
+/**
+ * Des工具类
+ * @author widebluesky
+ *
+ */
 public class DesUtil {
 	public static final String CHAR_ENCODING = "UTF-8";
 

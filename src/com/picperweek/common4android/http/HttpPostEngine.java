@@ -10,7 +10,7 @@ import com.picperweek.common4android.http.command.BaseHttpRequest;
 import com.picperweek.common4android.http.command.HttpPostRequest;
 
 /**
- * 
+ * 网络请求方法Post
  * @author widebluesky
  *
  */

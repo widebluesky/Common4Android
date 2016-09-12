@@ -5,6 +5,11 @@ import java.io.File;
 import android.os.Environment;
 import android.os.StatFs;
 
+/**
+ * SD卡工具类
+ * @author widebluesky
+ *
+ */
 public class SDCardUtil {
 
 	/**

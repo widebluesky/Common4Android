@@ -19,7 +19,7 @@ import dalvik.system.DexClassLoader;
 import dalvik.system.PathClassLoader;
 
 /**
- * 
+ * 热更新管理
  * @author widebluesky
  *
  */

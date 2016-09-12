@@ -10,22 +10,15 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 /**
- * @author xuyi
- * 
+ * SharedPreferences工具类
+ * @author widebluesky
+ *
  */
 public class SharedPreferencesUtil {
 
-
-	/**
-	 * 
-	 */
 	private SharedPreferencesUtil() {
 		// TODO Auto-generated constructor stub
 	}
-
-	/**
-	 * 
-	 */
 
 	private static SharedPreferences getInstance() {
 		return BaseApplication.getInstance().getSharedPreferences(

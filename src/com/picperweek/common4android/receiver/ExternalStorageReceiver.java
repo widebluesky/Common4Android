@@ -7,7 +7,8 @@ import android.os.Environment;
 
 /**
  * 外部存储设备状态广播
- * 
+ * @author widebluesky
+ *
  */
 public class ExternalStorageReceiver extends BroadcastReceiver {
 

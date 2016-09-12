@@ -8,6 +8,7 @@ import com.picperweek.common4android.util.LogUtil;
 
 /**
  * 
+ * 通用网络请求
  * @author widebluesky
  *
  */

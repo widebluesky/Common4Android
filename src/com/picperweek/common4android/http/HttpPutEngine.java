@@ -7,7 +7,7 @@ import org.apache.http.client.methods.HttpPut;
 import com.picperweek.common4android.http.command.BaseHttpRequest;
 
 /**
- * 
+ * 网络请求方法Put
  * @author widebluesky
  *
  */

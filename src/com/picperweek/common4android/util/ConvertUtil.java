@@ -12,7 +12,12 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
-public abstract class ConvertUtil {
+/**
+ * 转换工具类
+ * @author widebluesky
+ *
+ */
+public class ConvertUtil {
 
 	private static final DecimalFormat simpleFormat = new DecimalFormat("####");
 

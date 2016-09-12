@@ -5,6 +5,11 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 
+/**
+ * App信息工具类
+ * @author widebluesky
+ *
+ */
 public class AppInfoUtil {
 
 	private AppInfoUtil() {

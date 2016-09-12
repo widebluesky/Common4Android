@@ -6,6 +6,11 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.widget.Toast;
 
+/**
+ * Dialog工具类
+ * @author widebluesky
+ *
+ */
 public class DialogUtil {
 
 	private static ProgressDialog progressDialog;

@@ -2,6 +2,11 @@ package com.picperweek.common4android.http.model;
 
 import android.graphics.Bitmap;
 
+/**
+ * 图片响应结果Model
+ * @author widebluesky
+ *
+ */
 public class ImageResult {
 	public static final int STATUS_OK = 100;
 	public static final int ERROR_NO_NET = 101;

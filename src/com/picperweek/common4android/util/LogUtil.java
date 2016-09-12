@@ -5,6 +5,11 @@ import com.picperweek.common4android.config.Constants;
 
 import android.util.Log;
 
+/**
+ * 日志工具类
+ * @author widebluesky
+ *
+ */
 public class LogUtil {
 
 	private static boolean isDebugMode = Constants.IS_TEST;

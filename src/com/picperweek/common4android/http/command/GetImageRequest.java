@@ -6,7 +6,7 @@ import com.picperweek.common4android.receiver.NetStatusReceiver;
 import com.picperweek.common4android.util.LogUtil;
 
 /**
- * 
+ * 图片下载请求
  * @author widebluesky
  *
  */

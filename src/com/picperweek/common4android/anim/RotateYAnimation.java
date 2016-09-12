@@ -5,6 +5,11 @@ import android.graphics.Matrix;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
 
+/**
+ * Y轴旋转动画类
+ * @author widebluesky
+ *
+ */
 public class RotateYAnimation extends Animation {
 
 	private float fromDegree; // 旋转起始角度

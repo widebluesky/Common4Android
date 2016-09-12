@@ -9,11 +9,16 @@ import android.graphics.Bitmap;
 import android.os.Environment;
 import android.util.Log;
 
+/**
+ * BitmapCache工具类
+ * @author widebluesky
+ *
+ */
 public class BitmapCacheUtil {
 
-	String TAG = "HP_BitmapCacheUtils";
-	int MB = 1024;
-	int FREE_SD_SPACE_NEEDED_TO_CACHE = 50;// MB
+	private static final String TAG = "HP_BitmapCacheUtils";
+	private static final int MB = 1024;
+	private static final int FREE_SD_SPACE_NEEDED_TO_CACHE = 50;// MB
 
 	/**
 	 * 保存Bitmap到SD卡

@@ -5,7 +5,7 @@ import org.apache.http.client.methods.HttpGet;
 import com.picperweek.common4android.http.command.BaseHttpRequest;
 
 /**
- * 
+ * 网络请求方法Get
  * @author widebluesky
  *
  */

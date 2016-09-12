@@ -10,7 +10,7 @@ import com.picperweek.common4android.util.LogUtil;
 import com.picperweek.common4android.util.StringUtil;
 
 /**
- * 
+ * 网络请求基类
  * @author widebluesky
  *
  */

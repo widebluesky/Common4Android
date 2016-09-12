@@ -6,6 +6,7 @@ import com.picperweek.common4android.http.command.BaseHttpRequest;
 
 /**
  * 
+ * 网络请求方法Delete
  * @author widebluesky
  *
  */

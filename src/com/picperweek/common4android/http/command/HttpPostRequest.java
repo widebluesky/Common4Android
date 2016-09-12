@@ -15,6 +15,9 @@ import com.picperweek.common4android.util.StringUtil;
 
 
 /**
+ * 
+ * Post方式网络请求
+ * 
  * 用的时候把post参数用setBodyParams方法设置到bodyParams里，把读取的图片set到image里，没有图片时不用管image
  * picKey是服务器要求的传图片时的参数key，请根据实际情况改动
  * 

@@ -7,7 +7,12 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.provider.MediaStore.Audio.Media;
 
-public class SystemIntentUtils {
+/**
+ * Intent工具类
+ * @author widebluesky
+ *
+ */
+public class IntentUtil {
 
 	public Intent getGoogleSearchIntent(String searchStr) {
 		// 1.从google搜索内容

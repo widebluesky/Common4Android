@@ -3,6 +3,11 @@ package com.picperweek.common4android.util;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * 郑则表达式工具类
+ * @author widebluesky
+ *
+ */
 public class RegexUtil {
 
 	public static boolean isMobileNumber(String string) {

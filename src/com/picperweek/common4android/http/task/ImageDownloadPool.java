@@ -20,6 +20,7 @@ import android.graphics.Bitmap;
 
 /**
  * 
+ * 图片下载线程池
  * @author widebluesky
  *
  */

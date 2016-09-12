@@ -30,6 +30,11 @@ import android.text.Layout.Alignment;
 import android.text.StaticLayout;
 import android.text.TextPaint;
 
+/**
+ * Bitmap工具类
+ * @author widebluesky
+ *
+ */
 public class BitmapUtil {
 
 	/**

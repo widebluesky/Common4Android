@@ -4,7 +4,11 @@ import java.util.Map;
 
 import com.picperweek.common4android.http.HttpEngine.HttpCode;
 
-
+/**
+ * 网络响应结果Model
+ * @author widebluesky
+ *
+ */
 public class HttpResult {
 
 	public static final int RES_OK = 1; 

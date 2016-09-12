@@ -2,6 +2,11 @@ package com.picperweek.common4android.api;
 
 import com.picperweek.common4android.config.Constants;
 
+/**
+ * 网络请求配置文件
+ * @author widebluesky
+ *
+ */
 public enum HttpTag {
 
 	TEST(Constants.TAG_TYPE_STRING, 1, "http://www.baidu.com", null);

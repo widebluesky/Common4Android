@@ -4,14 +4,32 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * 日期工具类
+ * @author widebluesky
+ *
+ */
 public class DateUtil {
 
+	/**
+	 * 获取Date对象
+	 * @param dateString
+	 * @param formatString
+	 * @return
+	 * @throws Exception
+	 */
 	public static Date getDateFromDateString(String dateString, String formatString) throws Exception {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(formatString);
 		Date date = simpleDateFormat.parse(dateString);// 提取格式中的日期
 		return date;
 	}
 
+	/**
+	 * 时间格式化
+	 * @param date
+	 * @param formatString
+	 * @return
+	 */
 	public static String getDateStringFromDate(Date date, String formatString) {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(formatString);
 		String dateString = simpleDateFormat.format(date); // 改变格式
@@ -54,28 +72,53 @@ public class DateUtil {
 		return constellationArr[11];
 	}
 
+	/**
+	 * Calendar -> Date
+	 * @param calendar
+	 * @return
+	 */
 	public static Date dateFromCalendar(Calendar calendar) {
 		return calendar.getTime();
 	}
 
+	/**
+	 * Date -> Calendar
+	 * @param date
+	 * @return
+	 */
 	public static Calendar date2Calendar(Date date) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 		return cal;
 	}
 
+	/**
+	 * 获取年龄
+	 * @param date
+	 * @return
+	 */
 	public static int date2Age(Date date) {
 		Calendar mycalendar = Calendar.getInstance();// 获取现在时间
 		int year = mycalendar.get(Calendar.YEAR);// 获取年份
 		return year - date.getYear() - 1900;
 	}
 
+	/**
+	 * Java时间戳 -> PHP时间戳
+	 * @param time
+	 * @return
+	 */
 	public static long javaTime2PhpTime(long time) {
 		String javaTime = String.valueOf(time);
 		String phpTime = javaTime.substring(0, javaTime.length() - 3);
 		return Long.valueOf(phpTime);
 	}
 
+	/**
+	 * PHP时间戳 -> Java时间戳
+	 * @param time
+	 * @return
+	 */
 	public static long phpTime2JavaTime(long time) {
 		return time * 1000;
 	}

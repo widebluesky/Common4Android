@@ -12,6 +12,11 @@ import android.net.NetworkInfo;
 import android.os.Environment;
 import android.os.Handler;
 
+/**
+ * 应用程序基类
+ * @author widebluesky
+ *
+ */
 public class BaseApplication extends Application {
 
 	private static BaseApplication mBaseApplication;
@@ -22,7 +27,7 @@ public class BaseApplication extends Application {
 	}
 
 	/**
-	 * 获取SDKApi单例
+	 * 获取单例
 	 * 
 	 * @return
 	 */

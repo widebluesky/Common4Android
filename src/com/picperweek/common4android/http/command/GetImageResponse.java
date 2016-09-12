@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 
 /**
  * 
+ * 图片下载响应接口
  * @author widebluesky
  *
  */

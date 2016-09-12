@@ -20,7 +20,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 
 /**
- * 
+ * 任务管理器
  * @author widebluesky
  *
  */

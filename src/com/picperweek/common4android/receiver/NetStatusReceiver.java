@@ -11,8 +11,8 @@ import android.net.NetworkInfo;
 
 /**
  * 网络状态广播
- * 
- * 
+ * @author widebluesky
+ *
  */
 public class NetStatusReceiver extends BroadcastReceiver {
 

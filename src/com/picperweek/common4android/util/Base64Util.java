@@ -1,5 +1,10 @@
 package com.picperweek.common4android.util;
 
+/**
+ * Base64工具类
+ * @author widebluesky
+ *
+ */
 public class Base64Util {
 	/**
 	 * Chunk size per RFC 2045 section 6.8.

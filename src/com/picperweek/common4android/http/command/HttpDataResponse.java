@@ -4,7 +4,7 @@ import com.picperweek.common4android.api.HttpTag;
 import com.picperweek.common4android.http.HttpEngine.HttpCode;
 
 /**
- * 
+ * 通用网络请求响应接口
  * @author widebluesky
  *
  */

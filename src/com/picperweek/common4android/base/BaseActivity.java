@@ -18,6 +18,11 @@ import android.support.v4.app.FragmentActivity;
 import android.view.MotionEvent;
 import android.view.Window;
 
+/**
+ * Activity基类
+ * @author widebluesky
+ *
+ */
 abstract public class BaseActivity extends FragmentActivity {
 
 	/**

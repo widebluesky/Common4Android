@@ -28,6 +28,11 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+/**
+ * 获取设备信息
+ * @author widebluesky
+ *
+ */
 public class DeviceUtil {
 
 	/**

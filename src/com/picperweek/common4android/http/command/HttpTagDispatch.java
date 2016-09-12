@@ -9,7 +9,7 @@ import com.picperweek.common4android.config.Constants;
 import com.picperweek.common4android.util.LogUtil;
 
 /**
- * Http数据分发类
+ * 网络请求数据分发类
  * 
  * @author widebluesky
  * 

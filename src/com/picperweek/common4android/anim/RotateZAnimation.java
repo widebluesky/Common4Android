@@ -5,6 +5,11 @@ import android.graphics.Matrix;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
 
+/**
+ * Z轴旋转动画类
+ * @author widebluesky
+ *
+ */
 public class RotateZAnimation extends Animation {
 
 	private float fromDegree; // 旋转起始角度

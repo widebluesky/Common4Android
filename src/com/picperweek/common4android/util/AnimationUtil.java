@@ -20,6 +20,11 @@ import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 
+/**
+ * 动画工具类
+ * @author widebluesky
+ *
+ */
 public class AnimationUtil {
 
 	// 所有动画结束后，需要在onAnimationEnd中重新设置view的位置、大小。

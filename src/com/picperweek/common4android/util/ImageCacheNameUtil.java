@@ -4,9 +4,6 @@ import java.io.File;
 
 import com.picperweek.common4android.config.CachePathConstants;
 
-
-
-
 /**
  * 获取图片缓存名字工具
  * 

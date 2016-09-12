@@ -1,5 +1,10 @@
 package com.picperweek.common4android.config;
 
+/**
+ * 常量类
+ * @author widebluesky
+ *
+ */
 public class Constants {
 
 	public final static boolean IS_TEST = true;

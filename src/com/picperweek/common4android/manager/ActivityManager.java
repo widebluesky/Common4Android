@@ -5,6 +5,11 @@ import java.util.List;
 
 import android.app.Activity;
 
+/**
+ * Activity管理器
+ * @author widebluesky
+ *
+ */
 public class ActivityManager {
 
 	private volatile static ActivityManager mActivityManager;

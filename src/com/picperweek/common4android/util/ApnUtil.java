@@ -7,7 +7,7 @@ import android.net.NetworkInfo;
 import android.telephony.TelephonyManager;
 
 /**
- * 
+ * Apn工具类
  * @author widebluesky
  *
  */

@@ -99,7 +99,6 @@ public abstract class HttpEngine {
 	}
 
 	protected HttpResult doRequest() {
-		// TODO Auto-generated method stub
 		HttpResult httpResult = new HttpResult();
 		HttpCode code;
 		

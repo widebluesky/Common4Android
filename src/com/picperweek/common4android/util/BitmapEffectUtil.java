@@ -6,6 +6,11 @@ import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Paint;
 
+/**
+ * Bitmap特效工具类
+ * @author widebluesky
+ *
+ */
 public class BitmapEffectUtil {
 
 	@SuppressWarnings("unused")
