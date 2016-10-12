@@ -52,6 +52,57 @@ SystemIntentUtil.java      | 系统Intent工具类，常用的系统Intent跳转
 ##Example Usage
 
 ### - NetWork
+#### Config HttpTag
+	public enum HttpTag {
+
+		TEST1(Constants.TAG_TYPE_STRING, 1, "http://www.baidu.com", null),
+		TEST2(Constants.TAG_TYPE_JSON_OBJECT, 2, "http://www.baidu.com", null),
+		TEST3(Constants.TAG_TYPE_JSON_ARRAY, 3, "http://www.baidu.com", null),
+		TEST4(Constants.TAG_TYPE_GSON, 4, "http://www.baidu.com", Object.class);
+
+		/**
+		 * HttpTag
+		 * @param tagType 标签类型 1:string, 2:gson, 3:jsonObject, 4:jsonArray
+		 * @param httpTag Tag标签，用于接收响应数据
+		 * @param httpUrl 请求Url
+		 * @param parseClass GSON类型使用，用于转换GSON数据
+		 */
+		HttpTag(int tagType, int httpTag, String httpUrl, Class<?> parseClass) {
+			this.mTagType = tagType;
+			this.mHttpTag = httpTag;
+			this.mHttpUrl = httpUrl;
+			this.mParseClass = parseClass;
+		}
+
+		private final int mTagType;
+		private final int mHttpTag;
+		private final String mHttpUrl;
+		private final Class<?> mParseClass;
+
+
+		public int getTagType() {
+			return mTagType;
+		}
+
+		public int getHttpTag() {
+			return mHttpTag;
+		}
+
+		public String getHttpUrl() {
+			return mHttpUrl;
+		}
+
+		public Class<?> getParseClass() {
+			return mParseClass;
+		}
+
+		@Override
+		public String toString() {
+			String toString = "[tag=" + mHttpTag + "][url=" + mHttpUrl + "][parseClass=" + mParseClass + "]";
+			return toString;
+		}
+
+	}
 #### Create a Get Request
 	HttpGetRequest request = new HttpGetRequest();
 	request.setTag(HttpTag.TEST);
@@ -115,11 +166,11 @@ SystemIntentUtil.java      | 系统Intent工具类，常用的系统Intent跳转
 #### 1. Generate patch.jar with [APKTool](https://github.com/widebluesky/Common4Android-APKTool).
 #### 2. Load patch.jar.
 
-		String patchVersion = "0.1.0";
-		String patchPath = "SDCard://mnt/common4android/path/patch.jar";
-		HotFixManager hotFixManager = new HotFixManager(this);
-		hotFixManager.init(patchVersion);  // init with patch version
-		hotFixManager.addPatch(patchPath); // load patch.jar
+	String patchVersion = "0.1.0";
+	String patchPath = "SDCard://mnt/common4android/path/patch.jar";
+	HotFixManager hotFixManager = new HotFixManager(this);
+	hotFixManager.init(patchVersion);  // init with patch version
+	hotFixManager.addPatch(patchPath); // load patch.jar
 	
 ## Contact
 
