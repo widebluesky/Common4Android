@@ -112,8 +112,8 @@ SystemIntentUtil.java      | 系统Intent工具类，常用的系统Intent跳转
   
 #### - HotFixManager
 
-##### - 1. Generate patch.jar with [APKTool](https://github.com/widebluesky/Common4Android-APKTool).
-##### - 2. Load patch.jar.
+##### 1. Generate patch.jar with [APKTool](https://github.com/widebluesky/Common4Android-APKTool).
+##### 2. Load patch.jar.
 
 		String patchVersion = "0.1.0";
 		String patchPath = "SDCard://mnt/common4android/path/patch.jar";
