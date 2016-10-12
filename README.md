@@ -110,7 +110,15 @@ SystemIntentUtil.java      | 系统Intent工具类，常用的系统Intent跳转
 	request.addBodyParams(key, value); // Body params only post
 	request.addFileParams(key, file);  // File params only post
   
-  
+#### - HotFixManager
+- 1. Generate patch.jar with [APKTool](https://github.com/widebluesky/Common4Android-APKTool).
+- 2. Load patch.jar.
+	String patchVersion = "0.1.0";
+	String patchPath = "SDCard://mnt/common4android/path/patch.jar";
+	HotFixManager hotFixManager = new HotFixManager(this);
+	hotFixManager.init(patchVersion);  // init with patch version
+	hotFixManager.addPatch(patchPath); // load patch.jar
+	
 ## Contact
 
   E-mail：widebluesky@qq.com
